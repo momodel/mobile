@@ -20,3 +20,9 @@ Also there is another workaround for a missing feature https://github.com/react-
 ## LICENSE
 
 MIT
+
+
+# 语音转文字
+https://github.com/wenkesj/react-native-voice#example
+https://github.com/CharlesMangwa/react-native-simple-markdown
+yarn add react-native-simple-markdown

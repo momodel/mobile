@@ -13,12 +13,20 @@ import Loading from './containers/Loading'
 import Login from './containers/Login'
 import Home from './containers/Home'
 import Account from './containers/Account'
-import Detail from './containers/Detail'
+import Register from './containers/Register'
+import Message from './containers/Message'
+import Forget from './containers/Forget'
+import ApiDetail from './containers/ApiDetail'
+import Predict from './containers/Predict'
 
 const HomeNavigator = TabNavigator(
   {
-    Home: { screen: Home },
-    Account: { screen: Account },
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        tabBarVisible: false,
+      },
+    },
   },
   {
     tabBarComponent: TabBarBottom,
@@ -32,7 +40,37 @@ const HomeNavigator = TabNavigator(
 const MainNavigator = StackNavigator(
   {
     HomeNavigator: { screen: HomeNavigator },
-    Detail: { screen: Detail },
+    Message: { screen: Message },
+    Account: { screen: Account },
+
+    ApiDetail: { screen: ApiDetail },
+    Predict: { screen: Predict },
+  },
+  {
+    headerMode: 'float',
+  }
+)
+
+const LoginNavigator = StackNavigator(
+  {
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Register: {
+      screen: Register,
+      navigationOptions: {
+        title: '注册',
+      },
+    },
+    Forget: {
+      screen: Forget,
+      navigationOptions: {
+        title: '忘记密码',
+      },
+    },
   },
   {
     headerMode: 'float',
@@ -41,8 +79,8 @@ const MainNavigator = StackNavigator(
 
 const AppNavigator = StackNavigator(
   {
+    LoginNav: { screen: LoginNavigator },
     Main: { screen: MainNavigator },
-    Login: { screen: Login },
   },
   {
     headerMode: 'none',

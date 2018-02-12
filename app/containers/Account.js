@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, View, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
-
-import { Button } from '../components'
-
+import { List } from 'antd-mobile'
 import { createAction, NavigationActions } from '../utils'
+const Item = List.Item
 
 @connect(({ app }) => ({ ...app }))
 class Account extends Component {
   static navigationOptions = {
-    title: 'Account',
-    tabBarLabel: 'Account',
-    tabBarIcon: ({ focused, tintColor }) => (
-      <Image
-        style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
-        source={require('../images/person.png')}
-      />
-    ),
+    title: '我的账户',
+    // tabBarLabel: 'Account',
+    // tabBarIcon: ({ focused, tintColor }) => (
+    //   <Image
+    //     style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
+    //     source={require('../images/person.png')}
+    //   />
+    // ),
   }
 
   gotoLogin = () => {
@@ -26,19 +25,49 @@ class Account extends Component {
   logout = () => {
     this.props.dispatch(createAction('app/logout')())
   }
-
   render() {
-    const { login } = this.props
+    // const { username } = this.props
     return (
-      <View style={styles.container}>
-        {login ? (
-          <Button text="Logout" onPress={this.logout} />
-        ) : (
-          <Button text="Goto Login" onPress={this.gotoLogin} />
-        )}
+      <View>
+        <List>
+          <Item arrow="horizontal" onClick={() => {}}>
+            Super user
+          </Item>
+
+          <Item arrow="horizontal" onClick={() => {}}>
+            检查更新
+          </Item>
+
+          <Item arrow="horizontal" onClick={() => {}}>
+            用户帮助
+          </Item>
+          <View style={{ height: 50 }} />
+          <Item
+            style={styles.logout}
+            // arrow="horizontal"
+            onClick={this.logout}
+          >
+            <Text style={styles.logout_text}>退出登录</Text>
+          </Item>
+        </List>
+
+        <List />
       </View>
     )
   }
+
+  // render() {
+  //   const { login } = this.props
+  //   return (
+  //     <View style={styles.container}>
+  //       {login ? (
+  //         <Button text="Logout" onPress={this.logout} />
+  //       ) : (
+  //         <Button text="Goto Login" onPress={this.gotoLogin} />
+  //       )}
+  //     </View>
+  //   )
+  // }
 }
 
 const styles = StyleSheet.create({
@@ -50,6 +79,24 @@ const styles = StyleSheet.create({
   icon: {
     width: 32,
     height: 32,
+  },
+
+  logout: {
+    height: 40,
+    // marginTop: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    padding: 5,
+    margin: 5,
+  },
+  logout_text: {
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 18,
+    color: 'white',
   },
 })
 

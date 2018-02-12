@@ -1,34 +1,65 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
-import { connect } from 'react-redux'
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
 
-import { Button } from '../components'
+import { connect } from 'react-redux'
 
 import { NavigationActions } from '../utils'
 
-@connect()
-class Home extends Component {
-  static navigationOptions = {
-    title: 'Home',
-    tabBarLabel: 'Home',
-    tabBarIcon: ({ focused, tintColor }) => (
-      <Image
-        style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
-        source={require('../images/house.png')}
-      />
-    ),
-  }
+import WebChat from '../components/Chat/WebChat'
 
-  gotoDetail = () => {
-    this.props.dispatch(NavigationActions.navigate({ routeName: 'Detail' }))
-  }
+@connect(({ app }) => ({ ...app }))
+class Home extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerRight: (
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 10,
+          }}
+          onPress={() => {
+            navigation.dispatch(
+              NavigationActions.navigate({ routeName: 'Message' })
+            )
+          }}
+        >
+          <Image
+            style={{ width: 25, height: 25, tintColor: 'grey' }}
+            source={require('../images/icons/message.png')}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 10,
+          }}
+          onPress={() => {
+            navigation.dispatch(
+              NavigationActions.navigate({ routeName: 'Account' })
+            )
+          }}
+        >
+          <Image
+            style={{ width: 21, height: 21, tintColor: 'grey' }}
+            source={require('../images/icons/user.png')}
+          />
+        </TouchableOpacity>
+      </View>
+    ),
+  })
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Button text="Goto Detail" onPress={this.gotoDetail} />
-      </View>
-    )
+    return <WebChat />
   }
 }
 
