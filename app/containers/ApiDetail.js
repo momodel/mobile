@@ -11,7 +11,7 @@ import { Button } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { NavigationActions } from '../utils'
 
-@connect(({ app }) => ({ ...app }))
+@connect(({ api }) => ({ ...api }))
 class ApiDetail extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: '应用详情',
@@ -30,11 +30,11 @@ class ApiDetail extends Component {
             justifyContent: 'center',
             margin: 10,
           }}
-          // onPress={() => {
-          //   navigation.dispatch(
-          //     NavigationActions.navigate({ routeName: 'Message' })
-          //   )
-          // }}
+           onPress={() => {
+             navigation.dispatch({
+               type: ""
+             })
+           }}
         >
           <Image
             style={{ width: 25, height: 25, tintColor: 'grey' }}

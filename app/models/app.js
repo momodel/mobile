@@ -1,5 +1,5 @@
 import { createAction, NavigationActions, Storage } from '../utils'
-import * as authService from '../services/auth'
+import * as authService from '../services/user'
 
 export default {
   namespace: 'app',
@@ -36,6 +36,7 @@ export default {
       )
     },
     *login({ payload }, { call, put }) {
+      const {username, password} = payload
       yield put(createAction('updateState')({ fetching: true }))
       const login = yield call(authService.login, payload)
 
@@ -44,15 +45,20 @@ export default {
         yield call(Storage.set, 'username', payload.username)
         yield call(Storage.set, 'password', payload.password)
         yield call(Storage.set, 'token', login.response.token)
-        yield put(
-          NavigationActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Main' })],
-          })
-        )
+        // yield put(
+        //   NavigationActions.reset({
+        //     index: 0,
+        //     actions: [NavigationActions.navigate({ routeName: 'Main' })],
+        //   })
+        // )
+
+        yield put(NavigationActions.navigate({ routeName: 'Main' }))
+
+        yield put(createAction('updateState')({ login, username, password,fetching: false }))
+        yield call(Storage.set, 'login', login)
+        // Storage.set('login', login)
       }
-      yield put(createAction('updateState')({ login, fetching: false }))
-      Storage.set('login', login)
+
     },
     *logout(action, { call, put }) {
       yield call(Storage.set, 'login', false)

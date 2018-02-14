@@ -89,6 +89,9 @@ export default async function request(url, options) {
 const onSuccessDef = function(response) {}
 
 const onErrorDef = function(error) {}
+
+const callbackDef = function(response) {}
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -104,7 +107,7 @@ const onErrorDef = function(error) {}
 export async function customRequest(
   url,
   options,
-  callback,
+  callback = callbackDef,
   onSuccess = onSuccessDef,
   onError = onErrorDef
 ) {
@@ -118,7 +121,10 @@ export async function customRequest(
     credentials: 'include',
   }
   const newOptions = { ...defaultOptions, ...options }
-  if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
+  if (newOptions.method === 'POST' || newOptions.method === 'PUT' ||
+    newOptions.method === 'post' || newOptions.method === 'put'
+
+  ) {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
@@ -136,16 +142,24 @@ export async function customRequest(
     ...newOptions.headers,
   }
 
+  console.log('newUrl, newOptions')
+  console.log(newUrl, newOptions)
+  console.log(JSON.stringify(newUrl))
+  console.log(JSON.stringify(newOptions))
+
+
   return fetch(newUrl, newOptions)
     .then(checkStatus)
-    .then(response => response.json())
+    // .then(response => response.json())
     .then(response => {
       if (response.status !== 200) {
         Toast.fail('请求错误!!!', 1)
       } else {
-        onSuccess(response)
+        return response.json()
       }
-      return response.json()
+    })
+    .then(res=> {
+      onSuccess(res)
     })
     .then(res => {
       callback(res)

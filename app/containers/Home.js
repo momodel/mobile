@@ -1,3 +1,7 @@
+/**
+ * 手机端主页， 聊天机器人
+ *
+ */
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
 

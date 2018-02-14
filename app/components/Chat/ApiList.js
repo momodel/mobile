@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {
   View,
   TouchableOpacity,
@@ -6,19 +6,20 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native'
-import { connect } from 'react-redux'
-import { Button, Toast } from 'antd-mobile'
-
+import {connect} from 'react-redux'
+import {Button, Toast} from 'antd-mobile'
+import _ from 'lodash'
 import CustomCard from '../../components/Card'
-import { WebChatId } from './WebChat'
+import {WebChatId} from './WebChat'
 
-import { getApiList } from '../../services/chat'
-import { NavigationActions } from '../../utils'
+import {getApiList} from '../../services/chat'
+import {NavigationActions} from '../../utils'
+
 
 // import ChatBot, {Loading} from 'react-simple-chatbot';
 
-@connect(({ app }) => ({ ...app }))
-class Search extends Component {
+@connect(({app}) => ({...app}))
+export default class ApiList extends Component {
   constructor(props) {
     super(props)
     this.pageNo = 1
@@ -26,57 +27,69 @@ class Search extends Component {
     this.state = {
       apiList: null,
       displayText: null,
-
       // result: false
     }
   }
 
-  temp() {
-    fetch(`http://localhost:5000/chat/get_matched_apis?content=${keyWord}`, {
-      method: 'GET',
-    })
-      .then(response => response.json())
-      .then(({ response }) => {
-        console.log('response', response)
-        if (response.status) {
-          // 匹配成功
-          this.setState({
-            apiList: response['api_list'],
-            // displayText: "匹配成功"
-          })
-        } else {
-          // 匹配失败
-          this.setState(
-            {
-              displayText: '对不起，你的需求未匹配到任何服务',
-            },
-            () =>
-              this.props.triggerNextStep({
-                trigger: WebChatId.failed.requirement_failed_select,
-              })
-          )
-        }
-      })
-      .catch(() => {
-        console.log('error')
-        // 网络出错，重新输入
-        this.setState(
-          {
-            displayText: '请求出错了，请重新尝试输入',
-          },
-          () =>
-            this.props.triggerNextStep({ trigger: WebChatId.requirement.input })
-        )
-      })
-  }
+  // temp() {
+  //   fetch(`http://localhost:5000/chat/get_matched_apis?content=${keyWord}`, {
+  //     method: 'GET',
+  //   })
+  //     .then(response => response.json())
+  //     .then(({ response }) => {
+  //       console.log('response', response)
+  //       if (response.status) {
+  //         // 匹配成功
+  //         this.setState({
+  //           apiList: response['api_list'],
+  //           // displayText: "匹配成功"
+  //         })
+  //       } else {
+  //         // 匹配失败
+  //         this.setState(
+  //           {
+  //             displayText: '对不起，你的需求未匹配到任何服务',
+  //           },
+  //           () =>
+  //             this.props.triggerNextStep({
+  //               trigger: WebChatId.failed.requirement_failed_select,
+  //             })
+  //         )
+  //       }
+  //     })
+  //     .catch(() => {
+  //       console.log('error')
+  //       // 网络出错，重新输入
+  //       this.setState(
+  //         {
+  //           displayText: '请求出错了，请重新尝试输入',
+  //         },
+  //         () =>
+  //           this.props.triggerNextStep({ trigger: WebChatId.requirement.input })
+  //       )
+  //     })
+  // }
 
   componentWillMount() {
+    console.log("this.props", this.props)
+    let pageNo = _.get(this.props, "[previousStep][value][pageNo]", null)
+    if(pageNo){
+      this.pageNo = this.props.previousStep.value.pageNo
+    }
+    console.log("this.pageNo", this.pageNo)
+    // if("pageNo" in this.props.previousStep.value){
+    //   this.pageNo = this.props.previousStep.value.pageNo
+    // }
+    // 如果上一步是apilist, 则获取其页码
+    // const {pr}
     console.log('search')
-    // const { steps } = this.props
-    // const keyWord = steps[WebChatId.requirement.input].value
-    const keyWord = 'aaaa'
-    this.keyWord = keyWord
+    const {steps} = this.props
+    this.keyWord = steps[WebChatId.requirement.input].value
+    // this.keyWord = keyWord
     const result = this.getApiList()
+    this.props.triggerNextStep({
+      trigger: WebChatId.message.input,
+    })
     // 方式2, 接收promise
     // getApiList({keyword: keyWord})
     //   .then((res)=>console.log("res",res))
@@ -84,25 +97,30 @@ class Search extends Component {
   }
 
   getApiList() {
-    console.log('this.pageNo', this.pageNo)
     const result = getApiList(
-      { keyword: this.keyWord, pageNo: this.pageNo },
+      {keyword: this.keyWord, pageNo: this.pageNo},
       res => {
         console.log('res', res)
       },
+      // 成功回调
       res => {
         if (res.length !== 0) {
           this.setState(
             {
               apiList: res,
-              // displayText: "匹配成功"
             },
-            () => (this.pageNo += 1)
+            () => {
+              this.pageNo += 1
+            }
           )
         } else {
+          this.setState({
+            displayText: "没有更多了"
+          })
           Toast.fail('没有更多了')
         }
       },
+      // 失败回调
       res => {
         this.setState(
           {
@@ -118,7 +136,7 @@ class Search extends Component {
   }
 
   render() {
-    const { apiList, displayText } = this.state
+    const {apiList, displayText} = this.state
     return apiList ? (
       <View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -133,7 +151,7 @@ class Search extends Component {
                 this.props.dispatch(
                   NavigationActions.navigate({
                     routeName: 'ApiDetail',
-                    params: { api },
+                    params: {api},
                   })
                 )
               }
@@ -141,9 +159,14 @@ class Search extends Component {
           ))}
         </ScrollView>
         <Button
-          style={{ width: 100, margin: 10, borderRadius: 20 }}
+          style={{width: 100, margin: 10, borderRadius: 20}}
           onClick={() => {
-            this.getApiList()
+            this.props.triggerNextStep({
+              trigger: WebChatId.requirement.search,
+              value: {
+                pageNo: this.pageNo
+              }
+            })
           }}
         >
           换一批
@@ -183,7 +206,7 @@ class Search extends Component {
   }
 }
 
-class UISearch extends Component {
+export class ApiListTest extends Component {
   render() {
     const apiList = [
       {
@@ -303,7 +326,7 @@ class UISearch extends Component {
             />
           ))}
         </ScrollView>
-        <Button style={{ width: 100, margin: 10, borderRadius: 20 }}>
+        <Button style={{width: 100, margin: 10, borderRadius: 20}}>
           换一批
         </Button>
       </View>
@@ -313,6 +336,4 @@ class UISearch extends Component {
   }
 }
 
-export { UISearch }
-export default Search
 //  <View style={{display: "flex", flexDirection:"row", overflowX: "scroll",}}>

@@ -26,13 +26,22 @@ class Account extends Component {
     this.props.dispatch(createAction('app/logout')())
   }
   render() {
-    // const { username } = this.props
+    const { username, login } = this.props
     return (
       <View>
         <List>
-          <Item arrow="horizontal" onClick={() => {}}>
-            Super user
-          </Item>
+          {
+            login&&<Item arrow="horizontal" onClick={() => {}}>
+              {username}
+            </Item>
+          }
+
+          {
+            !login&&<Item arrow="horizontal" onClick={this.gotoLogin}>
+              登录
+            </Item>
+          }
+
 
           <Item arrow="horizontal" onClick={() => {}}>
             检查更新
@@ -42,13 +51,18 @@ class Account extends Component {
             用户帮助
           </Item>
           <View style={{ height: 50 }} />
-          <Item
-            style={styles.logout}
-            // arrow="horizontal"
-            onClick={this.logout}
-          >
-            <Text style={styles.logout_text}>退出登录</Text>
-          </Item>
+
+
+          {
+            login&&<Item
+              style={styles.logout}
+              // arrow="horizontal"
+              onClick={this.logout}
+            >
+              <Text style={styles.logout_text}>退出登录</Text>
+            </Item>
+          }
+
         </List>
 
         <List />

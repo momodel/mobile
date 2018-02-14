@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
-import { WebChatId } from './WebChat'
+import {WebChatId, optionStep} from './WebChat'
+import {getIntent} from "../../services/chat"
 
 export default class Intent extends Component {
   constructor(props) {
@@ -9,25 +10,35 @@ export default class Intent extends Component {
     this.state = {
       apiList: null,
       displayText: null,
-      // result: false
     }
   }
 
   componentWillMount() {
     console.log('intent')
-    const { steps } = this.props
+    const {steps} = this.props
     const keyWord = steps[WebChatId.message.input].value
-
     // 将关键字发往后端，得到反馈
-
-    if (keyWord === '使用平台服务') {
-      // 意图识别后前往其他页面
-      console.log('keyWord', keyWord)
-      this.props.triggerNextStep({ trigger: WebChatId.requirement.text })
-    } else {
-      // 无法识别
-      this.props.triggerNextStep({ trigger: WebChatId.requirement.hello })
-    }
+    const result = getIntent({
+      content: keyWord,
+      IntentList: optionStep.options,
+      onSuccess: (res) => {
+        const {type, message, trigger} = res.response
+        console.log("res", res)
+        if(type==="tuling"){
+          // 调用图灵机器人回答
+          this.props.triggerNextStep({trigger: "custom_message", value: message})
+        }
+        if(type === 'intent'){
+          // 跳转对应功能
+          console.log("this.props", this.props)
+          this.props.triggerNextStep({trigger: trigger})
+        }
+      },
+      onError: res => {
+        this.props.triggerNextStep({trigger: "custom_message", value: "网络出错了"})
+        console.log('res2', res)
+      }
+    })
   }
 
   render() {

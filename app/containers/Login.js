@@ -36,15 +36,15 @@ class LoginPage extends Component {
   }
 
   onLogin = () => {
-    if (this.props.username === '' || this.props.password === '') {
+    if (this.state.username === '' || this.state.password === '') {
       Alert.alert('警告', '请输入用户名和密码', [{ text: '确定' }])
       return
     }
 
     this.props.dispatch(
       createAction('app/login')({
-        username: this.props.username,
-        password: this.props.password,
+        username: this.state.username,
+        password: this.state.password,
       })
     )
   }
@@ -176,7 +176,7 @@ class Login extends Component {
             text="游客登录"
             onPress={this.onGotoMain}
           >
-            <Text>游客登录</Text>
+            <Text>close</Text>
           </Touchable>
         )}
       </View>

@@ -28,13 +28,14 @@ function pagination(pageNo, pageSize, array) {
  * @returns {Promise.<Object>} 用户意图
  */
 const getIntent = async payload => {
-  return request(`${prefix}/intent?content=${payload.keyword}`, {
+  const {content, IntentList, callback, onSuccess, onError} = payload
+  return customRequest(`${prefix}/intent`, {
     method: 'post',
     body: {
       content: payload.content,
       intent_list: payload.IntentList,
     },
-  })
+  }, callback, onSuccess, onError)
 }
 
 /**
@@ -87,4 +88,4 @@ const apiPredict = async ({ input, apiId }) => {
   })
 }
 
-export { getApiList }
+export { getApiList, getIntent }

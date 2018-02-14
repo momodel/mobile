@@ -10,18 +10,19 @@
  *
  */
 
-import React, { Component } from 'react'
-import { ThemeProvider } from 'styled-components'
+import React, {Component} from 'react'
+import {ThemeProvider} from 'styled-components'
 
 import ChatBot from '../../package/react-native-chatbot/lib/ChatBot'
 
-import Search, { UISearch } from './ApiList'
+import ApiList, {ApiListTest} from './ApiList'
 import Intent from './Intent'
 // import {ShowApiDetail, UIShowApiDetail} from './ShowApiDetail'
 import Result from './Result'
 import Asking from './Asking'
+import CreateUserRequest from './CreateUserRequest'
 // import {} from '../../constants'
-import { themeColor } from '../../utils/theme'
+import {themeColor} from '../../utils/theme'
 // 把 props 放到component will mount 的state里可以只在第一次触发的时候出现内容，之后更改props，块可以不刷新
 
 const theme = {
@@ -72,14 +73,52 @@ export const WebChatId = {
   failed: {
     requirement_failed_select: 'requirement_failed_select',
     not_opened: '服务暂未开放',
+    can_not_recognize: "无法识别",
   },
 }
+
+export const optionStep = {
+  id: WebChatId.functionSelect.select,
+  options: [
+    {
+      value: 1,
+      label: '使用平台服务',
+      trigger: WebChatId.requirement.text,
+      borderColor: 'yellow',
+    },
+    {
+      value: 2,
+      label: '发布需求',
+      trigger: "createUserRequest", // WebChatId.asking.text,
+      borderColor: 'yellow',
+    },
+    {
+      value: 3,
+      label: '我的收藏',
+      trigger: WebChatId.failed.not_opened,
+      borderColor: 'white',
+    },
+    {
+      value: 4,
+      label: '夫妻脸',
+      trigger: WebChatId.failed.not_opened,
+      borderColor: 'white',
+    },
+    {
+      value: 5,
+      label: '购物推荐',
+      trigger: WebChatId.failed.not_opened,
+      borderColor: 'white',
+    },
+  ],
+}
+
 
 const uiSteps = [
   // api_list
   {
     id: 'search',
-    component: <Search />,
+    component: <ApiListTest/>,
     waitAction: true,
     // trigger: 'show_api_detail',
     // asMessage: true
@@ -129,9 +168,14 @@ function finalSteps() {
 
     {
       id: WebChatId.message.intent,
-      component: <Intent />,
+      component: <Intent/>,
       waitAction: true,
-      asMessage: true,
+    },
+
+    {
+      id: "custom_message",
+      message: ({previousValue}) => `${previousValue}`,
+      trigger: WebChatId.message.hello,
     },
 
     /*********** 分割线  **********/
@@ -194,7 +238,7 @@ function finalSteps() {
     {
       // display api list or go to asking (api list)
       id: WebChatId.requirement.search,
-      component: <Search />,
+      component: <ApiList/>,
       waitAction: true,
       // asMessage: true,
     },
@@ -222,37 +266,43 @@ function finalSteps() {
   //
   const asking = [
     {
-      id: WebChatId.asking.text,
-      message: '请输入你的问题？',
-      trigger: WebChatId.asking.input,
+      id: "createUserRequest",
+      component: <CreateUserRequest/>,
     },
 
-    {
-      id: WebChatId.asking.input,
-      user: true,
-      trigger: WebChatId.asking.api,
-      validator: value => {
-        if (value.trim() === '') {
-          return '输入不能为空'
-        }
-        return true
-      },
-    },
-
-    {
-      // 使用提问api
-      id: WebChatId.asking.api,
-      component: <Asking />,
-      waitAction: true,
-      trigger: WebChatId.functionSelect.text,
-      asMessage: true,
-    },
+    //
+    // {
+    //   id: WebChatId.asking.text,
+    //   message: '请输入你的问题？',
+    //   trigger: WebChatId.asking.input,
+    // },
+    //
+    // {
+    //   id: WebChatId.asking.input,
+    //   user: true,
+    //   trigger: WebChatId.asking.api,
+    //   validator: value => {
+    //     if (value.trim() === '') {
+    //       return '输入不能为空'
+    //     }
+    //     return true
+    //   },
+    // },
+    //
+    // {
+    //   // 使用提问api
+    //   id: WebChatId.asking.api,
+    //   component: <Asking/>,
+    //   waitAction: true,
+    //   trigger: WebChatId.functionSelect.text,
+    //   asMessage: true,
+    // },
   ]
 
   return [
     ...start,
     ...requirement,
-    // ...asking
+    ...asking
   ]
 }
 

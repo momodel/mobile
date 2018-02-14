@@ -11,9 +11,28 @@ import {
 } from 'react-native'
 import { InputItem, Button, List } from 'antd-mobile'
 import Global from '../Global'
+import { createAction, NavigationActions } from '../utils'
 
 // @connect(({ app }) => ({ ...app }))
 export default class Forget extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      phoneNumber: ""
+    }
+  }
+
+  goToReset = () => {
+    // 发送验证码
+    this.props.dispatch({
+      type: 'auth/getVerificationCode',
+      payload: {
+        phone: this.state.phoneNumber
+      }
+    })
+    // this.props.dispatch(NavigationActions.navigate({ routeName: 'ResetPassword' }))
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -36,7 +55,7 @@ export default class Forget extends Component {
 
           <Button
             style={styles.btn}
-            // onClick={this.onLogin}
+            onClick={this.goToReset}
           >
             <Text style={{ color: 'white' }}>获取验证码</Text>
           </Button>
