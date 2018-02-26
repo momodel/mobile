@@ -19,15 +19,25 @@ import Forget from './containers/Forget'
 import ApiDetail from './containers/ApiDetail'
 import Predict from './containers/Predict'
 
+import {ApiDetailUI} from './containers/ApiDetail'
+
 const HomeNavigator = TabNavigator(
   {
     Home: {
-      screen: Home,
+      screen: Predict,
       navigationOptions: {
         tabBarVisible: false,
       },
     },
   },
+  // {
+  //   Home: {
+  //     screen: Home,
+  //     navigationOptions: {
+  //       tabBarVisible: false,
+  //     },
+  //   },
+  // },
   {
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',

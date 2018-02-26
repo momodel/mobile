@@ -65,7 +65,7 @@ export const register = async payload => {
 
 export const favorApi = async payload => {
   return request(`${prefix}/favor_api`, {
-    method: 'post',
+    method: 'put',
     body: {
       user_ID: payload.user_ID,
       api_id: payload.api_id,
@@ -75,7 +75,7 @@ export const favorApi = async payload => {
 
 export const starApi = async payload => {
   return request(`${prefix}/star_api`, {
-    method: 'post',
+    method: 'put',
     body: {
       user_ID: payload.user_ID,
       api_id: payload.api_id,

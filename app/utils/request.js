@@ -5,7 +5,7 @@ import { Storage } from '../utils'
 import { URL } from '../Global'
 
 function checkStatus(response) {
-  // console.log("AAA - ", response)
+  console.log("response ", response)
 
   if (response.status >= 200 && response.status < 300) {
     return response
@@ -39,7 +39,8 @@ export default async function request(url, options) {
     credentials: 'include',
   }
   const newOptions = { ...defaultOptions, ...options }
-  if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
+  if (newOptions.method === 'POST' || newOptions.method === 'PUT'||
+    newOptions.method === 'post' || newOptions.method === 'put') {
     newOptions.headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
@@ -57,8 +58,8 @@ export default async function request(url, options) {
     ...newOptions.headers,
   }
 
-  // console.log('newUrl, newOptions')
-  // console.log(newUrl, newOptions)
+  console.log('newUrl, newOptions')
+  console.log(newUrl, newOptions)
 
   return fetch(newUrl, newOptions)
     .then(checkStatus)

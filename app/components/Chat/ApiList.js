@@ -139,7 +139,9 @@ export default class ApiList extends Component {
     const {apiList, displayText} = this.state
     return apiList ? (
       <View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
+                    keyboardShouldPersistTaps="always"
+        >
           {apiList.map(api => (
             <CustomCard
               key={api._id}
@@ -314,7 +316,8 @@ export class ApiListTest extends Component {
 
     return apiList ? (
       <View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
+                    keyboardShouldPersistTaps="always">
           {apiList.map(api => (
             <CustomCard
               key={api._id}

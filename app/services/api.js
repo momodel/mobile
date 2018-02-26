@@ -3,9 +3,14 @@ import request, { customRequest } from '../utils/request'
 import { MOCK } from '../Global'
 import { apiList } from './mockData'
 
-const prefix = '/api'
+const prefix = '/apis'
 const defaultPageSize = 5
 const defaultPageNo = 1
+
+
+export const getApi = async payload => {
+  return await request(`${prefix}/${payload.api_id}`)
+}
 
 const getApiList = async (
   { keyword, pageNo = defaultPageNo, pageSize = defaultPageSize, user_ID },
@@ -57,7 +62,7 @@ const getFavorApiList = async (
   )
 }
 
-const runApi = async payload => {
+export const runApi = async payload => {
   return request(`${prefix}/run`, {
     method: 'post',
     body: {

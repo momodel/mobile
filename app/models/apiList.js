@@ -1,5 +1,5 @@
 import { createAction, NavigationActions, Storage } from '../utils'
-import * as authService from '../services/auth'
+// import * as authService from '../services/auth'
 
 export default {
   namespace: 'apiList',
