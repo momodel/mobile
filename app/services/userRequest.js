@@ -3,7 +3,7 @@ import request, { customRequest } from '../utils/request'
 import { MOCK } from '../Global'
 import { apiList } from './mockData'
 
-const prefix = '/user_request'
+const prefix = '/user_requests'
 
 
 // 新建 request
@@ -26,4 +26,8 @@ export function createNewUserRequest(payload) {
       request_dataset:payload.requestDataset,
     },
   }, callback, onSuccess, onError);
+}
+
+export const getRequest = (payload) => {
+  return request(`${prefix}/${payload.requestId}`)
 }

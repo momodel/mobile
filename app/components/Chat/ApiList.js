@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux'
 import {Button, Toast} from 'antd-mobile'
 import _ from 'lodash'
-import CustomCard from '../../components/Card'
+import {ApiCard} from '../../components/ApiCard'
 import {WebChatId} from './WebChat'
 
 import {getApiList} from '../../services/chat'
@@ -319,7 +319,7 @@ export class ApiListTest extends Component {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
                     keyboardShouldPersistTaps="always">
           {apiList.map(api => (
-            <CustomCard
+            <ApiCard
               key={api._id}
               title={api.name}
               description={api.description}

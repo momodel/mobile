@@ -349,7 +349,6 @@ const Cube = ({title, content, type = "icon"}) => {
     )
   }
 
-
 }
 
 const styles = StyleSheet.create({

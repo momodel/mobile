@@ -26,3 +26,7 @@ MIT
 https://github.com/wenkesj/react-native-voice#example
 https://github.com/CharlesMangwa/react-native-simple-markdown
 yarn add react-native-simple-markdown
+
+# issue
+每次npm install之后 styled-components 都会消失
+yarn add styled-compyarn global add react-devtoolsonents

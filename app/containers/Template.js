@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 @connect(({ app }) => ({ ...app }))
-class Account extends Component {
+export default class Account extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -24,4 +24,3 @@ const styles = StyleSheet.create({
     height: 32,
   },
 })
-export default Account

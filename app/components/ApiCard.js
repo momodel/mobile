@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 
-const CustomCard = ({ title, description, score, favor, onPress }) => (
+export const ApiCard = ({ title, description, score, favor, onPress }) => (
   <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
     <View style={styles.title}>
       <Text style={{ fontSize: 18 }}>{title}</Text>
@@ -22,21 +22,21 @@ const CustomCard = ({ title, description, score, favor, onPress }) => (
   </TouchableOpacity>
 )
 
-CustomCard.propTypes = {
+ApiCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   favor: PropTypes.number.isRequired,
   onPress: PropTypes.func,
 }
-CustomCard.defaultProps = {
+ApiCard.defaultProps = {
   title: '标题',
   description: '描述',
   score: 0,
   favor: 0,
 }
 
-export default CustomCard
+// export default CustomCard
 
 const styles = StyleSheet.create({
   cardContainer: {

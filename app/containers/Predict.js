@@ -44,7 +44,8 @@ export default class Predict extends Component {
   }
 
   render() {
-    const {input} = {
+    // Todo 结果可能不是文字，而是一个json, 最多2层 loop一下就好
+    const {input, api_response="结果"} = {
       "input": {
         "body": {
           "date_time": {
@@ -58,8 +59,6 @@ export default class Predict extends Component {
         }
       }
     }
-
-
 
 
     return (
@@ -104,6 +103,11 @@ export default class Predict extends Component {
           >
             提交
           </Button>
+        </View>
+        <View style={{justifyContent:"center", alignItems:"center"}}>
+          <Text>
+            {api_response}
+          </Text>
         </View>
 
       </View>

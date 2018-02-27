@@ -15,7 +15,10 @@ export default {
     // isStar: false,
     // upNum: 0,
     // startNum: 0,
-    favor_users: []
+    favor_users: [],
+
+    api_response: null,
+
   },
 
   reducers: {
@@ -76,7 +79,13 @@ export default {
         ...payload,
         user_ID
       })
-
+      console.log("result", result)
+      yield put({
+        type: 'updateState',
+        payload: {
+          api_response: result.response
+        }
+      })
     }
 
 

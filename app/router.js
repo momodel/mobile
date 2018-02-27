@@ -18,13 +18,16 @@ import Message from './containers/Message'
 import Forget from './containers/Forget'
 import ApiDetail from './containers/ApiDetail'
 import Predict from './containers/Predict'
+import Requests from './containers/Requests'
+import Request from './containers/Request'
+
 
 import {ApiDetailUI} from './containers/ApiDetail'
 
 const HomeNavigator = TabNavigator(
   {
     Home: {
-      screen: Predict,
+      screen: Request,
       navigationOptions: {
         tabBarVisible: false,
       },
@@ -55,6 +58,7 @@ const MainNavigator = StackNavigator(
 
     ApiDetail: { screen: ApiDetail },
     Predict: { screen: Predict },
+    Request: { screen: Request },
   },
   {
     headerMode: 'float',
