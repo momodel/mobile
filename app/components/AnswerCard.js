@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 import PropTypes from 'prop-types'
-
-export const CommentCard = ({username, content, datetime, onPressReply}) => (
+import {showTime} from "../utils"
+export const AnswerCard = ({username, content, datetime, comments, onPressReply}) => (
   <View style={styles.cardContainer}>
 
     <View
@@ -25,26 +25,38 @@ export const CommentCard = ({username, content, datetime, onPressReply}) => (
         <Text style={{fontSize: 15}}>{content}</Text>
       </View>
 
+      <View style={{height: 1, backgroundColor: "black"}}/>
+
+      {
+        comments.map(comment=>{
+          const {comments: commentText, comments_user_id, create_time, _id} = comment
+          return <Text key={_id}>
+            {commentText} - {comments_user_id}  at {showTime(create_time)}
+          </Text>
+        })
+      }
+
+
       <View style={styles.datetime}>
-        <Text style={{color: 'grey'}}>{datetime}</Text>
-        {/*<TouchableOpacity onPress={onPressReply} style={{marginLeft: 20}}>*/}
-          {/*<Text>*/}
-            {/*回复*/}
-          {/*</Text>*/}
-        {/*</TouchableOpacity>*/}
+        <Text style={{color: 'grey'}}>{showTime(datetime)}</Text>
+        <TouchableOpacity onPress={onPressReply} style={{marginLeft: 20}}>
+          <Text>
+            回复
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
 
   </View>
 )
 
-CommentCard.propTypes = {
+AnswerCard.propTypes = {
   username: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   datetime: PropTypes.string.isRequired,
   onPressReply: PropTypes.func,
 }
-CommentCard.defaultProps = {
+AnswerCard.defaultProps = {
   username: '用户名',
   content: '评论内容',
   datetime: 0,

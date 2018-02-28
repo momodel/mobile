@@ -110,6 +110,18 @@ export const optionStep = {
       trigger: WebChatId.failed.not_opened,
       borderColor: 'white',
     },
+
+
+    {
+      value: 6,
+      label: '我发布的需求',
+      // trigger: "createUserRequest", // WebChatId.asking.text,
+      borderColor: 'yellow',
+      route: "Requests"
+    },
+
+
+
   ],
 }
 

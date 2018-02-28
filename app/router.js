@@ -27,7 +27,7 @@ import {ApiDetailUI} from './containers/ApiDetail'
 const HomeNavigator = TabNavigator(
   {
     Home: {
-      screen: Request,
+      screen: Home,
       navigationOptions: {
         tabBarVisible: false,
       },
@@ -58,7 +58,17 @@ const MainNavigator = StackNavigator(
 
     ApiDetail: { screen: ApiDetail },
     Predict: { screen: Predict },
-    Request: { screen: Request },
+    Requests: {
+      screen: Requests,
+      navigationOptions: {
+        title: '我发布的需求',
+      },
+    },
+    Request: { screen: Request,
+      navigationOptions: {
+        title: '需求详情',
+      }
+    },
   },
   {
     headerMode: 'float',

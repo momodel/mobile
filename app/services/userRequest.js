@@ -31,3 +31,7 @@ export function createNewUserRequest(payload) {
 export const getRequest = (payload) => {
   return request(`${prefix}/${payload.requestId}`)
 }
+
+export const getRequests = (payload) => {
+  return request(`${prefix}?user_ID=${payload.user_ID}`)
+}

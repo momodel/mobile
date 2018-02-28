@@ -58,7 +58,7 @@ class LoginPage extends Component {
         <View style={styles.icon}>
           <Image
             style={{ height: 150, width: 150 }}
-            source={require('./../images/icon.png')}
+            source={require('./../images/icons/mo.png')}
           />
           <Text style={styles.title}>MO</Text>
         </View>

@@ -22,6 +22,10 @@ class Account extends Component {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'Login' }))
   }
 
+  gotoRequests = () => {
+    this.props.dispatch(NavigationActions.navigate({ routeName: 'Requests' }))
+  }
+
   logout = () => {
     this.props.dispatch(createAction('app/logout')())
   }
@@ -50,6 +54,13 @@ class Account extends Component {
           <Item arrow="horizontal" onClick={() => {}}>
             用户帮助
           </Item>
+
+          <View style={{ height: 50 }} />
+
+          <Item arrow="horizontal" onClick={this.gotoRequests}>
+            我发布的需求
+          </Item>
+
           <View style={{ height: 50 }} />
 
 

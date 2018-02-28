@@ -28,7 +28,7 @@ export const RequestCard = ({title, datetime, commitNum, answerNum, favorNum, on
 RequestCard.propTypes = {
   title: PropTypes.string.isRequired,
   datetime: PropTypes.string.isRequired,
-  commitNum: PropTypes.number.isRequired,
+  commitNum: PropTypes.string.isRequired,
   answerNum: PropTypes.number.isRequired,
   favorNum: PropTypes.number.isRequired,
   onPress: PropTypes.func,

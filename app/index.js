@@ -9,12 +9,13 @@ import routerModel from './models/router'
 import apiModel from './models/api'
 import apiListModel from './models/apiList'
 import requestModel from './models/request'
+import requestsModel from './models/requests'
 
 
 
 const app = dva({
   initialState: {},
-  models: [appModel, routerModel, apiModel, apiListModel, requestModel],
+  models: [appModel, routerModel, apiModel, apiListModel, requestModel, requestsModel],
   onError(e) {
     console.log('onError', e)
   },

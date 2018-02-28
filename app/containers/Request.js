@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, ScrollView} from 'react-native'
+import {StyleSheet, View, Image, Text, ScrollView, TouchableOpacity} from 'react-native'
 import {InputItem, List, Tabs} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {CommentCard} from "../components/CommentCard"
+import {AnswerCard} from "../components/AnswerCard"
 
 const tabs = [
   {title: "回答"},
@@ -12,10 +13,19 @@ const tabs = [
 
 @connect(({request}) => ({...request}))
 export default class Request extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      comment: null,
+
+      showReplyTextSend: false,
+      focusAnswerId: null
+    }
+  }
 
   componentDidMount() {
-    const requestId = "5a91266739b6bd4e0cc199d2" //this.props.navigation.state.params.request._id
-
+    // const requestId = "5a91266739b6bd4e0cc199d2" //
+    const requestId = this.props.navigation.state.params.request._id
     // 通过id 重新获取 request
     this.props.dispatch({
       type: 'request/getRequest',
@@ -43,49 +53,11 @@ export default class Request extends Component {
       <View style={{
         flex: 1 // 不加 List 和 Tabs 冲突
       }}>
-        <List style={{
-          marginTop: 10
-        }}>
-          <InputItem
-            type="text"
-            disabled
-            editable={false}
-            value={title}
-          >
-            名称
-          </InputItem>
 
-          <InputItem
-            type="text"
-            disabled
-            editable={false}
-            value={description}
-          >
-            描述
-          </InputItem>
-
-          <InputItem
-            type="text"
-            disabled
-            editable={false}
-            value={input}
-          >
-            输入
-          </InputItem>
-
-          <InputItem
-            type="text"
-            disabled
-            editable={false}
-            value={output}
-          >
-            输出
-          </InputItem>
-        </List>
-
+        <RequestInfo {...{title, description, input, output}}/>
 
         <Tabs tabs={tabs}
-              initialPage={1}
+              initialPage={0}
           // onChange={(tab, index) => {
           //   console.log('onChange', index, tab)
           // }}
@@ -96,84 +68,194 @@ export default class Request extends Component {
                 marginTop: 10
               }}
         >
-          <View style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 150,
-            backgroundColor: '#fff'
-          }}>
-            <Text>
-              11
-            </Text>
-          </View>
-
 
           <View style={{
-            // display: 'flex',
-            // alignItems: 'center',
-            // justifyContent: 'center',
-            // flex: 1
-            // height: 150,
-            // backgroundColor: '#fff'
+            flex: 1
           }}>
-            <ScrollView>
-              {comments.map((comment) => {
-                const {
-                  comments, comments_type, comments_user_id, create_time,
-                  reply_number, _id
-                } = comment
-                return <CommentCard
-                  key={_id}
-                  username={comments_user_id}
-                  content={comments}
-                  datetime={create_time}
-                />
-              })}
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              keyboardShouldPersistTaps="always"
+              onScroll={() => {
+                this.setState({showReplyTextSend: false})
+              }}
+            >
+              {
+
+                answers.map(answerObj => {
+                  console.log("answerObj", answerObj)
+                  const {
+                    _id, answer, answer_user_id, comment, create_time, votes_up_user
+                  } = answerObj
+                  return <AnswerCard
+                    key={_id}
+                    username={answer_user_id}
+                    content={answer}
+                    datetime={create_time}
+                    comments={comment}
+                    onPressReply={() => this.setState({showReplyTextSend: true, focusAnswerId: _id})}
+                  />
+                })
+              }
             </ScrollView>
-            <View style={{flexDirection: "row"}}>
-              <List style={{flex: 1}}>
-                <InputItem
-                  type="text"
-                  placeholder="输入评论"
-                  ref={el => this.autoFocusInst = el}
-                />
-              </List>
-              <View style={{
-                width: 40,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "white"
-              }}>
-              <Image
-                style={{
-                  height: 30, width: 30,
-                  // justifyContent: "center",
-                  // alignItems: "center",
-                  // backgroundColor: "white"
-                }}
-                source={require('./../images/icons/message.png')}
-              />
-              </View>
-            </View>
+            {
+              this.state.showReplyTextSend ?
+                <TextSend
+                  onChangeCommentText={value => {
+                    this.setState({
+                      comment: value,
+                    })
+                  }}
+                  onPressSend={() => {
+                    this.props.dispatch({
+                      type: "request/sendAnswerComment",
+                      payload: {
+                        comments: this.state.comment,
+                        request_answer_id: this.state.focusAnswerId
+                      }
+                    })
+                    this.setState({
+                      comment: "",
+                      showReplyTextSend: false
+                    })
+                  }}
+                  commentText={this.state.comment}/> : null
+            }
 
           </View>
-          <View style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 150,
-            backgroundColor: '#fff'
-          }}>
-            <Text>
-              Content of first tab
-            </Text>
-          </View>
+
+          <Comments
+            {...{comments}}
+            onChangeCommentText={value => {
+              this.setState({
+                comment: value,
+              })
+            }}
+            onPressSend={() => {
+              this.props.dispatch({
+                type: "request/sendComment",
+                payload: {
+                  comments: this.state.comment,
+
+                }
+              })
+              this.setState({
+                comment: ""
+              })
+            }}
+            commentText={this.state.comment}
+          />
+
         </Tabs>
 
       </View>
     )
   }
+}
+
+const Comments = ({comments, onChangeCommentText, onPressSend, commentText}) => {
+  return (
+    <View style={{flex: 1}}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
+      >
+        {comments.map((comment) => {
+          const {
+            comments, comments_type, comments_user_id, create_time,
+            reply_number, _id
+          } = comment
+          return <CommentCard
+            key={_id}
+            username={comments_user_id}
+            content={comments}
+            datetime={create_time}
+          />
+        })}
+      </ScrollView>
+
+      <TextSend {...{onChangeCommentText, onPressSend, commentText}}/>
+    </View>
+  )
+}
+
+const TextSend = ({onChangeCommentText, commentText, onPressSend}) => {
+  return <View style={{flexDirection: "row"}}>
+    <List style={{flex: 1}}>
+      <InputItem
+        type="text"
+        placeholder="输入评论"
+        onChange={onChangeCommentText}
+        value={commentText}
+        // ref={el => this.autoFocusInst = el}
+      />
+    </List>
+
+    <View
+      style={{
+        width: 40,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "white"
+      }}
+      keyboardShouldPersistTaps="always"
+    >
+      <TouchableOpacity
+        onPress={onPressSend}
+      >
+        <Image
+          style={{
+            height: 30, width: 30,
+            // justifyContent: "center",
+            // alignItems: "center",
+            // backgroundColor: "white"
+          }}
+          source={require('./../images/icons/message.png')}
+        />
+      </TouchableOpacity>
+    </View>
+  </View>
+}
+
+const RequestInfo = ({title, description, input, output}) => {
+  return <List style={{
+    marginTop: 10
+  }}>
+    <InputItem
+      type="text"
+      disabled
+      editable={false}
+      value={title}
+    >
+      名称
+    </InputItem>
+
+    <InputItem
+      type="text"
+      disabled
+      editable={false}
+      value={description}
+    >
+      描述
+    </InputItem>
+
+    <InputItem
+      type="text"
+      disabled
+      editable={false}
+      value={input}
+    >
+      输入
+    </InputItem>
+
+    <InputItem
+      type="text"
+      disabled
+      editable={false}
+      value={output}
+    >
+      输出
+    </InputItem>
+  </List>
 }
 
 const styles = StyleSheet.create({
