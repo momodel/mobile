@@ -92,12 +92,22 @@ export const optionStep = {
       trigger: "createUserRequest", // WebChatId.asking.text,
       borderColor: 'yellow',
     },
+
+    {
+      value: 6,
+      label: '我发布的需求',
+      // trigger: "createUserRequest", // WebChatId.asking.text,
+      borderColor: 'yellow',
+      route: "Requests"
+    },
+
     {
       value: 3,
-      label: '我的收藏',
-      trigger: WebChatId.failed.not_opened,
+      label: '我收藏的服务',
+      trigger: "favor_api_list",
       borderColor: 'white',
     },
+
     {
       value: 4,
       label: '夫妻脸',
@@ -112,13 +122,7 @@ export const optionStep = {
     },
 
 
-    {
-      value: 6,
-      label: '我发布的需求',
-      // trigger: "createUserRequest", // WebChatId.asking.text,
-      borderColor: 'yellow',
-      route: "Requests"
-    },
+
 
 
 
@@ -239,7 +243,7 @@ function finalSteps() {
     {
       id: WebChatId.requirement.input,
       user: true,
-      trigger: WebChatId.message.apiList,
+      trigger: WebChatId.requirement.search, //WebChatId.message.apiList,
       validator: value => {
         if (value.trim() === '') {
           return '输入不能为空'
@@ -250,7 +254,15 @@ function finalSteps() {
     {
       // display api list or go to asking (api list)
       id: WebChatId.requirement.search,
-      component: <ApiList/>,
+      component: <ApiList get_type="chat"/>,
+      waitAction: true,
+      // asMessage: true,
+    },
+
+    {
+      // display api list or go to asking (api list)
+      id: "favor_api_list",
+      component: <ApiList get_type="favor"/>,
       waitAction: true,
       // asMessage: true,
     },

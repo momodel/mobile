@@ -50,7 +50,7 @@ const getIntent = async payload => {
 //   content=${keyword}&page_no=${pageNo}&page_size=${pageSize}`)
 // }
 const getApiList = async (
-  { keyword, pageNo = defaultPageNo, pageSize = defaultPageSize },
+  { keyword, pageNo = defaultPageNo, pageSize = defaultPageSize, get_type, user_ID },
   callback,
   onSuccess,
   onError
@@ -61,8 +61,8 @@ const getApiList = async (
     return apiList_1
   }
   return await customRequest(
-    `${prefix}/et_matched_apis?
-  content=${keyword}&page_no=${pageNo}&page_size=${pageSize}`,
+    `${prefix}/get_matched_apis?
+  content=${keyword}&page_no=${pageNo}&page_size=${pageSize}&get_type=${get_type}&user_ID=${user_ID}`,
     {},
     callback,
     onSuccess,

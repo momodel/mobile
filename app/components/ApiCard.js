@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native'
 import PropTypes from 'prop-types'
 
 export const ApiCard = ({ title, description, score, favor, onPress }) => (
@@ -21,6 +21,25 @@ export const ApiCard = ({ title, description, score, favor, onPress }) => (
     </View>
   </TouchableOpacity>
 )
+export const NoMoreCard = ({onPress}) => <IconCard
+  imgSource={require("../images/icons/message.png")}
+  text="没有更多了"
+  onPress={onPress}
+/>
+
+export const MoreCard = ({onPress}) => <IconCard
+  imgSource={require("../images/icons/user.png")}
+  text="再看看"
+  onPress={onPress}
+/>
+
+export const IconCard = ({imgSource, text, onPress}) =>
+  <TouchableOpacity style={[styles.cardContainer, {justifyContent: "center"}]} onPress={onPress}>
+    <Image style={{width: 50, height:50}} source={imgSource}/>
+    <View style={styles.title}>
+      <Text style={{ fontSize: 18 }}>{text}</Text>
+    </View>
+  </TouchableOpacity>
 
 ApiCard.propTypes = {
   title: PropTypes.string.isRequired,
@@ -54,6 +73,8 @@ const styles = StyleSheet.create({
     shadowOffset: { h: 2, w: 2 },
     shadowRadius: 8,
     shadowOpacity: 0.5,
+    minWidth: 150,
+    maxWidth: 300,
   },
   title: {
     alignItems: 'center',

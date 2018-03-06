@@ -54,7 +54,7 @@ export default async function request(url, options) {
 
   newOptions.headers = {
     // 添加 token
-    Authorization: token,
+    Authorization: "Bearer " + token,
     ...newOptions.headers,
   }
 
@@ -139,7 +139,7 @@ export async function customRequest(
 
   newOptions.headers = {
     // 添加 token
-    Authorization: token,
+    Authorization: "Bearer " + token,
     ...newOptions.headers,
   }
 

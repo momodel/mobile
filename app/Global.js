@@ -8,7 +8,7 @@ const Global = {
 
   // URL1: 'http://122.224.116.44:8899',
   URL: 'http://localhost:5000',
-  MOCK: true,
+  MOCK: false,
   // production (demo)
   // URL: "http://10.52.22.196:3080",
 

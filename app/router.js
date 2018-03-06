@@ -16,13 +16,13 @@ import Account from './containers/Account'
 import Register from './containers/Register'
 import Message from './containers/Message'
 import Forget from './containers/Forget'
-import ApiDetail from './containers/ApiDetail'
+import ApiDetail, {ApiDetailUI} from './containers/ApiDetail'
 import Predict from './containers/Predict'
 import Requests from './containers/Requests'
 import Request from './containers/Request'
 
 
-import {ApiDetailUI} from './containers/ApiDetail'
+// import {ApiDetailUI} from './containers/ApiDetail'
 
 const HomeNavigator = TabNavigator(
   {
@@ -56,7 +56,11 @@ const MainNavigator = StackNavigator(
     Message: { screen: Message },
     Account: { screen: Account },
 
-    ApiDetail: { screen: ApiDetail },
+    ApiDetail: { screen: ApiDetail,
+      navigationOptions: {
+        title: '应用详情',
+      },
+    },
     Predict: { screen: Predict },
     Requests: {
       screen: Requests,

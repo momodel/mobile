@@ -16,6 +16,10 @@ export default {
     // upNum: 0,
     // startNum: 0,
     favor_users: [],
+    tags: [],
+    input_type: [],
+    output_type: [],
+    category: [],
 
     api_response: null,
 
@@ -52,12 +56,11 @@ export default {
 
 
     * favorApi({payload}, {call, put, select}) {
-      const user_ID = yield select(state => state.app.username)
+      // const user_ID = yield select(state => state.app.username)
       const result = yield call(userService.favorApi, {
         ...payload,
-        user_ID
+        // user_ID
       })
-      console.log("result", result)
 
       yield put({
         type: 'updateState',

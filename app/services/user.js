@@ -1,5 +1,6 @@
-import request from '../utils/request'
+import request, {customRequest} from '../utils/request'
 const prefix = '/user'
+import {formatParam} from '../utils'
 
 // 当加入推送后 更改login
 export const login = async payload => {
@@ -64,14 +65,29 @@ export const register = async payload => {
 }
 
 export const favorApi = async payload => {
-  return request(`${prefix}/favor_api`, {
+  return request(`${prefix}/favor_app/${payload.api_id}`, {
     method: 'put',
-    body: {
-      user_ID: payload.user_ID,
-      api_id: payload.api_id,
-    },
+    // body: {
+    //   user_ID: payload.user_ID,
+    //   api_id: payload.api_id,
+    // },
   })
 }
+
+export const getfavorApps = async (payload, callback, onSuccess, onError) => {
+  // return request(`${prefix}/favor_apps`, {
+  //   method: 'get',
+  // })
+  const {pageNo: page_no, pageSize: page_size} = payload
+  return await customRequest(
+    `${prefix}/favor_apps?${formatParam({page_no, page_size})}`,
+    {},
+    callback,
+    onSuccess,
+    onError
+  )
+}
+
 
 export const starApi = async payload => {
   return request(`${prefix}/star_api`, {

@@ -9,10 +9,12 @@ import {
 import {connect} from 'react-redux'
 import {Button, Toast} from 'antd-mobile'
 import _ from 'lodash'
-import {ApiCard} from '../../components/ApiCard'
+import {ApiCard, NoMoreCard, MoreCard} from '../../components/ApiCard'
 import {WebChatId} from './WebChat'
 
-import {getApiList} from '../../services/chat'
+import {getApiList} from '../../services/api'
+import {getfavorApps} from '../../services/user'
+
 import {NavigationActions} from '../../utils'
 
 
@@ -28,67 +30,35 @@ export default class ApiList extends Component {
       apiList: null,
       displayText: null,
       // result: false
+      hasMore: false,
+      showButton: true
     }
   }
 
-  // temp() {
-  //   fetch(`http://localhost:5000/chat/get_matched_apis?content=${keyWord}`, {
-  //     method: 'GET',
-  //   })
-  //     .then(response => response.json())
-  //     .then(({ response }) => {
-  //       console.log('response', response)
-  //       if (response.status) {
-  //         // 匹配成功
-  //         this.setState({
-  //           apiList: response['api_list'],
-  //           // displayText: "匹配成功"
-  //         })
-  //       } else {
-  //         // 匹配失败
-  //         this.setState(
-  //           {
-  //             displayText: '对不起，你的需求未匹配到任何服务',
-  //           },
-  //           () =>
-  //             this.props.triggerNextStep({
-  //               trigger: WebChatId.failed.requirement_failed_select,
-  //             })
-  //         )
-  //       }
-  //     })
-  //     .catch(() => {
-  //       console.log('error')
-  //       // 网络出错，重新输入
-  //       this.setState(
-  //         {
-  //           displayText: '请求出错了，请重新尝试输入',
-  //         },
-  //         () =>
-  //           this.props.triggerNextStep({ trigger: WebChatId.requirement.input })
-  //       )
-  //     })
-  // }
-
   componentWillMount() {
-    console.log("this.props", this.props)
+    const {steps, get_type} = this.props
+
+    // 如果上一步是apilist, 则获取其页码
     let pageNo = _.get(this.props, "[previousStep][value][pageNo]", null)
-    if(pageNo){
+    if (pageNo) {
       this.pageNo = this.props.previousStep.value.pageNo
     }
-    console.log("this.pageNo", this.pageNo)
-    // if("pageNo" in this.props.previousStep.value){
-    //   this.pageNo = this.props.previousStep.value.pageNo
-    // }
-    // 如果上一步是apilist, 则获取其页码
-    // const {pr}
-    console.log('search')
-    const {steps} = this.props
-    this.keyWord = steps[WebChatId.requirement.input].value
+
+    if (get_type === "chat") {
+      this.keyWord = steps[WebChatId.requirement.input].value
+    }
+    else if (get_type === "favor") {
+
+    }
+
     // this.keyWord = keyWord
     const result = this.getApiList()
+
     this.props.triggerNextStep({
       trigger: WebChatId.message.input,
+      value: {
+        pageNo: this.pageNo + 1
+      }
     })
     // 方式2, 接收promise
     // getApiList({keyword: keyWord})
@@ -97,42 +67,108 @@ export default class ApiList extends Component {
   }
 
   getApiList() {
-    const result = getApiList(
-      {keyword: this.keyWord, pageNo: this.pageNo},
-      res => {
-        console.log('res', res)
-      },
-      // 成功回调
-      res => {
-        if (res.length !== 0) {
+    // 根据get_type 判断调用那个api
+    if(this.props.get_type==="chat"){
+      const result = getApiList(
+        {keyword: this.keyWord, pageNo: this.pageNo},
+        res => {
+          console.log('res', res)
+        },
+        // 成功回调
+        res => {
+          const {objects, count, page_no, page_size} = res.response
+
+          if (res.message) {
+            this.setState({
+              displayText: res.message
+            })
+            Toast.fail(res.message)
+          }
+          else {
+            if (res.response.length !== 0) {
+              this.setState(
+                {
+                  apiList: res.response.objects,
+                  hasMore: count>=page_no*page_size
+                },
+                // () => {
+                //   this.pageNo += 1
+                // }
+              )
+            } else {
+              this.setState({
+                displayText: "没有更多了"
+              })
+              Toast.fail('没有更多了')
+            }
+          }
+
+        },
+        // 失败回调
+        res => {
           this.setState(
             {
-              apiList: res,
+              displayText: '对不起，你的需求未匹配到任何服务',
             },
-            () => {
-              this.pageNo += 1
-            }
+            () =>
+              this.props.triggerNextStep({
+                trigger: WebChatId.failed.requirement_failed_select,
+              })
           )
-        } else {
-          this.setState({
-            displayText: "没有更多了"
-          })
-          Toast.fail('没有更多了')
         }
-      },
-      // 失败回调
-      res => {
-        this.setState(
-          {
-            displayText: '对不起，你的需求未匹配到任何服务',
-          },
-          () =>
-            this.props.triggerNextStep({
-              trigger: WebChatId.failed.requirement_failed_select,
+      )
+    }
+    else{
+      const result = getfavorApps(
+        {pageNo: this.pageNo},
+        res => {
+          console.log('res', res)
+        },
+        // 成功回调
+        res => {
+          const {objects, count, page_no, page_size} = res.response
+
+          if (res.message) {
+            this.setState({
+              displayText: res.message
             })
-        )
-      }
-    )
+            Toast.fail(res.message)
+          }
+          else {
+            if (res.response.objects.length !== 0) {
+              this.setState(
+                {
+                  apiList: res.response.objects,
+                  hasMore: count>=page_no*page_size
+                },
+                // () => {
+                //   this.pageNo += 1
+                // }
+              )
+            } else {
+              this.setState({
+                displayText: "没有更多了"
+              })
+              Toast.fail('没有更多了')
+            }
+          }
+
+        },
+        // 失败回调
+        res => {
+          this.setState(
+            {
+              displayText: '对不起，你的需求未匹配到任何服务',
+            },
+            () =>
+              this.props.triggerNextStep({
+                trigger: WebChatId.failed.requirement_failed_select,
+              })
+          )
+        }
+      )
+    }
+
   }
 
   render() {
@@ -142,69 +178,64 @@ export default class ApiList extends Component {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
                     keyboardShouldPersistTaps="always"
         >
-          {apiList.map(api => (
-            <CustomCard
-              key={api._id}
-              title={api.name}
-              description={api.description}
-              score={api.score}
-              favor={0}
-              onPress={() =>
-                this.props.dispatch(
-                  NavigationActions.navigate({
-                    routeName: 'ApiDetail',
-                    params: {api},
-                  })
-                )
-              }
-            />
-          ))}
+          {apiList.map(api => {
+              const {favor_users} = api
+              const favor_num = favor_users.length
+              return <ApiCard
+                key={api._id}
+                title={api.name}
+                description={api.description}
+                score={api.score}
+                favor={favor_num}
+                onPress={() =>
+                  this.props.dispatch(
+                    NavigationActions.navigate({
+                      routeName: 'ApiDetail',
+                      params: {api},
+                    })
+                  )
+                }
+              />
+            }
+          )}
+          {
+            this.state.hasMore?(this.state.showButton && <MoreCard onPress={() => {
+                // 判断 get_type 确定去哪
+                this.props.triggerNextStep({
+                  trigger: this.props.get_type === "chat" ? WebChatId.requirement.search : "favor_api_list",
+                  value: {
+                    pageNo: this.pageNo
+                  }
+                })
+
+                this.setState({showButton: false})
+              }}/>):
+              <NoMoreCard/>
+          }
+
         </ScrollView>
-        <Button
-          style={{width: 100, margin: 10, borderRadius: 20}}
-          onClick={() => {
-            this.props.triggerNextStep({
-              trigger: WebChatId.requirement.search,
-              value: {
-                pageNo: this.pageNo
-              }
-            })
-          }}
-        >
-          换一批
-        </Button>
+        {
+          this.state.showButton && <Button
+            style={{width: 100, margin: 10, borderRadius: 20}}
+            onClick={() => {
+              // 判断 get_type 确定去哪
+              this.props.triggerNextStep({
+                trigger: this.props.get_type === "chat" ? WebChatId.requirement.search : "favor_api_list",
+                value: {
+                  pageNo: this.pageNo
+                }
+              })
+
+              this.setState({showButton: false})
+            }}
+          >
+            换一批
+          </Button>
+        }
       </View>
     ) : (
       <Text> {displayText} </Text>
     )
-    // return (
-    //   <View style={{width: 300, height: 500}}>
-    //     {apiList ? (
-    //       apiList.map(api => (
-    //         <Card key={api._id}>
-    //           <Card.Header title={api.name}/>
-    //           <Card.Body>
-    //             <TouchableOpacity
-    //               onPress={() =>
-    //                 this.props.triggerNextStep({
-    //                   value: api,
-    //                   trigger: WebChatId.requirement.api_detail,
-    //                 })
-    //               }
-    //             >
-    //               <Text>{api.score}</Text>
-    //               <Text>{api.description}</Text>
-    //               <Text>{api.keyword}</Text>
-    //             </TouchableOpacity>
-    //           </Card.Body>
-    //           {/*<Card.Footer content="footer content" extra={<div>extra footer content</div>} />*/}
-    //         </Card>
-    //       ))
-    //     ) : (
-    //       <Text> {displayText} </Text>
-    //     )}
-    //   </View>
-    // )
   }
 }
 
@@ -338,5 +369,3 @@ export class ApiListTest extends Component {
     )
   }
 }
-
-//  <View style={{display: "flex", flexDirection:"row", overflowX: "scroll",}}>
