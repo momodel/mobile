@@ -1,63 +1,72 @@
-import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native'
+import React, {Component} from 'react'
+import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 import PropTypes from 'prop-types'
 
-export const ApiCard = ({ title, description, score, favor, onPress }) => (
-  <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
+import {HearderRightV} from './Header'
+export const ApiCard = ({title, description, score, favor, onPress, isFavor}) => {
+
+  return <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
     <View style={styles.title}>
-      <Text style={{ fontSize: 18 }}>{title}</Text>
+      <Text style={{fontSize: 18}}>{title}</Text>
     </View>
 
     <View style={styles.desc}>
-      <Text style={{ color: 'grey' }}>{description}</Text>
+      <Text style={{color: 'grey'}} numberOfLines={5}>{description}</Text>
     </View>
 
-    <View style={styles.text}>
-      <Text>匹配度：{score}</Text>
-    </View>
+    {/*<View style={styles.text}>*/}
+      {/*{score && <Text>匹配度：{score.toFixed(2)}</Text>}*/}
+    {/*</View>*/}
 
-    <View style={styles.text}>
-      <Text>点赞数：{favor}</Text>
-    </View>
+    {/*<View style={styles.text}>*/}
+      {/*<Text>点赞数：{favor}</Text>*/}
+    {/*</View>*/}
+
+    <HearderRightV isFavor={isFavor} />
+
+
   </TouchableOpacity>
-)
+}
 export const NoMoreCard = ({onPress}) => <IconCard
-  imgSource={require("../images/icons/message.png")}
+  imgSource={require("../images/icons/no_more.png")}
   text="没有更多了"
   onPress={onPress}
+  moreText="发布需求"
 />
 
 export const MoreCard = ({onPress}) => <IconCard
-  imgSource={require("../images/icons/user.png")}
+  imgSource={require("../images/icons/more.png")}
   text="再看看"
   onPress={onPress}
 />
 
-export const IconCard = ({imgSource, text, onPress}) =>
+export const IconCard = ({imgSource, text, onPress, moreText}) =>
   <TouchableOpacity style={[styles.cardContainer, {justifyContent: "center"}]} onPress={onPress}>
-    <Image style={{width: 50, height:50}} source={imgSource}/>
+    <Image style={{width: 50, height: 50}} source={imgSource}/>
     <View style={styles.title}>
-      <Text style={{ fontSize: 18 }}>{text}</Text>
+      <Text style={{fontSize: 18}}>{text}</Text>
+      {moreText && <Text style={{fontSize: 18, color: "blue", marginTop: 5}}>{moreText}</Text>}
     </View>
   </TouchableOpacity>
 
 ApiCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
+  // score: PropTypes.number.isRequired,
   favor: PropTypes.number.isRequired,
   onPress: PropTypes.func,
 }
 ApiCard.defaultProps = {
   title: '标题',
   description: '描述',
-  score: 0,
+  // score: 0,
   favor: 0,
 }
 
 // export default CustomCard
 
 const styles = StyleSheet.create({
+
   cardContainer: {
     display: 'flex',
     padding: 3,
@@ -70,11 +79,13 @@ const styles = StyleSheet.create({
     // boxShadow: "10px 10px 5px #888888"
 
     shadowColor: 'grey',
-    shadowOffset: { h: 2, w: 2 },
+    shadowOffset: {h: 2, w: 2},
     shadowRadius: 8,
     shadowOpacity: 0.5,
-    minWidth: 150,
-    maxWidth: 300,
+    // minWidth: 150,
+    // maxWidth: 300,
+    width: 150,
+    height: 200,
   },
   title: {
     alignItems: 'center',
@@ -86,6 +97,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginLeft: 10,
     marginRight: 10,
+    height: "35%"
   },
 
   text: {

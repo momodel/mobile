@@ -9,7 +9,7 @@ const defaultPageNo = 1
 
 
 export const getApi = async payload => {
-  return await request(`${prefix}/${payload.api_id}`)
+  return await request(`${prefix}/${payload.api_id}?yml=true`)
 }
 
 export const getApiList = async (payload, callback, onSuccess, onError) => {
@@ -77,11 +77,10 @@ const getFavorApiList = async ({keyword, pageNo = defaultPageNo, pageSize = defa
 }
 
 export const runApi = async payload => {
-  return request(`${prefix}/run`, {
+  return request(`${prefix}/run/${payload.app_id}`, {
     method: 'post',
     body: {
-      user_ID: payload.user_ID,
-      api: payload.api,
+      app: payload.app,
     },
   })
 }

@@ -20,7 +20,14 @@ import ApiDetail, {ApiDetailUI} from './containers/ApiDetail'
 import Predict from './containers/Predict'
 import Requests from './containers/Requests'
 import Request from './containers/Request'
+import Apps from './containers/Apps'
 
+import SpeechToText from './containers/SpeechToText'
+
+// import Predict from './containers/Predict'
+
+// import Test from './containers/Test'
+import {RequestHeaderCard} from './components/RequestHeader'
 
 // import {ApiDetailUI} from './containers/ApiDetail'
 
@@ -73,6 +80,14 @@ const MainNavigator = StackNavigator(
         title: '需求详情',
       }
     },
+
+    UsedApps: { screen: Apps,
+      navigationOptions: {
+        title: '使用记录',
+      }
+    },
+
+
   },
   {
     headerMode: 'float',

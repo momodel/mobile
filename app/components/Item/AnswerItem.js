@@ -1,10 +1,15 @@
 import React, {Component} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 import PropTypes from 'prop-types'
-import {showTime} from "../utils"
-export const AnswerCard = ({username, content, datetime, comments, onPressReply}) => (
-  <View style={styles.cardContainer}>
+import {HearderRight} from '../Header'
+import {showTime} from "../../utils/index"
 
+
+export const AnswerCard = ({answerObj, onPressReply, user}) => {
+  const {
+    _id, answer: content, answer_user_ID: username, comment: comments, create_time: datetime, votes_up_user
+  } = answerObj
+  return <View style={styles.cardContainer}>
     <View
       style={{width: 65, alignItems: "center", padding: 10, paddingTop: 20}}
     >
@@ -12,11 +17,11 @@ export const AnswerCard = ({username, content, datetime, comments, onPressReply}
         style={{
           height: 50, width: 50
         }}
-        source={require('./../images/icon.png')}
+        source={require('../../images/icons/mo.png')}
       />
     </View>
 
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <View style={[styles.title]}>
         <Text style={{fontSize: 20}}>{username}</Text>
       </View>
@@ -26,16 +31,14 @@ export const AnswerCard = ({username, content, datetime, comments, onPressReply}
       </View>
 
       <View style={{height: 1, backgroundColor: "black"}}/>
-
       {
-        comments.map(comment=>{
+        comments.map(comment => {
           const {comments: commentText, comments_user_id, create_time, _id} = comment
           return <Text key={_id}>
-            {commentText} - {comments_user_id}  at {showTime(create_time)}
+            {commentText} - {comments_user_id} at {showTime(create_time)}
           </Text>
         })
       }
-
 
       <View style={styles.datetime}>
         <Text style={{color: 'grey'}}>{showTime(datetime)}</Text>
@@ -45,21 +48,23 @@ export const AnswerCard = ({username, content, datetime, comments, onPressReply}
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
 
+      <HearderRight onPressFavor={()=>{}} isFavor={false} starNum={0} favorNum={0}/>
+
+    </View>
   </View>
-)
+}
 
 AnswerCard.propTypes = {
-  username: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  datetime: PropTypes.string.isRequired,
-  onPressReply: PropTypes.func,
+  // username: PropTypes.string.isRequired,
+  // content: PropTypes.string.isRequired,
+  // datetime: PropTypes.string.isRequired,
+  // onPressReply: PropTypes.func,
 }
 AnswerCard.defaultProps = {
-  username: '用户名',
-  content: '评论内容',
-  datetime: 0,
+  // username: '用户名',
+  // content: '评论内容',
+  // datetime: 0,
 
 }
 

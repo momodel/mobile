@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
-// import {Cube} from "../components/Cube"
 import PropTypes from 'prop-types'
 
-export const RequestCard = ({title, datetime, commitNum, answerNum, favorNum, onPress}) => (
+export const RequestItem = ({title, datetime, commitNum, answerNum, favorNum, onPress}) => (
   <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
 
     <View style={styles.datetime}>
@@ -25,7 +24,7 @@ export const RequestCard = ({title, datetime, commitNum, answerNum, favorNum, on
   </TouchableOpacity>
 )
 
-RequestCard.propTypes = {
+RequestItem.propTypes = {
   title: PropTypes.string.isRequired,
   datetime: PropTypes.string.isRequired,
   commitNum: PropTypes.string.isRequired,
@@ -33,7 +32,7 @@ RequestCard.propTypes = {
   favorNum: PropTypes.number.isRequired,
   onPress: PropTypes.func,
 }
-RequestCard.defaultProps = {
+RequestItem.defaultProps = {
   title: '标题',
   datetime: '描述',
   commitNum: 0,
@@ -66,7 +65,7 @@ const Cube = ({title, content, customStyle}) => {
 }
 
 
-// export default RequestCard
+// export default RequestItem
 
 const styles = StyleSheet.create({
   cardContainer: {

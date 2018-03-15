@@ -10,13 +10,13 @@ import {Button, Tag, Text,} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {NavigationActions} from '../utils'
 import _ from 'lodash'
-
+import {HearderRight} from "../components/Header"
 
 @connect(({api, app}) => ({api, app}))
 export default class ApiDetail extends Component {
   // help function, 判断是否收藏
   isFavor() {
-    const {favor_users} = this.props.api
+    const {favor_users=[]} = this.props.api.app
     const user_id = _.get(this.props.app.login, '[response][user][_id]', null)
     return favor_users.includes(user_id)
   }
@@ -38,17 +38,19 @@ export default class ApiDetail extends Component {
       description,
       doc,
       create_time,
-      input_type,
-      output_type,
-      tags,
-      category,
+      input_type=[],
+      output_type=[],
+      tags=[],
+      category=[],
       user,
       _id,
-    } = this.props.api
-
+      args
+    } = this.props.api.app
     return (
-      <View style={{flex: 1}}>
-        <ScrollView>
+      <View style={{flex: 1, backgroundColor: "white"}}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+        >
           <View style={styles.container}>
             <Header title={name} create_time={create_time}
                     onPressFavor={() => {
@@ -75,6 +77,7 @@ export default class ApiDetail extends Component {
               </Text>
 
               <Text style={{lineHeight: 20}}>{description}</Text>
+
               <Text>{doc}</Text>
             </View>
 
@@ -98,6 +101,7 @@ export default class ApiDetail extends Component {
                 NavigationActions.navigate({routeName: 'Predict'})
               )
             }}
+            disabled={args===undefined}
           >
             立即使用
           </Button>
@@ -120,53 +124,11 @@ const Header = ({title, create_time, onPressFavor, isFavor}) => {
       <Text style={{fontSize: 15, color: "grey", marginTop: 10}}>
         发布于{create_time}
       </Text>
-
-
     </View>
   )
 }
 
-const HearderRight = ({onPressFavor, isFavor}) => {
-  return <View
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-    }}
-  >
-    <TouchableOpacity
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 10,
-      }}
-    >
-      <Image
-        style={{width: 15, height: 15, tintColor: 'grey'}}
-        source={require('../images/navigation/thumb_up.png')}
-      />
-    </TouchableOpacity>
 
-    <TouchableOpacity
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 10,
-      }}
-      onPress={onPressFavor}
-    >
-      <Image
-        style={{
-          width: 15, height: 15,
-          tintColor: isFavor ? "red" : "grey"
-        }}
-        source={require('../images/navigation/ion-heart.png')}
-      />
-    </TouchableOpacity>
-  </View>
-
-}
 
 const Cube = ({title, content, type = "icon"}) => {
   if (type === 'icon') {
@@ -180,12 +142,13 @@ const Cube = ({title, content, type = "icon"}) => {
         margin: 10, alignItems: "center", justifyContent: "center",
         flex: 0.25
       }}>
-        <Text>
+        <Text style={{height: 40}}>
           {title}
         </Text>
 
-        <View style={{flexDirection: "row", marginTop: 10}}>
-          {content.map(e =>
+        <View style={{flexDirection: "row",height: 40}}>
+
+          {content&&content.map(e =>
             <Image
               key={e}
               style={{
@@ -197,7 +160,6 @@ const Cube = ({title, content, type = "icon"}) => {
         </View>
       </View>
     )
-
   }
   else {
     return (
@@ -205,10 +167,10 @@ const Cube = ({title, content, type = "icon"}) => {
         margin: 10, alignItems: "center", justifyContent: "center",
         flex: 0.25
       }}>
-        <Text>
+        <Text style={{height: 40}}>
           {title}
         </Text>
-        <View style={{flexDirection: "row", marginTop: 10}}>
+        <View style={{flexDirection: "row", height: 40}}>
           <Text>{content}</Text>
         </View>
       </View>

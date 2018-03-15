@@ -6,6 +6,17 @@ import * as apiService from '../services/api'
 export default {
   namespace: 'api',
   state: {
+    app: {},
+    api_response: null,
+
+    // favor_users: [],
+    // tags: [],
+    // input_type: [],
+    // output_type: [],
+    // category: [],
+    // args: null,
+
+
     // name: '',
     // desc: '',
 
@@ -15,13 +26,7 @@ export default {
     // isStar: false,
     // upNum: 0,
     // startNum: 0,
-    favor_users: [],
-    tags: [],
-    input_type: [],
-    output_type: [],
-    category: [],
 
-    api_response: null,
 
   },
 
@@ -43,12 +48,11 @@ export default {
       const result = yield call(apiService.getApi, {
         ...payload,
       })
-      console.log("result", result)
 
       yield put({
         type: 'updateState',
         payload: {
-          ...result.response
+          app: result.response
         }
       })
 
@@ -65,7 +69,7 @@ export default {
       yield put({
         type: 'updateState',
         payload: {
-          ...result.response.api
+          app: result.response.entity
         }
       })
       // yield put({
@@ -77,12 +81,10 @@ export default {
 
 
     * runApi({payload}, {call, put, select}) {
-      const user_ID = yield select(state => state.app.username)
+      // const user_ID = yield select(state => state.app.username)
       const result = yield call(apiService.runApi, {
         ...payload,
-        user_ID
       })
-      console.log("result", result)
       yield put({
         type: 'updateState',
         payload: {

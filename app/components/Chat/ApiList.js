@@ -66,108 +66,166 @@ export default class ApiList extends Component {
     //   .catch((error)=>console.log("error", error))
   }
 
+  isFavor(favor_users=[]) {
+    // const {favor_users=[]} = this.props.api.app
+    const user_id = _.get(this.props.login, '[response][user][_id]', null)
+    return favor_users.includes(user_id)
+  }
+
   getApiList() {
     // 根据get_type 判断调用那个api
+    let apiFunc
     if(this.props.get_type==="chat"){
-      const result = getApiList(
-        {keyword: this.keyWord, pageNo: this.pageNo},
-        res => {
-          console.log('res', res)
-        },
-        // 成功回调
-        res => {
-          const {objects, count, page_no, page_size} = res.response
-
-          if (res.message) {
-            this.setState({
-              displayText: res.message
-            })
-            Toast.fail(res.message)
-          }
-          else {
-            if (res.response.length !== 0) {
-              this.setState(
-                {
-                  apiList: res.response.objects,
-                  hasMore: count>=page_no*page_size
-                },
-                // () => {
-                //   this.pageNo += 1
-                // }
-              )
-            } else {
-              this.setState({
-                displayText: "没有更多了"
-              })
-              Toast.fail('没有更多了')
-            }
-          }
-
-        },
-        // 失败回调
-        res => {
-          this.setState(
-            {
-              displayText: '对不起，你的需求未匹配到任何服务',
-            },
-            () =>
-              this.props.triggerNextStep({
-                trigger: WebChatId.failed.requirement_failed_select,
-              })
-          )
-        }
-      )
+      apiFunc = getApiList
+    }else{
+      apiFunc = getfavorApps
     }
-    else{
-      const result = getfavorApps(
-        {pageNo: this.pageNo},
-        res => {
-          console.log('res', res)
-        },
-        // 成功回调
-        res => {
-          const {objects, count, page_no, page_size} = res.response
+    const result = apiFunc(
+      {keyword: this.keyWord, pageNo: this.pageNo},
+      res => {
+        // console.log('res', res)
+      },
+      // 成功回调
+      res => {
+        const {objects, count, page_no, page_size} = res.response
 
-          if (res.message) {
-            this.setState({
-              displayText: res.message
-            })
-            Toast.fail(res.message)
-          }
-          else {
-            if (res.response.objects.length !== 0) {
-              this.setState(
-                {
-                  apiList: res.response.objects,
-                  hasMore: count>=page_no*page_size
-                },
-                // () => {
-                //   this.pageNo += 1
-                // }
-              )
-            } else {
-              this.setState({
-                displayText: "没有更多了"
-              })
-              Toast.fail('没有更多了')
-            }
-          }
-
-        },
-        // 失败回调
-        res => {
-          this.setState(
-            {
-              displayText: '对不起，你的需求未匹配到任何服务',
-            },
-            () =>
-              this.props.triggerNextStep({
-                trigger: WebChatId.failed.requirement_failed_select,
-              })
-          )
+        if (res.message) {
+          this.setState({
+            displayText: res.message
+          })
+          Toast.fail(res.message)
         }
-      )
-    }
+        else {
+
+          if (objects.length !== 0) {
+            this.setState(
+              {
+                apiList: objects,
+                hasMore: count>page_no*page_size
+              },
+            )
+          } else {
+            // 如果是空的
+
+            this.setState({
+              displayText: "你还没有收藏任何服务，点击服务右上角收藏按钮，收藏服务"
+            })
+            // Toast.fail('没有更多了')
+          }
+        }
+
+      },
+      // 失败回调
+      res => {
+        this.setState(
+          {
+            displayText: '对不起，你的需求未匹配到任何服务',
+          },
+          () =>
+            this.props.triggerNextStep({
+              trigger: WebChatId.failed.requirement_failed_select,
+            })
+        )
+      }
+    )
+
+
+
+
+    // if(this.props.get_type==="chat"){
+    //   const result = getApiList(
+    //     {keyword: this.keyWord, pageNo: this.pageNo},
+    //     res => {
+    //       console.log('res', res)
+    //     },
+    //     // 成功回调
+    //     res => {
+    //       const {objects, count, page_no, page_size} = res.response
+    //
+    //       if (res.message) {
+    //         this.setState({
+    //           displayText: res.message
+    //         })
+    //         Toast.fail(res.message)
+    //       }
+    //       else {
+    //         if (res.response.length !== 0) {
+    //           this.setState(
+    //             {
+    //               apiList: res.response.objects,
+    //               hasMore: count>=page_no*page_size
+    //             },
+    //           )
+    //         } else {
+    //           this.setState({
+    //             displayText: "没有更多了"
+    //           })
+    //           Toast.fail('没有更多了')
+    //         }
+    //       }
+    //
+    //     },
+    //     // 失败回调
+    //     res => {
+    //       this.setState(
+    //         {
+    //           displayText: '对不起，你的需求未匹配到任何服务',
+    //         },
+    //         () =>
+    //           this.props.triggerNextStep({
+    //             trigger: WebChatId.failed.requirement_failed_select,
+    //           })
+    //       )
+    //     }
+    //   )
+    // }
+    // else{
+    //   const result = getfavorApps(
+    //     {pageNo: this.pageNo},
+    //     res => {
+    //       console.log('res', res)
+    //     },
+    //     // 成功回调
+    //     res => {
+    //       const {objects, count, page_no, page_size} = res.response
+    //
+    //       if (res.message) {
+    //         this.setState({
+    //           displayText: res.message
+    //         })
+    //         Toast.fail(res.message)
+    //       }
+    //       else {
+    //         if (res.response.objects.length !== 0) {
+    //           this.setState(
+    //             {
+    //               apiList: res.response.objects,
+    //               hasMore: count>=page_no*page_size
+    //             },
+    //           )
+    //         } else {
+    //           this.setState({
+    //             displayText: "没有更多了"
+    //           })
+    //           Toast.fail('没有更多了')
+    //         }
+    //       }
+    //
+    //     },
+    //     // 失败回调
+    //     res => {
+    //       this.setState(
+    //         {
+    //           displayText: '对不起，你的需求未匹配到任何服务',
+    //         },
+    //         () =>
+    //           this.props.triggerNextStep({
+    //             trigger: WebChatId.failed.requirement_failed_select,
+    //           })
+    //       )
+    //     }
+    //   )
+    // }
 
   }
 
@@ -181,6 +239,7 @@ export default class ApiList extends Component {
           {apiList.map(api => {
               const {favor_users} = api
               const favor_num = favor_users.length
+
               return <ApiCard
                 key={api._id}
                 title={api.name}
@@ -195,6 +254,8 @@ export default class ApiList extends Component {
                     })
                   )
                 }
+
+                isFavor={this.isFavor(favor_users)}
               />
             }
           )}
@@ -210,28 +271,36 @@ export default class ApiList extends Component {
 
                 this.setState({showButton: false})
               }}/>):
-              <NoMoreCard/>
+              <NoMoreCard onPress={()=>{
+                console.log("this.props", this.props)
+                this.props.triggerCustomOption({
+                  value: 2,
+                  label: '发布需求',
+                  trigger: "createUserRequest", // WebChatId.asking.text,
+                  borderColor: 'yellow',
+                })
+              }}/>
           }
 
         </ScrollView>
-        {
-          this.state.showButton && <Button
-            style={{width: 100, margin: 10, borderRadius: 20}}
-            onClick={() => {
-              // 判断 get_type 确定去哪
-              this.props.triggerNextStep({
-                trigger: this.props.get_type === "chat" ? WebChatId.requirement.search : "favor_api_list",
-                value: {
-                  pageNo: this.pageNo
-                }
-              })
+        {/*{*/}
+          {/*this.state.showButton && <Button*/}
+            {/*style={{width: 100, margin: 10, borderRadius: 20}}*/}
+            {/*onClick={() => {*/}
+              {/*// 判断 get_type 确定去哪*/}
+              {/*this.props.triggerNextStep({*/}
+                {/*trigger: this.props.get_type === "chat" ? WebChatId.requirement.search : "favor_api_list",*/}
+                {/*value: {*/}
+                  {/*pageNo: this.pageNo*/}
+                {/*}*/}
+              {/*})*/}
 
-              this.setState({showButton: false})
-            }}
-          >
-            换一批
-          </Button>
-        }
+              {/*this.setState({showButton: false})*/}
+            {/*}}*/}
+          {/*>*/}
+            {/*换一批*/}
+          {/*</Button>*/}
+        {/*}*/}
       </View>
     ) : (
       <Text> {displayText} </Text>

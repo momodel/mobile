@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
-import {RequestCard} from '../components/RequestCard'
+import {RequestItem} from '../components/Item'
 import {NavigationActions, showTime} from '../utils'
 
 showTime("Tue Jul 16 01:07:00 CST 2013")
@@ -59,50 +59,30 @@ export default class Requests extends Component {
   render() {
 
     const {requests} = this.props
-    return requests.map((request) => {
-      const {_id, title, create_time, answer_number, star_user} = request
-      return <View style={styles.container}  key={_id}>
-        <RequestCard title={title}
-
-          // title="我想找到和我最有夫妻脸的用户"
-                     datetime={showTime(create_time)}
-                     commitNum={"暂无"} answerNum={answer_number} favorNum={star_user.length}
-                     onPress={() => {
-                       this.props.dispatch(
-                         NavigationActions.navigate({
-                           routeName: 'Request',
-                           params: {request},
-                         }))
-                     }}
-        />
-      </View>
-    })
-
     return (
-      <View>
+      <ScrollView
+        keyboardShouldPersistTaps="always">
         {
           requests.map((request) => {
             const {_id, title, create_time, answer_number, star_user} = request
-            return <View style={styles.container}>
-              <RequestCard title={title}
-                           key={_id}
-                // title="我想找到和我最有夫妻脸的用户"
-                           datetime={showTime(create_time)}
-                           commitNum={"暂无"} answerNum={answer_number} favorNum={star_user.length}
-                           onPress={() => {
-                             this.props.dispatch(
-                               NavigationActions.navigate({
-                                 routeName: 'Request',
-                                 params: {request},
-                               }))
-                           }}
+            return <View style={styles.container} key={_id}>
+              <RequestItem
+                title={title}
+                datetime={showTime(create_time)}
+                commitNum={"暂无"} answerNum={answer_number} favorNum={star_user.length}
+                onPress={() => {
+                  this.props.dispatch(
+                    NavigationActions.navigate({
+                      routeName: 'Request',
+                      params: {request},
+                    }))
+                }}
               />
             </View>
           })
         }
-      </View>
+      </ScrollView>
     )
-
   }
 }
 

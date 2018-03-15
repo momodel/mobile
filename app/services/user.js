@@ -1,4 +1,5 @@
 import request, {customRequest} from '../utils/request'
+
 const prefix = '/user'
 import {formatParam} from '../utils'
 
@@ -65,13 +66,21 @@ export const register = async payload => {
 }
 
 export const favorApi = async payload => {
-  return request(`${prefix}/favor_app/${payload.api_id}`, {
+  return request(`${prefix}/action_entity/${payload.api_id}`, {
     method: 'put',
-    // body: {
-    //   user_ID: payload.user_ID,
-    //   api_id: payload.api_id,
-    // },
+    body: {
+      action: "favor",
+      entity: "app"
+    },
   })
+
+  // return request(`${prefix}/favor_app/${payload.api_id}`, {
+  //   method: 'put',
+  //   body: {
+  //     user_ID: payload.user_ID,
+  //     api_id: payload.api_id,
+  //   },
+  // })
 }
 
 export const getfavorApps = async (payload, callback, onSuccess, onError) => {
@@ -80,24 +89,38 @@ export const getfavorApps = async (payload, callback, onSuccess, onError) => {
   // })
   const {pageNo: page_no, pageSize: page_size} = payload
   return await customRequest(
-    `${prefix}/favor_apps?${formatParam({page_no, page_size})}`,
+    `${prefix}/action_entity?${formatParam({page_no, page_size, action_entity: "favor_apps"})}`,
     {},
     callback,
     onSuccess,
     onError
   )
+  //
+  // return await customRequest(
+  //   `${prefix}/favor_apps?${formatParam({page_no, page_size})}`,
+  //   {},
+  //   callback,
+  //   onSuccess,
+  //   onError
+  // )
+}
+
+export const getUsedApps = async payload => {
+  const {pageNo: page_no, pageSize: page_size} = payload
+  return await request(
+    `${prefix}/statistics?${formatParam({page_no, page_size, action: "use", entity_type: "app"})}`,)
 }
 
 
-export const starApi = async payload => {
-  return request(`${prefix}/star_api`, {
-    method: 'put',
-    body: {
-      user_ID: payload.user_ID,
-      api_id: payload.api_id,
-    },
-  })
-}
+// export const starApi = async payload => {
+//   return request(`${prefix}/star_api`, {
+//     method: 'put',
+//     body: {
+//       user_ID: payload.user_ID,
+//       api_id: payload.api_id,
+//     },
+//   })
+// }
 
 // 当加入推送后启用
 // export const logout = async payload => {

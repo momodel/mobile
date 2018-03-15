@@ -12,7 +12,7 @@ export const CommentCard = ({username, content, datetime, onPressReply}) => (
         style={{
           height: 50, width: 50
         }}
-        source={require('./../images/icon.png')}
+        source={require('../../images/icon.png')}
       />
     </View>
 

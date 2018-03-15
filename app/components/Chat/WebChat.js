@@ -346,11 +346,14 @@ class WebChat extends Component {
           steps={finalSteps()}
           //steps={uiSteps}
           hideUserAvatar
+          hideBotAvatar
           botDelay={100}
           userDelay={10}
           botBubbleColor="white"
           botFontColor="black"
           // customStyle={{"background-color": "red"}}
+          userBubbleColor='#ffe695'
+          // userFontColor=''
         />
       </ThemeProvider>
     )
