@@ -1,6 +1,7 @@
 /**
  * 智能机器人对话
  *
+ * 把 props 放到component will mount 的state里可以只在第一次触发的时候出现内容，之后更改props，块可以不刷新
  * id 命名规则：
  * {n}_text 文本展示
  * {n}_input 用户输入
@@ -9,21 +10,12 @@
  *
  *
  */
-
 import React, {Component} from 'react'
 import {ThemeProvider} from 'styled-components'
-
 import ChatBot from '../../package/react-native-chatbot/lib/ChatBot'
-
-import ApiList, {ApiListTest} from './ApiList'
+import ApiList from './ApiList'
 import Intent from './Intent'
-// import {ShowApiDetail, UIShowApiDetail} from './ShowApiDetail'
-import Result from './Result'
-import Asking from './Asking'
 import CreateUserRequest from './CreateUserRequest'
-// import {} from '../../constants'
-import {themeColor} from '../../utils/theme'
-// 把 props 放到component will mount 的state里可以只在第一次触发的时候出现内容，之后更改props，块可以不刷新
 
 const theme = {
   // background: "red", //'#f5f8fb',
@@ -128,19 +120,6 @@ export const optionStep = {
 
   ],
 }
-
-
-const uiSteps = [
-  // api_list
-  {
-    id: 'search',
-    component: <ApiListTest/>,
-    waitAction: true,
-    // trigger: 'show_api_detail',
-    // asMessage: true
-  },
-]
-
 /**
  * 保存 webChat id
  * */

@@ -8,6 +8,7 @@ export default {
   state: {
     app: {},
     api_response: null,
+    fetch_api_response: false
 
     // favor_users: [],
     // tags: [],
@@ -81,14 +82,38 @@ export default {
 
 
     * runApi({payload}, {call, put, select}) {
+      yield put({
+        type: 'updateState',
+        payload: {
+          fetch_api_response: true
+        }
+      })
+
+      // const fake_result = {
+      //   "response": {
+      //     "weather_prediction_out1": 1
+      //   }
+      // }
+      // yield put({
+      //   type: 'updateState',
+      //   payload: {
+      //     api_response: fake_result.response,
+      //     fetch_api_response: false
+      //   }
+      // })
+
+      // TODO 把真实的打开
       // const user_ID = yield select(state => state.app.username)
       const result = yield call(apiService.runApi, {
         ...payload,
       })
+
+
       yield put({
         type: 'updateState',
         payload: {
-          api_response: result.response
+          api_response: result.response,
+          fetch_api_response: false
         }
       })
     }

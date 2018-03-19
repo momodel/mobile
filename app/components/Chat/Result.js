@@ -1,3 +1,6 @@
+/**
+ * 停用
+ */
 import React, { Component } from 'react'
 
 class ShowApiDetail extends Component {

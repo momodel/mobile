@@ -27,11 +27,7 @@ class Register extends Component {
   }
 
   render() {
-    // return (
-    //   <View><Text>123</Text></View>
-    // )
-    // const { getFieldProps } = this.props.form
-    // console.log('this.props.form', this.props.form)
+
     return (
       <View style={styles.container}>
         {/*<View style={styles.icon}>*/}
@@ -74,7 +70,6 @@ class Register extends Component {
 
           <Button
             style={styles.btn}
-            // onClick={this.onLogin}
           >
             <Text style={{ color: 'white' }}>注册</Text>
           </Button>

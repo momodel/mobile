@@ -7,10 +7,6 @@ import {MessageItem} from '../components/Item'
 
 @connect(({messages}) => ({...messages}))
 class Message extends Component {
-  static navigationOptions = {
-    title: '我的消息',
-  }
-
   componentDidMount() {
     this.props.dispatch({
       type: 'messages/getMessages'
@@ -33,13 +29,6 @@ class Message extends Component {
       payload: {receiver_id: receiver_id},
     })
   }
-  // gotoRequest = () => {
-  //   // this.props.dispatch(NavigationActions.navigate({ routeName: 'Request' }))
-  // }
-  //
-  // goBack = () => {
-  //   this.props.dispatch(NavigationActions.back({ routeName: 'Account' }))
-  // }
 
   render() {
     const {messages} = this.props
@@ -56,7 +45,6 @@ class Message extends Component {
               } = message
 
               const content = `${user_ID}评论了您关注的需求${user_request_title}`
-
               return <MessageItem
                 key={_id}
                 content={content}
@@ -78,9 +66,6 @@ class Message extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   icon: {
     width: 32,

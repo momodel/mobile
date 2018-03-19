@@ -8,7 +8,25 @@ import {
   Text
 } from 'react-native'
 
-export const HearderRightV = ({onPressFavor, isFavor, starNum = 102, favorNum = 569}) => {
+
+export const Header = ({title, create_time, onPressFavor, isFavor, starNum, favorNum}) => {
+  return (
+    <View style={{padding: 10}}>
+      <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+        <Text style={{fontSize: 25}}>
+          {title}
+        </Text>
+        <HearderRight {...{onPressFavor, isFavor, starNum, favorNum}}/>
+      </View>
+      <Text style={{fontSize: 15, color: "grey", marginTop: 10}}>
+        发布于{create_time}
+      </Text>
+    </View>
+  )
+}
+
+
+export const HearderRightV = ({onPressFavor, isFavor, starNum, favorNum}) => {
   return <View
     style={{
       display: 'flex',
@@ -60,7 +78,7 @@ export const HearderRightV = ({onPressFavor, isFavor, starNum = 102, favorNum = 
         <Image
           style={{
             width: 20, height: 20,
-            tintColor: isFavor ? "blue" : "grey"
+            tintColor: isFavor ? "#FFE38F" : "grey"
           }}
           source={require('../images/navigation/star.png')}
         />
@@ -81,7 +99,7 @@ export const HearderRightV = ({onPressFavor, isFavor, starNum = 102, favorNum = 
 
 }
 
-export const HearderRight = ({onPressFavor, isFavor, starNum = 102, favorNum = 569}) => {
+export const HearderRight = ({onPressFavor, isFavor, starNum, favorNum}) => {
   return <View
     style={{
       display: 'flex',
@@ -125,7 +143,7 @@ export const HearderRight = ({onPressFavor, isFavor, starNum = 102, favorNum = 5
       <Image
         style={{
           width: 20, height: 20,
-          tintColor: isFavor ? "blue" : "grey"
+          tintColor: isFavor ? "#FFE38F" : "grey"
         }}
         source={require('../images/navigation/star.png')}
       />

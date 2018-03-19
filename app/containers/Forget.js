@@ -10,10 +10,11 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { InputItem, Button, List } from 'antd-mobile'
+import {connect} from 'react-redux'
 import Global from '../Global'
 import { createAction, NavigationActions } from '../utils'
 
-// @connect(({ app }) => ({ ...app }))
+@connect(({ app }) => ({ ...app }))
 export default class Forget extends Component {
   constructor(props){
     super(props)
@@ -22,6 +23,9 @@ export default class Forget extends Component {
     }
   }
 
+  /**
+   * 还未开发忘记密码
+   */
   goToReset = () => {
     // 发送验证码
     this.props.dispatch({
@@ -30,7 +34,7 @@ export default class Forget extends Component {
         phone: this.state.phoneNumber
       }
     })
-    // this.props.dispatch(NavigationActions.navigate({ routeName: 'ResetPassword' }))
+    this.props.dispatch(NavigationActions.navigate({ routeName: 'ResetPassword' }))
   }
 
   render() {
@@ -55,7 +59,7 @@ export default class Forget extends Component {
 
           <Button
             style={styles.btn}
-            onClick={this.goToReset}
+            // onClick={this.goToReset}
           >
             <Text style={{ color: 'white' }}>获取验证码</Text>
           </Button>

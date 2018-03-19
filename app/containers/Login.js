@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { InputItem, Button } from 'antd-mobile'
-// import {createForm} from 'rc-form'
 import { Touchable } from '../components'
 import Global from '../Global'
 
@@ -50,9 +49,6 @@ class LoginPage extends Component {
   }
 
   render() {
-    // const {username, password} = this.props
-    // const {getFieldProps} = this.props.form
-
     return (
       <View style={styles.container}>
         <View style={styles.icon}>
@@ -71,11 +67,6 @@ class LoginPage extends Component {
               this.setState({
                 username: value,
               })
-              // this.props.dispatch(
-              //   createAction('app/updateState')({
-              //     username: value,
-              //   })
-              // )
             }}
             autoCapitalize="none"
             value={this.state.username}
@@ -90,12 +81,6 @@ class LoginPage extends Component {
               this.setState({
                 password: value,
               })
-
-              // this.props.dispatch(
-              //   createAction('app/updateState')({
-              //     password: value,
-              //   })
-              // )
             }}
             value={this.state.password}
           >
@@ -137,14 +122,8 @@ class LoginPage extends Component {
   }
 }
 
-// const LoginPage1 = createForm()(LoginPage)
-
 @connect(({ app }) => ({ ...app }))
 class Login extends Component {
-  static navigationOptions = {
-    title: 'Login',
-  }
-
   componentWillMount() {
     // 检查是否登录
     const { login } = this.props
@@ -155,9 +134,9 @@ class Login extends Component {
     }
   }
 
-  onClose = () => {
-    this.props.dispatch(NavigationActions.back())
-  }
+  // onClose = () => {
+  //   this.props.dispatch(NavigationActions.back())
+  // }
 
   onGotoMain = () => {
     this.props.navigation.dispatch(

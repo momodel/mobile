@@ -19,9 +19,7 @@ export default class Request extends Component {
     this.state = {
       comment: null,
       reply: null,
-
       showReplyTextSend: false,
-
       showCommentTextSend: false,
       focusAnswerId: null,
       showMore: false
@@ -29,7 +27,6 @@ export default class Request extends Component {
   }
 
   componentDidMount() {
-    // const requestId = "5a91266739b6bd4e0cc199d2" //
     const requestId = this.props.navigation.state.params.request._id
     // 通过id 重新获取 request
     this.props.dispatch({
@@ -198,7 +195,6 @@ const TextSend = ({onChangeCommentText, commentText, onPressSend, placeholder}) 
         placeholder={placeholder}
         onChange={onChangeCommentText}
         value={commentText}
-        // ref={el => this.autoFocusInst = el}
       />
     </List>
 
@@ -209,7 +205,6 @@ const TextSend = ({onChangeCommentText, commentText, onPressSend, placeholder}) 
         alignItems: "center",
         backgroundColor: "white"
       }}
-      // keyboardShouldPersistTaps="always"
     >
       <TouchableOpacity
         onPress={onPressSend}
@@ -217,9 +212,6 @@ const TextSend = ({onChangeCommentText, commentText, onPressSend, placeholder}) 
         <Image
           style={{
             height: 30, width: 30,
-            // justifyContent: "center",
-            // alignItems: "center",
-            // backgroundColor: "white"
           }}
           source={require('./../images/icons/message.png')}
         />
@@ -230,35 +222,5 @@ const TextSend = ({onChangeCommentText, commentText, onPressSend, placeholder}) 
 
 
 const styles = StyleSheet.create({
-  // container: {
-  //   // flex: 1,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-})
 
-// const request_tmp = {
-//   "_id": "5a91266739b6bd4e0cc199d2",
-//   "accept_answer": "5a91282939b6bd4e0cc199db",
-//   "category": [
-//     "Business",
-//     "Government"
-//   ],
-//   "create_time": "2018-02-24 08:56:52.084000",
-//   "description": "I just got an Oops! Something Bad Happened! error, while opening this question. This question works now, it was only a temporary problem.\n\nHowever, when this happens, you get redirected to this URL. From there, you can't hit F5 (refresh) to try to reload the question. You have to find and open the original link to the question again.\n\nIt would be nice, if the URL would not be altered, so that F5 works (or a refresh of the error page tries to redirect to the original question, if available).",
-//   "input": "a picture",
-//   "output": "some description of the pic",
-//   "star_user": [
-//     "5a01c3ff0c11f3291b0e5ca9",
-//     "59c08c950c11f387a185cce6"
-//   ],
-//   "status": 0,
-//   "tags": [
-//     "cnn",
-//     "lstm",
-//     "tag"
-//   ],
-//   "title": "superuser的提问2",
-//   "user_id": "super_user",
-//   "votes_up_user": []
-// }
+})

@@ -37,14 +37,11 @@ export default class CreateUserRequest extends Component {
         this.setState({
           submitSuccess: true
         })
-
       },
       onError: (res) => {
         console.log("res1", res)
         Toast.fail("提交失败")
       }
-
-
     })
 
 
@@ -89,7 +86,6 @@ export default class CreateUserRequest extends Component {
               </Button>
             </View>
         }
-
       </View>
     )
 
@@ -98,23 +94,13 @@ export default class CreateUserRequest extends Component {
 }
 const styles = StyleSheet.create({
   cardContainer: {
-    // display: 'flex',
     padding: 3,
-    // alignItems: 'center',
     backgroundColor: 'white',
     margin: 8,
-    // borderColor: "grey",
-    // borderWidth: 0.5,
     borderRadius: 8,
-    // boxShadow: "10px 10px 5px #888888"
-
     shadowColor: 'grey',
     shadowOffset: {h: 2, w: 2},
     shadowRadius: 8,
     shadowOpacity: 0.5,
-    // minWidth: 150,
-    // maxWidth: 300,
-    // width: 150,
-    // height: 200,
   }
 })

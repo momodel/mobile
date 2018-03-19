@@ -1,3 +1,6 @@
+/**
+ * 暂时不使用
+ */
 import React, { Component } from 'react'
 // import { connect } from 'dva'
 import { View, Text } from 'react-native'
@@ -68,5 +71,3 @@ export default class Asking extends Component {
     )
   }
 }
-
-// export default connect(({ login }) => ({ login }))(Asking)

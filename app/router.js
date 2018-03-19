@@ -16,20 +16,19 @@ import Account from './containers/Account'
 import Register from './containers/Register'
 import Message from './containers/Message'
 import Forget from './containers/Forget'
-import ApiDetail, {ApiDetailUI} from './containers/ApiDetail'
+import AppDetail from './containers/AppDetail'
 import Predict from './containers/Predict'
 import Requests from './containers/Requests'
 import Request from './containers/Request'
-import Apps from './containers/Apps'
+import UsedApps from './containers/UsedApps'
 
 import SpeechToText from './containers/SpeechToText'
 
 // import Predict from './containers/Predict'
 
-// import Test from './containers/Test'
+import Test from './containers/Test'
 import {RequestHeaderCard} from './components/RequestHeader'
 
-// import {ApiDetailUI} from './containers/ApiDetail'
 
 const HomeNavigator = TabNavigator(
   {
@@ -60,10 +59,17 @@ const HomeNavigator = TabNavigator(
 const MainNavigator = StackNavigator(
   {
     HomeNavigator: { screen: HomeNavigator },
-    Message: { screen: Message },
-    Account: { screen: Account },
-
-    ApiDetail: { screen: ApiDetail,
+    Message: { screen: Message,
+      navigationOptions: {
+        title: '我的消息30[]',
+      },
+    },
+    Account: { screen: Account,
+      navigationOptions: {
+        title: '我的账户',
+      },
+    },
+    AppDetail: { screen: AppDetail,
       navigationOptions: {
         title: '应用详情',
       },
@@ -81,13 +87,11 @@ const MainNavigator = StackNavigator(
       }
     },
 
-    UsedApps: { screen: Apps,
+    UsedApps: { screen: UsedApps,
       navigationOptions: {
         title: '使用记录',
       }
     },
-
-
   },
   {
     headerMode: 'float',

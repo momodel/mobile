@@ -3,7 +3,9 @@ import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 import PropTypes from 'prop-types'
 
 import {HearderRightV} from './Header'
-export const ApiCard = ({title, description, score, favor, onPress, isFavor}) => {
+export const ApiCard = ({ app, onPress, isFavor}) => {
+
+  const {favor_users=[], star_users=[], name: title, description, score} = app
 
   return <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
     <View style={styles.title}>
@@ -18,11 +20,7 @@ export const ApiCard = ({title, description, score, favor, onPress, isFavor}) =>
       {/*{score && <Text>匹配度：{score.toFixed(2)}</Text>}*/}
     {/*</View>*/}
 
-    {/*<View style={styles.text}>*/}
-      {/*<Text>点赞数：{favor}</Text>*/}
-    {/*</View>*/}
-
-    <HearderRightV isFavor={isFavor} />
+    <HearderRightV isFavor={isFavor} starNum={favor_users.length} favorNum={star_users.length}/>
 
 
   </TouchableOpacity>

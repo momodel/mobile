@@ -1,65 +1,59 @@
-import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text } from 'react-native'
-import { connect } from 'react-redux'
-import { List } from 'antd-mobile'
-import { createAction, NavigationActions } from '../utils'
+import React, {Component} from 'react'
+import {StyleSheet, View, Image, Text} from 'react-native'
+import {connect} from 'react-redux'
+import {List} from 'antd-mobile'
+import {createAction, NavigationActions} from '../utils'
+
 const Item = List.Item
 
-@connect(({ app }) => ({ ...app }))
+@connect(({app}) => ({...app}))
 class Account extends Component {
-  static navigationOptions = {
-    title: '我的账户',
-    // tabBarLabel: 'Account',
-    // tabBarIcon: ({ focused, tintColor }) => (
-    //   <Image
-    //     style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
-    //     source={require('../images/person.png')}
-    //   />
-    // ),
-  }
-
   gotoLogin = () => {
-    this.props.dispatch(NavigationActions.navigate({ routeName: 'Login' }))
+    this.props.dispatch(NavigationActions.navigate({routeName: 'Login'}))
   }
 
   gotoRequests = () => {
-    this.props.dispatch(NavigationActions.navigate({ routeName: 'Requests' }))
+    this.props.dispatch(NavigationActions.navigate({routeName: 'Requests'}))
   }
 
   gotoUsedApps = () => {
-    this.props.dispatch(NavigationActions.navigate({ routeName: 'UsedApps' }))
+    this.props.dispatch(NavigationActions.navigate({routeName: 'UsedApps'}))
   }
 
   logout = () => {
     this.props.dispatch(createAction('app/logout')())
   }
+
   render() {
-    const { username, login } = this.props
+    const {username, login} = this.props
     return (
       <View>
         <List>
           {
-            login&&<Item arrow="horizontal" onClick={() => {}}>
+            login && <Item arrow="horizontal" onClick={() => {
+            }}>
               {username}
             </Item>
           }
 
           {
-            !login&&<Item arrow="horizontal" onClick={this.gotoLogin}>
+            !login && <Item arrow="horizontal" onClick={this.gotoLogin}>
               登录
             </Item>
           }
 
 
-          <Item arrow="horizontal" onClick={() => {}}>
+          <Item arrow="horizontal" onClick={() => {
+          }}>
             检查更新
           </Item>
 
-          <Item arrow="horizontal" onClick={() => {}}>
+          <Item arrow="horizontal" onClick={() => {
+          }}>
             用户帮助
           </Item>
 
-          <View style={{ height: 50 }} />
+          <View style={{height: 50}}/>
 
           <Item arrow="horizontal" onClick={this.gotoRequests}>
             我发布的需求
@@ -69,11 +63,9 @@ class Account extends Component {
             我的历史记录
           </Item>
 
-          <View style={{ height: 50 }} />
-
-
+          <View style={{height: 50}}/>
           {
-            login&&<Item
+            login && <Item
               style={styles.logout}
               // arrow="horizontal"
               onClick={this.logout}
@@ -84,23 +76,10 @@ class Account extends Component {
 
         </List>
 
-        <List />
+        <List/>
       </View>
     )
   }
-
-  // render() {
-  //   const { login } = this.props
-  //   return (
-  //     <View style={styles.container}>
-  //       {login ? (
-  //         <Button text="Logout" onPress={this.logout} />
-  //       ) : (
-  //         <Button text="Goto Login" onPress={this.gotoLogin} />
-  //       )}
-  //     </View>
-  //   )
-  // }
 }
 
 const styles = StyleSheet.create({
@@ -116,7 +95,6 @@ const styles = StyleSheet.create({
 
   logout: {
     height: 40,
-    // marginTop: 50,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

@@ -2,18 +2,16 @@
  * 手机端主页， 聊天机器人
  *
  */
-import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native'
 
-import { connect } from 'react-redux'
-
-import { NavigationActions } from '../utils'
-
+import {NavigationActions} from '../utils'
 import WebChat from '../components/Chat/WebChat'
 
-@connect(({ app }) => ({ ...app }))
+@connect(({app}) => ({...app}))
 class Home extends Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({navigation}) => ({
     headerRight: (
       <View
         style={{
@@ -30,12 +28,12 @@ class Home extends Component {
           }}
           onPress={() => {
             navigation.dispatch(
-              NavigationActions.navigate({ routeName: 'Message' })
+              NavigationActions.navigate({routeName: 'Message'})
             )
           }}
         >
           <Image
-            style={{ width: 25, height: 25, tintColor: 'grey' }}
+            style={{width: 25, height: 25, tintColor: 'grey'}}
             source={require('../images/icons/message.png')}
           />
         </TouchableOpacity>
@@ -49,12 +47,12 @@ class Home extends Component {
           }}
           onPress={() => {
             navigation.dispatch(
-              NavigationActions.navigate({ routeName: 'Account' })
+              NavigationActions.navigate({routeName: 'Account'})
             )
           }}
         >
           <Image
-            style={{ width: 21, height: 21, tintColor: 'grey' }}
+            style={{width: 21, height: 21, tintColor: 'grey'}}
             source={require('../images/icons/user.png')}
           />
         </TouchableOpacity>
@@ -63,20 +61,20 @@ class Home extends Component {
   })
 
   render() {
-    return <WebChat />
+    return <WebChat/>
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    width: 32,
-    height: 32,
-  },
+  // container: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // icon: {
+  //   width: 32,
+  //   height: 32,
+  // },
 })
 
 export default Home

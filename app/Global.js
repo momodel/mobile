@@ -43,5 +43,30 @@ const Global = {
   myBlack: 'black',
 
   fetchTimeInterval: 3600 * 1000, // 1 hour
+
+  py_type_to_antd_components: {
+    "str": "text",
+    "int": "number",
+    "float": "digit",
+    "datetime": "datetime",
+    "image": {},
+  },
+
+  py_type_to_image: {
+    datetime: "datetime",
+    float: "digit",
+    "image": require('./images/icons/favor.png'),
+    "int": require('./images/icons/user.png'),
+    "str": require('./images/icons/user.png'),
+  },
+
+  py_type_to_form: {
+    'int': 'Number',
+    'str': 'String',
+    "float": "number",
+    'datetime': 'Date',
+    "image": {},
+  }
+
 }
 module.exports = Global
