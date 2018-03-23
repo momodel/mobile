@@ -9,14 +9,15 @@ import {
 } from 'react-native'
 
 
-export const Header = ({title, create_time, onPressFavor, isFavor, starNum, favorNum}) => {
+export const Header = ({title, create_time, onPressFavor, isFavor, isStar,starNum, favorNum, onPressStar}) => {
   return (
     <View style={{padding: 10}}>
       <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-        <Text style={{fontSize: 25}}>
+        <Text style={{fontSize: 25, width: '60%'}}>
           {title}
         </Text>
-        <HearderRight {...{onPressFavor, isFavor, starNum, favorNum}}/>
+
+        <HearderRight {...{onPressFavor, isFavor, isStar, starNum, favorNum, onPressStar}}/>
       </View>
       <Text style={{fontSize: 15, color: "grey", marginTop: 10}}>
         发布于{create_time}
@@ -26,16 +27,16 @@ export const Header = ({title, create_time, onPressFavor, isFavor, starNum, favo
 }
 
 
-export const HearderRightV = ({onPressFavor, isFavor, starNum, favorNum}) => {
+export const HearderRightV = ({onPressFavor, isFavor, isStar, starNum, favorNum}) => {
   return <View
     style={{
-      display: 'flex',
+      // display: 'flex',
       flexDirection: 'column',
       alignItems: "center"
     }}
   >
     <View style={{display: 'flex', flexDirection: 'row'}}>
-      <TouchableOpacity
+      <View
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -44,11 +45,11 @@ export const HearderRightV = ({onPressFavor, isFavor, starNum, favorNum}) => {
         }}
       >
         <Image
-          style={{width: 15, height: 15, tintColor: 'grey'}}
+          style={{width: 15, height: 15, tintColor: isStar ? "#FFE38F" : "grey"}}
           source={require('../images/navigation/thumb_up.png')}
         />
 
-      </TouchableOpacity>
+      </View>
 
       <Text style={{
         display: 'flex',
@@ -66,7 +67,7 @@ export const HearderRightV = ({onPressFavor, isFavor, starNum, favorNum}) => {
       display: 'flex',
       flexDirection: 'row',
     }}>
-      <TouchableOpacity
+      <View
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -83,7 +84,7 @@ export const HearderRightV = ({onPressFavor, isFavor, starNum, favorNum}) => {
           source={require('../images/navigation/star.png')}
         />
 
-      </TouchableOpacity>
+      </View>
 
       <Text style={{
         display: 'flex',
@@ -99,7 +100,7 @@ export const HearderRightV = ({onPressFavor, isFavor, starNum, favorNum}) => {
 
 }
 
-export const HearderRight = ({onPressFavor, isFavor, starNum, favorNum}) => {
+export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, onPressStar}) => {
   return <View
     style={{
       display: 'flex',
@@ -113,9 +114,10 @@ export const HearderRight = ({onPressFavor, isFavor, starNum, favorNum}) => {
         justifyContent: 'center',
         margin: 10,
       }}
+      onPress={onPressStar}
     >
       <Image
-        style={{width: 15, height: 15, tintColor: 'grey'}}
+        style={{width: 15, height: 15, tintColor: isStar ? "#FFE38F" : "grey"}}
         source={require('../images/navigation/thumb_up.png')}
       />
 

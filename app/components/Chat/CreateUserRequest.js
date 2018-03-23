@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 // import { connect } from 'dva'
 import {View, Text, StyleSheet} from 'react-native'
-import {List, InputItem, Button, Toast, } from 'antd-mobile'
+import {List, InputItem, Button, Toast,} from 'antd-mobile'
 import {WebChatId} from './WebChat'
 import {connect} from 'react-redux'
 
@@ -32,6 +32,7 @@ export default class CreateUserRequest extends Component {
       requestTitle: this.state['requestTitle'],
       requestDescription: this.state['requestDescription'],
       user_ID: this.props.username,
+      type: this.props.type,
       onSuccess: (res) => {
         console.log("res", res)
         this.setState({
@@ -62,31 +63,36 @@ export default class CreateUserRequest extends Component {
 
   render() {
     return (
-      <View style={styles.cardContainer}>
-        {
-          this.state.submitSuccess ? <Text>
-              提交成功
-            </Text> :
-            <View>
-              <List>
-                <InputItem
-                  clear
-                  placeholder="填写标题"
-                  onChangeText={text => this.setState({requestTitle: text})}
-                >需求标题</InputItem>
 
-                <InputItem
-                  // type={type}
-                  placeholder="需求描述"
-                  onChangeText={text => this.setState({requestDescription: text})}
-                >需求描述</InputItem>
-              </List>
-              <Button type="primary" onClick={this.submit}>
-                提交
-              </Button>
-            </View>
-        }
-      </View>
+
+      this.state.submitSuccess ?
+        <View style={[styles.cardContainer, {justifyContent: "center", alignItems: "center"}]}>
+          <Text style={{color: "blue"}}>
+            提交成功
+          </Text>
+        </View> :
+        <View style={styles.cardContainer}>
+          <View>
+            <List>
+              <InputItem
+                clear
+                placeholder="填写标题"
+                onChangeText={text => this.setState({requestTitle: text})}
+              >需求标题</InputItem>
+
+              <InputItem
+                // type={type}
+                placeholder="需求描述"
+                onChangeText={text => this.setState({requestDescription: text})}
+              >需求描述</InputItem>
+            </List>
+            <Button type="primary" onClick={this.submit}>
+              提交
+            </Button>
+          </View>
+        </View>
+
+
     )
 
   }
@@ -94,6 +100,8 @@ export default class CreateUserRequest extends Component {
 }
 const styles = StyleSheet.create({
   cardContainer: {
+    paddingTop: 10,
+    paddingBottom: 10,
     padding: 3,
     backgroundColor: 'white',
     margin: 8,

@@ -113,11 +113,6 @@ export const optionStep = {
       borderColor: 'white',
     },
 
-
-
-
-
-
   ],
 }
 /**
@@ -270,7 +265,31 @@ function finalSteps() {
   const asking = [
     {
       id: "createUserRequest",
-      component: <CreateUserRequest/>,
+      message: '请选择你要创建的需求类型',
+      trigger: 'createUserRequest1',
+    },
+    {
+      id: "createUserRequest1",
+      options: [
+        { value: 1, label: 'App',  trigger: "createUserRequestApp"},
+        { value: 2, label: 'Module',  trigger: "createUserRequestModule" },
+        { value: 3, label: 'DataSet',  trigger: "createUserRequestDataSet" },
+      ],
+    },
+
+    {
+      id: "createUserRequestApp",
+      component: <CreateUserRequest type='app'/>,
+    },
+
+    {
+      id: "createUserRequestModule",
+      component: <CreateUserRequest type='module'/>,
+    },
+
+    {
+      id: "createUserRequestDataSet",
+      component: <CreateUserRequest type='dataset'/>,
     },
 
     //

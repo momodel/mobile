@@ -65,6 +65,16 @@ export const register = async payload => {
   })
 }
 
+export const starApi = async payload => {
+  return request(`${prefix}/action_entity/${payload.api_id}`, {
+    method: 'put',
+    body: {
+      action: "star",
+      entity: "app"
+    },
+  })
+}
+
 export const favorApi = async payload => {
   return request(`${prefix}/action_entity/${payload.api_id}`, {
     method: 'put',
@@ -73,14 +83,6 @@ export const favorApi = async payload => {
       entity: "app"
     },
   })
-
-  // return request(`${prefix}/favor_app/${payload.api_id}`, {
-  //   method: 'put',
-  //   body: {
-  //     user_ID: payload.user_ID,
-  //     api_id: payload.api_id,
-  //   },
-  // })
 }
 
 export const getfavorApps = async (payload, callback, onSuccess, onError) => {

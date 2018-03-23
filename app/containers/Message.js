@@ -38,35 +38,47 @@ class Message extends Component {
                   keyboardShouldPersistTaps="always"
       >
         {
-          messages.map(message => {
-              const {
-                _id, create_time, is_read, sender, user_request,
-                user_ID, user_request_title, receiver_id
-              } = message
+          messages.length === 0 ? <InfoPage text="暂无信息"/> :
+            messages.map(message => {
+                const {
+                  _id, create_time, is_read, sender, user_request,
+                  user_ID, user_request_title, receiver_id
+                } = message
 
-              const content = `${user_ID}评论了您关注的需求${user_request_title}`
-              return <MessageItem
-                key={_id}
-                content={content}
-                sender={"system"}
-                datetime={create_time}
-                onPress={() => {
-                  this.toMessage(user_request, receiver_id)
-                }
-                }
-                isRead = {is_read}
-              />
-            }
-          )
+                const content = `${user_ID}评论了您关注的需求${user_request_title}`
+                return <MessageItem
+                  key={_id}
+                  content={content}
+                  sender={"system"}
+                  datetime={create_time}
+                  onPress={() => {
+                    this.toMessage(user_request, receiver_id)
+                  }
+                  }
+                  isRead={is_read}
+                />
+              }
+            )
+
         }
+
       </ScrollView>
     )
   }
 }
 
+const InfoPage = ({text}) => {
+  return (
+    <View style={{alignItems: "center", justifyContent: "center"}}>
+      <Text>
+        {text}
+      </Text>
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
   icon: {
     width: 32,
     height: 32,

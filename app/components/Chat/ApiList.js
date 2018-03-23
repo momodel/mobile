@@ -63,6 +63,11 @@ export default class ApiList extends Component {
     return favor_users.includes(user_id)
   }
 
+  isStar(star_users = []) {
+    const user_id = _.get(this.props.login, '[response][user][_id]', null)
+    return star_users.includes(user_id)
+  }
+
   getApiList() {
     // 根据get_type 判断调用那个api
     let apiFunc
@@ -123,13 +128,14 @@ export default class ApiList extends Component {
                     keyboardShouldPersistTaps="always"
         >
           {apiList.map(api => {
-              const {favor_users} = api
+              const {favor_users, star_users} = api
               const favor_num = favor_users.length
-
               return <ApiCard
                 app={api}
                 key={api._id}
                 isFavor={this.isFavor(favor_users)}
+
+                isStar={this.isStar(star_users)}
                 onPress={() =>
                   this.props.dispatch(
                     NavigationActions.navigate({

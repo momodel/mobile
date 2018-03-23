@@ -59,12 +59,9 @@ export default {
 
     },
 
-
-    * favorApi({payload}, {call, put, select}) {
-      // const user_ID = yield select(state => state.app.username)
-      const result = yield call(userService.favorApi, {
+    * starApi({payload}, {call, put, select}) {
+      const result = yield call(userService.starApi, {
         ...payload,
-        // user_ID
       })
 
       yield put({
@@ -73,12 +70,22 @@ export default {
           app: result.response.entity
         }
       })
-      // yield put({
-      //   type: 'updateState',
-      //   payload: {apiDetail: result.response}
-      // })
-
     },
+
+
+    * favorApi({payload}, {call, put, select}) {
+      const result = yield call(userService.favorApi, {
+        ...payload,
+      })
+
+      yield put({
+        type: 'updateState',
+        payload: {
+          app: result.response.entity
+        }
+      })
+    },
+
 
 
     * runApi({payload}, {call, put, select}) {

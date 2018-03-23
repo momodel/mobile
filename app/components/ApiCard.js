@@ -3,7 +3,7 @@ import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 import PropTypes from 'prop-types'
 
 import {HearderRightV} from './Header'
-export const ApiCard = ({ app, onPress, isFavor}) => {
+export const ApiCard = ({ app, onPress, isFavor, isStar}) => {
 
   const {favor_users=[], star_users=[], name: title, description, score} = app
 
@@ -13,14 +13,14 @@ export const ApiCard = ({ app, onPress, isFavor}) => {
     </View>
 
     <View style={styles.desc}>
-      <Text style={{color: 'grey'}} numberOfLines={5}>{description}</Text>
+      <Text style={{color: 'grey'}} numberOfLines={3}>{description}</Text>
     </View>
 
     {/*<View style={styles.text}>*/}
       {/*{score && <Text>匹配度：{score.toFixed(2)}</Text>}*/}
     {/*</View>*/}
 
-    <HearderRightV isFavor={isFavor} starNum={favor_users.length} favorNum={star_users.length}/>
+    <HearderRightV isFavor={isFavor} isStar={isStar} favorNum={favor_users.length} starNum={star_users.length}/>
 
 
   </TouchableOpacity>
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     // maxWidth: 300,
     width: 150,
     height: 200,
+    justifyContent: "space-between"
   },
   title: {
     alignItems: 'center',
@@ -92,10 +93,13 @@ const styles = StyleSheet.create({
 
   desc: {
     alignItems: 'center',
-    marginBottom: 30,
+    // marginBottom: 5,
     marginLeft: 10,
     marginRight: 10,
-    height: "35%"
+    height: "35%",
+    // maxHeight: 100,
+    // minHeight: 100,
+
   },
 
   text: {

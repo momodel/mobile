@@ -61,7 +61,7 @@ const MainNavigator = StackNavigator(
     HomeNavigator: { screen: HomeNavigator },
     Message: { screen: Message,
       navigationOptions: {
-        title: '我的消息30[]',
+        title: '我的消息',
       },
     },
     Account: { screen: Account,

@@ -16,14 +16,15 @@ export function createNewUserRequest(payload) {
   return customRequest(`${prefix}`, {
     method: 'post',
     body: {
-      user_id:payload.user_ID,
-      request_title:payload.requestTitle,
-      request_input:payload.requestInput,
-      request_output:payload.requestOutput,
-      request_description:payload.requestDescription,
-      request_tags:payload.requestTags,
-      request_category:payload.requestCategory,
-      request_dataset:payload.requestDataset,
+      // user_id:payload.user_ID,
+      title:payload.requestTitle,
+      // input:payload.requestInput,
+      // output:payload.requestOutput,
+      description:payload.requestDescription,
+      // tags:payload.requestTags,
+      // category:payload.requestCategory,
+      // request_dataset:payload.requestDataset,
+      type: payload.type
     },
   }, callback, onSuccess, onError);
 }

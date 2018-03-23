@@ -22,6 +22,12 @@ export default class AppDetail extends Component {
     return favor_users.includes(user_id)
   }
 
+  isStar() {
+    const {star_users = []} = this.props.api.app
+    const user_id = _.get(this.props.app.login, '[response][user][_id]', null)
+    return star_users.includes(user_id)
+  }
+
   componentDidMount() {
     // 获取 api 详情
     this.props.dispatch({
@@ -47,6 +53,7 @@ export default class AppDetail extends Component {
       tags = [],
       category = [],
       user,
+      user_ID,
       _id,
       args,
       star_users = [],
@@ -71,6 +78,15 @@ export default class AppDetail extends Component {
                     create_time={create_time}
                     starNum={star_users.length}
                     favorNum={favor_users.length}
+                    onPressStar={() => {
+                      this.props.dispatch({
+                        type: "api/starApi",
+                        payload: {
+                          api_id: _id
+                        }
+                      })
+                    }}
+
                     onPressFavor={() => {
                       this.props.dispatch({
                         type: "api/favorApi",
@@ -80,12 +96,13 @@ export default class AppDetail extends Component {
                       })
                     }}
                     isFavor={this.isFavor()}
+                    isStar={this.isStar()}
             />
             <View style={{flexDirection: "row", padding: 10}}>
               <Cube title="输入" content={inputTypes}/>
               <Cube title="输出" content={outputTypes}/>
               <Cube title="分类" content={category}/>
-              <Cube title="发布者" content={user} type="text"/>
+              <Cube title="发布者" content={user_ID} type="text"/>
             </View>
             <View style={{padding: 10}}>
               <Text style={{marginTop: 10, marginBottom: 10, fontSize: 20}}>

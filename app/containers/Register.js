@@ -21,13 +21,35 @@ class Register extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      phoneNumber: '',
+      phone: '',
       password: '',
+      count: 0
     }
   }
 
-  render() {
+  onGetCaptcha = () => {
+    // 向后端请求验证码
+    let phone = this.state.phone
+    this.props.dispatch({
+      type: "register/sendVerificationCode",
+      payload: {
+        phone: phone
+      }
+    })
 
+    let count = 59;
+    this.setState({ count });
+    this.interval = setInterval(() => {
+      count -= 1;
+      this.setState({ count });
+      if (count === 0) {
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  }
+
+  render() {
+    const { count } = this.state;
     return (
       <View style={styles.container}>
         {/*<View style={styles.icon}>*/}
@@ -45,13 +67,27 @@ class Register extends Component {
               placeholder="186 1234 1234"
               onChange={value => {
                 this.setState({
-                  phoneNumber: value,
+                  phone: value,
                 })
               }}
               // autoCapitalize="none"
-              value={this.state.phoneNumber}
+              value={this.state.phone}
             >
               手机号码
+            </InputItem>
+
+            <InputItem
+              type="text"
+              placeholder="user_ID"
+              onChange={value => {
+                this.setState({
+                  user_ID: value,
+                })
+              }}
+              // autoCapitalize="none"
+              value={this.state.user_ID}
+            >
+              用户名
             </InputItem>
 
             <InputItem
@@ -66,6 +102,62 @@ class Register extends Component {
             >
               密码
             </InputItem>
+
+
+            <View >
+              <InputItem
+                type="text"
+                placeholder="验证码"
+                onChange={value => {
+                  this.setState({
+                    password: value,
+                  })
+                }}
+                value={this.state.password}
+              >
+                请输入验证码
+              </InputItem>
+
+              <Button
+                size="large"
+                disabled={count}
+                // style={{
+                //   display: "block",
+                //   width: "100%"
+                // }}
+                onClick={this.onGetCaptcha}
+              >
+                {count ? `${count} s` : '获取验证码'}
+              </Button>
+            </View>
+
+            {/*<FormItem>*/}
+              {/*<Row gutter={8}>*/}
+                {/*<Col span={16}>*/}
+                  {/*{getFieldDecorator('captcha', {*/}
+                    {/*rules: [{*/}
+                      {/*required: true, message: '请输入验证码！',*/}
+                    {/*}],*/}
+                  {/*})(*/}
+                    {/*<Input*/}
+                      {/*size="large"*/}
+                      {/*placeholder="验证码"*/}
+                    {/*/>*/}
+                  {/*)}*/}
+                {/*</Col>*/}
+                {/*<Col span={8}>*/}
+                  {/*<Button*/}
+                    {/*size="large"*/}
+                    {/*disabled={count}*/}
+                    {/*className={styles.getCaptcha}*/}
+                    {/*onClick={this.onGetCaptcha}*/}
+                  {/*>*/}
+                    {/*{count ? `${count} s` : '获取验证码'}*/}
+                  {/*</Button>*/}
+                {/*</Col>*/}
+              {/*</Row>*/}
+            {/*</FormItem>*/}
+
           </List>
 
           <Button
