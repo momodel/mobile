@@ -12,7 +12,7 @@
  */
 import React, {Component} from 'react'
 import {ThemeProvider} from 'styled-components'
-import ChatBot from '../../package/react-native-chatbot/lib/ChatBot'
+import ChatBot from '../../package/rn-chatbot/lib/ChatBot'
 import ApiList from './ApiList'
 import Intent from './Intent'
 import CreateUserRequest from './CreateUserRequest'
