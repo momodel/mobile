@@ -1,6 +1,6 @@
-import { message } from 'antd'
-import { routerRedux } from 'dva/router'
-import { register, send_verification_code } from '../services/register'
+import { createAction, NavigationActions, Storage } from '../utils'
+import { register, send_verification_code } from '../services/user'
+import { Toast } from 'antd-mobile'
 
 export default {
   namespace: 'register',
@@ -18,7 +18,7 @@ export default {
       const response = yield call(register, payload)
 
       if(response.status === 200){
-        message.success('Register Success!')
+        Toast.success('Register Success!', 1)
         yield put({
           type: 'registerHandle',
           payload: {status: response.status===200?"ok":"failed"},
@@ -27,10 +27,11 @@ export default {
           type: 'changeSubmitting',
           payload: false,
         })
-        yield put(routerRedux.push('/user/login'))
+        yield put(NavigationActions.navigate({ routeName: 'Login' }))
+
       }else{
         let message = response.data.error.message
-        message.error(message)
+        Toast.fail(message, 1)
       }
 
     },
@@ -39,10 +40,10 @@ export default {
       const response = yield call(send_verification_code, payload)
       console.log("response", response)
       if(response.status === 200){
-        message.success('验证码发送成功!')
+        Toast.success('验证码发送成功!', 1)
       }else{
-        let message = response.data.error.message
-        message.error(message)
+        let message = response.response.error.message
+        Toast.fail(message, 1)
       }
 
     }

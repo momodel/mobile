@@ -36,3 +36,18 @@ export const getRequest = (payload) => {
 export const getRequests = (payload) => {
   return request(`${prefix}?user_ID=${payload.user_ID}`)
 }
+
+
+export const updateUserRequest = (payload) => {
+  const {description, input, output, tags, userRequestId} = payload
+
+  return request(`${prefix}/${userRequestId}`, {
+    method: 'put',
+    body: {
+      description,
+      input,
+      output,
+      tags
+    },
+  })
+}

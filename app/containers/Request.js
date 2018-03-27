@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {CommentCard} from "../components/Item/CommentItem"
 import {AnswerCard} from "../components/Item/AnswerItem"
 import {RequestHeaderCard} from '../components/RequestHeader'
+import { createAction, NavigationActions, Storage } from '../utils'
 
 const tabs = [
   {title: "回答"},
@@ -65,6 +66,7 @@ export default class Request extends Component {
           <RequestHeaderCard request={this.props}
                              showMore={this.state.showMore}
                              onPress={() => this.setState({showMore: true})}
+                             onPressEdit={()=> {this.props.dispatch(NavigationActions.navigate({ routeName: "RequestEdit" }))}}
           />
           <Tabs tabs={tabs}
                 initialPage={0}

@@ -21,7 +21,7 @@ import Predict from './containers/Predict'
 import Requests from './containers/Requests'
 import Request from './containers/Request'
 import UsedApps from './containers/UsedApps'
-
+import {RequestEdit} from './containers/RequestEdit'
 import SpeechToText from './containers/SpeechToText'
 
 // import Predict from './containers/Predict'
@@ -90,6 +90,11 @@ const MainNavigator = StackNavigator(
     UsedApps: { screen: UsedApps,
       navigationOptions: {
         title: '使用记录',
+      }
+    },
+    RequestEdit: { screen: RequestEdit,
+      navigationOptions: {
+        title: '修改需求',
       }
     },
   },

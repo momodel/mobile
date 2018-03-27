@@ -5,13 +5,17 @@ import {InputItem, List, Tabs} from 'antd-mobile'
 import {showTime} from '../utils'
 
 
-export const RequestHeaderCard = ({request, onPress, showMore}) => {
+export const RequestHeaderCard = ({request, onPress, showMore, onPressEdit}) => {
   const {title, create_time, description, category, tags, input, output} = request
 
   return <View style={styles.cardContainer}>
-
-    <View style={styles.title}>
-      <Text style={{fontSize: 20}}>{title}</Text>
+    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+      <View style={styles.title}>
+        <Text style={{fontSize: 20}}>{title}</Text>
+      </View>
+      <TouchableOpacity onPress={onPressEdit}>
+        <Text style={{color: 'grey', fontSize: 15, marginTop: 5, marginRight: 5}}> 编辑</Text>
+      </TouchableOpacity>
     </View>
 
     <View style={styles.datetime}>
@@ -91,7 +95,7 @@ const RequestInfo = ({category, tags, input, output}) => {
       type="text"
       disabled
       editable={false}
-      value={category&&category.toString()}
+      value={category && category.toString()}
     >
       分类
     </InputItem>
@@ -100,7 +104,7 @@ const RequestInfo = ({category, tags, input, output}) => {
       type="text"
       disabled
       editable={false}
-      value={tags&&tags.toString()}
+      value={tags && tags.toString()}
     >
       标签
     </InputItem>
@@ -127,18 +131,19 @@ const RequestInfo = ({category, tags, input, output}) => {
 
 
 const Steps = ({array}) => {
-  array = array.map(e=>{
-    if(e){
+  array = array.map(e => {
+    if (e) {
       return true
-    }else{
+    } else {
       return false
-    }})
-  array = array.map(e=>e.length!==0)
+    }
+  })
+  array = array.map(e => e.length !== 0)
   return (
-    <View style={{flexDirection:"row"}}>
-      {array.map(e=>
+    <View style={{flexDirection: "row"}}>
+      {array.map(e =>
         <View key={Math.random()}
-          style={{backgroundColor: e?"#6A9AF6":'#F5F5F5', height: 30, width: "12%", margin: 3}}/>)}
+              style={{backgroundColor: e ? "#6A9AF6" : '#F5F5F5', height: 30, width: "12%", margin: 3}}/>)}
     </View>
   )
 }

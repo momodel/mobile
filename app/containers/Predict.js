@@ -3,9 +3,10 @@
  * 示例写在Test里面
  */
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, ScrollView, Dimensions} from 'react-native'
+import {StyleSheet, View, Image, Text, ScrollView, Dimensions, TextInput} from 'react-native'
+
 import {connect} from 'react-redux'
-import {InputItem, Button, List, DatePicker, ActivityIndicator} from 'antd-mobile'
+import {InputItem, Button, List, DatePicker, ActivityIndicator, ImagePicker} from 'antd-mobile'
 import t from 'tcomb-form-native'
 import _ from "lodash"
 import {py_type_to_antd_components} from '../Global'
@@ -19,12 +20,19 @@ const dict = {
   'datetime': 'Date'
 }
 
+const typeDict = {
+  upload: "",
+  input: ""
+}
+
 @connect(({api}) => ({...api}))
 export default class Predict extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: {}
+      value: {},
+      files: [],
+      multiple: false,
     }
     this.setContentRef = this.setContentRef.bind(this)
     this.onContentSizeChange = this.onContentSizeChange.bind(this)
@@ -45,6 +53,10 @@ export default class Predict extends Component {
     let value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
       console.log(value) // value here is an instance of Person
+      if(this.imgDict){
+        // 存进input里
+
+      }
 
       const app = {
         input: value
@@ -63,16 +75,27 @@ export default class Predict extends Component {
           app
         }
       })
-      this.clearForm();
+      this.clearForm()
     }
   }
 
   onChange = (value) => {
-    this.setState({ value });
+    this.setState({value})
   }
 
   clearForm() {
-    this.setState({ value: null });
+    this.setState({value: null})
+  }
+
+  onChangeFile = (files, type, index) => {
+    console.log(files, type, index)
+    this.setState({
+      files,
+    })
+  }
+
+  componentWillMount(){
+
   }
 
   render() {
@@ -81,8 +104,15 @@ export default class Predict extends Component {
     // 生成样式内容
     let typeJson = {}
     let fieldsJson = {}
+    this.imgDict = []
     for (let key in args.input) {
       if (args.input.hasOwnProperty(key)) {
+
+        if (args.input[key].type === 'upload') {
+          this.imgDict.push(args.input[key])
+          continue
+        }
+
         if (args.input[key].required === false) {
           typeJson[args.input[key].name] = t.maybe(t[(dict[args.input[key].value_type])])
         }
@@ -92,16 +122,26 @@ export default class Predict extends Component {
 
         fieldsJson[args.input[key].name] = {
           placeholder: args.input[key].placeholder,
-          help: args.input[key].help,
-          error: `need type: ${args.input[key].value_type}`
+          help: `type: ${args.input[key].value_type}`,
+          error: `need type: ${args.input[key].value_type}`,
+          // label: `${args.input[key].name}(${args.input[key].value_type})`
         }
       }
     }
     let Type = t.struct(
-      typeJson
+      {
+        ...typeJson,
+        // img: t.String
+      }
     )
     let options = {
-      fields: fieldsJson
+      fields: {
+        ...fieldsJson,
+        // img: {
+        //   template: myCustomTemplate
+        // }
+
+      }
     }
 
     return (
@@ -121,42 +161,59 @@ export default class Predict extends Component {
         />
 
         {/*<List>*/}
-          {/*{*/}
-            {/*_.map(args.input, (value, key) => {*/}
-                {/*if (value.value_type === "datetime") {*/}
-                  {/*return <DatePicker*/}
-                    {/*value={this.state[key]}*/}
-                    {/*key={key}*/}
-                    {/*onChange={date => this.setState({*/}
-                      {/*form: {*/}
-                        {/*...this.state.form,*/}
-                        {/*[value.name]: v*/}
-                      {/*}*/}
-                    {/*})}*/}
-                  {/*>*/}
-                    {/*<List.Item arrow="horizontal">Datetime</List.Item>*/}
-                  {/*</DatePicker>*/}
-                {/*}*/}
-                {/*return <InputItem*/}
-                  {/*type={py_type_to_antd_components[value.value_type]}*/}
-                  {/*placeholder={value.name}*/}
-                  {/*onChange={v =>{*/}
-                    {/*this.setState({*/}
-                      {/*form: {*/}
-                        {/*...this.state.form,*/}
-                        {/*[value.name]: v*/}
-                      {/*}*/}
-                    {/*})*/}
+        {/*{*/}
+        {/*_.map(args.input, (value, key) => {*/}
+        {/*if (value.value_type === "datetime") {*/}
+        {/*return <DatePicker*/}
+        {/*value={this.state[key]}*/}
+        {/*key={key}*/}
+        {/*onChange={date => this.setState({*/}
+        {/*form: {*/}
+        {/*...this.state.form,*/}
+        {/*[value.name]: v*/}
+        {/*}*/}
+        {/*})}*/}
+        {/*>*/}
+        {/*<List.Item arrow="horizontal">Datetime</List.Item>*/}
+        {/*</DatePicker>*/}
+        {/*}*/}
+        {/*return <InputItem*/}
+        {/*type={py_type_to_antd_components[value.value_type]}*/}
+        {/*placeholder={value.name}*/}
+        {/*onChange={v =>{*/}
+        {/*this.setState({*/}
+        {/*form: {*/}
+        {/*...this.state.form,*/}
+        {/*[value.name]: v*/}
+        {/*}*/}
+        {/*})*/}
 
-                    {/*// this.setState({*/}
-                    {/*//   [value.name]: v,*/}
-                    {/*// })*/}
-                  {/*}}*/}
-                  {/*key={key}*/}
-                {/*/>*/}
-              {/*}*/}
-            {/*)}*/}
+        {/*// this.setState({*/}
+        {/*//   [value.name]: v,*/}
+        {/*// })*/}
+        {/*}}*/}
+        {/*key={key}*/}
+        {/*/>*/}
+        {/*}*/}
+        {/*)}*/}
         {/*</List>*/}
+
+        {
+          this.imgDict.map(img => {
+            return (
+              <View key={img.name}>
+                <Text>{img.name}</Text>
+                <ImagePicker
+                  files={this.state.files}
+                  onChange={this.onChangeFile}
+                  onImageClick={(index, fs) => console.log(index, fs)}
+                  selectable={this.state.files.length < 5}
+                  multiple={this.state.multiple}
+                />
+              </View>
+            )
+          })
+        }
 
         <Button
           type="primary"
@@ -210,6 +267,20 @@ const ResultItem = ({keyIn, value}) => {
       </View>
 
 
+    </View>
+  )
+}
+
+function myCustomTemplate(locals) {
+
+  var containerStyle = {}
+  var labelStyle = {}
+  var textboxStyle = {}
+
+  return (
+    <View style={containerStyle}>
+      <Text style={labelStyle}>{locals.label}</Text>
+      <TextInput style={textboxStyle}/>
     </View>
   )
 }

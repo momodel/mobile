@@ -61,9 +61,23 @@ export default async function request(url, options) {
   console.log('newUrl, newOptions')
   console.log(newUrl, newOptions)
 
-  return fetch(newUrl, newOptions)
-    .then(checkStatus)
-    .then(response => response.json())
+  const response = await fetch(newUrl, newOptions)
+  const ret = {
+    ...await response.json(),
+    headers: {},
+    status: response.status,
+  }
+  return ret
+
+  // return fetch(newUrl, newOptions)
+  //   .then(checkStatus)
+  //   .then(response =>  {
+  //     console.log("response", response)
+  //     console.log("status", response.status)
+  //     console.log("response json", response.json())
+  //     return {status: response.status, response:  response.json().response}
+  //
+  //   })
   // .catch(error => {
   //   if (error.code) {
   //     Toast.fail(`请求错误 Load failed !!! ${error.name} ${error.message}`, 1)

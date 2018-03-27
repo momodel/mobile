@@ -1,3 +1,4 @@
+import { createAction, NavigationActions, Storage } from '../utils'
 
 import * as userRequestService from '../services/userRequest'
 import * as requestCommentService from '../services/requestComment'
@@ -141,7 +142,28 @@ export default {
       //     comment: result.response[0]
       //   }
       // })
+    },
+
+    * updateUserRequest({payload}, {call, put, select}) {
+      const result = yield call(userRequestService.updateUserRequest, {
+        ...payload,
+      })
+
+      console.log("result", result)
+
+      yield put({
+        type: 'updateState',
+        payload: {
+          ...result.response
+        }
+      })
+
+      yield put(NavigationActions.back())
+
+
     }
+
+
 
 
 

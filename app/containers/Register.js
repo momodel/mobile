@@ -23,6 +23,8 @@ class Register extends Component {
     this.state = {
       phone: '',
       password: '',
+      user_ID: "",
+      code: "",
       count: 0
     }
   }
@@ -48,6 +50,24 @@ class Register extends Component {
     }, 1000);
   }
 
+  onSubmit = () => {
+    if (this.state.phone === '' || this.state.code === '' || this.state.user_ID === '' || this.state.password === '') {
+      Alert.alert('警告', '请输入手机号和验证码', [{text: '确定'}])
+      return
+    }
+
+    this.props.dispatch(
+      createAction('register/submit')({
+        phone: this.state.phone,
+        code: this.state.code,
+        user_ID: this.state.user_ID,
+        password: this.state.password
+      })
+    )
+
+
+  }
+
   render() {
     const { count } = this.state;
     return (
@@ -63,7 +83,7 @@ class Register extends Component {
         <View style={styles.bg}>
           <List>
             <InputItem
-              type="phone"
+              type="text"
               placeholder="186 1234 1234"
               onChange={value => {
                 this.setState({
@@ -107,20 +127,19 @@ class Register extends Component {
             <View >
               <InputItem
                 type="text"
-                placeholder="验证码"
+                placeholder="输入验证码"
                 onChange={value => {
                   this.setState({
-                    password: value,
+                    code: value,
                   })
                 }}
-                value={this.state.password}
-              >
-                请输入验证码
-              </InputItem>
+                value={this.state.code} />
+
+
 
               <Button
                 size="large"
-                disabled={count}
+                disabled={Boolean(count)}
                 // style={{
                 //   display: "block",
                 //   width: "100%"
@@ -162,6 +181,7 @@ class Register extends Component {
 
           <Button
             style={styles.btn}
+            onClick={this.onSubmit}
           >
             <Text style={{ color: 'white' }}>注册</Text>
           </Button>

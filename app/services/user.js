@@ -4,8 +4,8 @@ const prefix = '/user'
 import {formatParam} from '../utils'
 
 // 当加入推送后 更改login
-export const login = async payload => {
-  const result = await request(`${prefix}/login`, {
+export const login = payload => {
+  const result = request(`${prefix}/login`, {
     method: 'POST',
     body: {
       user_ID: payload.username,
@@ -24,7 +24,6 @@ export const login_with_phone = async payload => {
     method: 'POST',
     body: {
       phone: payload.phone,
-      message_id: payload.message_id,
       code: payload.code,
     },
   })
@@ -54,15 +53,29 @@ export const resetPassword = async payload => {
   })
 }
 
-export const register = async payload => {
+// export const register = async payload => {
+//   return request(`${prefix}/register`, {
+//     method: 'post',
+//     body: {
+//       user_ID: payload.user_ID,
+//       password: payload.password,
+//       phone: payload.phone,
+//     },
+//   })
+// }
+
+export async function register(params) {
   return request(`${prefix}/register`, {
-    method: 'post',
-    body: {
-      user_ID: payload.user_ID,
-      password: payload.password,
-      phone: payload.phone,
-    },
-  })
+    method: 'POST',
+    body: {...params, captcha: params.code},
+  });
+}
+
+
+export async function send_verification_code(params) {
+  return request(`${prefix}/send_verification_code/${params.phone}`, {
+    method: 'GET',
+  });
 }
 
 export const starApi = async payload => {
