@@ -23,8 +23,9 @@ import Request from './containers/Request'
 import UsedApps from './containers/UsedApps'
 import {RequestEdit} from './containers/RequestEdit'
 import SpeechToText from './containers/SpeechToText'
-
+import UserInfo from './containers/UserInfo'
 // import Predict from './containers/Predict'
+import ImagePickerExample from './containers/Test'
 
 import Test from './containers/Test'
 import {RequestHeaderCard} from './components/RequestHeader'
@@ -33,7 +34,7 @@ import {RequestHeaderCard} from './components/RequestHeader'
 const HomeNavigator = TabNavigator(
   {
     Home: {
-      screen: Home,
+      screen: ImagePickerExample,
       navigationOptions: {
         tabBarVisible: false,
       },
@@ -67,6 +68,7 @@ const MainNavigator = StackNavigator(
     Account: { screen: Account,
       navigationOptions: {
         title: '我的账户',
+        header: null,
       },
     },
     AppDetail: { screen: AppDetail,
@@ -95,6 +97,12 @@ const MainNavigator = StackNavigator(
     RequestEdit: { screen: RequestEdit,
       navigationOptions: {
         title: '修改需求',
+      }
+    },
+
+    UserInfo: { screen: UserInfo,
+      navigationOptions: {
+        title: '账号与安全',
       }
     },
   },

@@ -48,8 +48,8 @@ export default class AppDetail extends Component {
       description,
       doc,
       create_time,
-      input_type = [],
-      output_type = [],
+      // input_type = [],
+      // output_type = [],
       tags = [],
       category = [],
       user,
@@ -66,6 +66,18 @@ export default class AppDetail extends Component {
       const {input, output} = args
       inputTypes = _.map(input, (value, key)=> value.value_type)
       outputTypes = _.map(output, (value, key)=> value.type)
+      console.log("inputTypes", inputTypes)
+      // 筛选
+      inputTypes = inputTypes.filter(function (item, index, self) {
+        return self.indexOf(item) === index;
+
+      });
+
+      outputTypes = outputTypes.filter(function (item, index, self) {
+        return self.indexOf(item) === index;
+      });
+      console.log("inputTypes2", inputTypes)
+
     }
 
     return (

@@ -62,11 +62,13 @@ export default async function request(url, options) {
   console.log(newUrl, newOptions)
 
   const response = await fetch(newUrl, newOptions)
+  console.log("response", response)
   const ret = {
     ...await response.json(),
     headers: {},
     status: response.status,
   }
+  console.log("ret", ret)
   return ret
 
   // return fetch(newUrl, newOptions)

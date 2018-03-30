@@ -74,7 +74,7 @@ export const optionStep = {
   options: [
     {
       value: 1,
-      label: '使用平台服务',
+      label: '使用app',
       trigger: WebChatId.requirement.text,
       borderColor: 'yellow',
     },
@@ -211,13 +211,13 @@ function finalSteps() {
   const requirement = [
     {
       id: WebChatId.requirement.text,
-      message: '请告诉我你的需求？',
+      message: '您需要使用什么样的app？',
       trigger: WebChatId.requirement.input,
     },
     {
       id: WebChatId.requirement.input,
       user: true,
-      trigger: WebChatId.requirement.search, //WebChatId.message.apiList,
+      trigger: WebChatId.message.apiList, //WebChatId.message.apiList,
       validator: value => {
         if (value.trim() === '') {
           return '输入不能为空'

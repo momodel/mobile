@@ -34,7 +34,10 @@ export const RequestHeaderCard = ({request, onPress, showMore, onPressEdit}) => 
       showMore && <RequestInfo {...request}/>
     }
     <View style={styles.title}>
-      <Steps array={[title, input, output, tags, description, category]}/>
+      <Steps array={[title, input, output, tags, description]}/>
+      <Text style={{color: 'grey', fontSize: 15, margin: 10}}>
+        填写更加详细的信息有助于得到想要的回答
+      </Text>
     </View>
   </View>
 }
@@ -91,14 +94,14 @@ const RequestInfo = ({category, tags, input, output}) => {
   return <List style={{
     marginTop: 10
   }}>
-    <InputItem
-      type="text"
-      disabled
-      editable={false}
-      value={category && category.toString()}
-    >
-      分类
-    </InputItem>
+    {/*<InputItem*/}
+      {/*type="text"*/}
+      {/*disabled*/}
+      {/*editable={false}*/}
+      {/*value={category && category.toString()}*/}
+    {/*>*/}
+      {/*分类*/}
+    {/*</InputItem>*/}
 
     <InputItem
       type="text"
@@ -131,19 +134,33 @@ const RequestInfo = ({category, tags, input, output}) => {
 
 
 const Steps = ({array}) => {
+  console.log("array1", array)
+  let count = 0
   array = array.map(e => {
-    if (e) {
+    if (e !== undefined && e !== null && e.length !== 0) {
       return true
-    } else {
-      return false
     }
+    count +=1
+    return false
   })
-  array = array.map(e => e.length !== 0)
+
+  // for (let item in array) {
+  //   if (item === false) {
+  //     count += 1
+  //   }
+  // }
   return (
-    <View style={{flexDirection: "row"}}>
-      {array.map(e =>
-        <View key={Math.random()}
-              style={{backgroundColor: e ? "#6A9AF6" : '#F5F5F5', height: 30, width: "12%", margin: 3}}/>)}
+    <View>
+      {count !== 0 && <Text>
+        {`还有${count}项未完善`}
+      </Text>
+      }
+
+      <View style={{flexDirection: "row"}}>
+        {array.map(e =>
+          <View key={Math.random()}
+                style={{backgroundColor: e ? "#6A9AF6" : '#F5F5F5', height: 30, width: "12%", margin: 3}}/>)}
+      </View>
     </View>
   )
 }

@@ -127,6 +127,20 @@ export const getUsedApps = async payload => {
 }
 
 
+export const updateUser = async payload => {
+  // const {} = payload
+  return await request(`${prefix}`, {
+    method: "put",
+    body: payload
+  })
+}
+
+export const getUserInfo = async payload => {
+  // const {} = payload
+  return await request(`${prefix}/profile/${payload.user_ID}`)
+}
+
+
 // export const starApi = async payload => {
 //   return request(`${prefix}/star_api`, {
 //     method: 'put',

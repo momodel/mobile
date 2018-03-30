@@ -7,7 +7,7 @@ const Global = {
   // URL: 'http://localhost:3080',
 
   // URL1: 'http://122.224.116.44:8899',
-  URL: 'http://localhost:5005',
+  URL: 'http://192.168.31.2:5005',
   MOCK: false,
   // production (demo)
   // URL: "http://10.52.22.196:3080",
@@ -57,7 +57,7 @@ const Global = {
     float: "digit",
     "image": require('./images/icons/favor.png'),
     "int": require('./images/icons/user.png'),
-    "str": require('./images/icons/user.png'),
+    "str": require('./images/icons/message.png'),
   },
 
   py_type_to_form: {
