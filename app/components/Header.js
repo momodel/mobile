@@ -112,55 +112,63 @@ export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, 
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
+        padding: 10,
+        flexDirection: 'row',
       }}
       onPress={onPressStar}
     >
       <Image
-        style={{width: 15, height: 15, tintColor: isStar ? "#FFE38F" : "grey"}}
+        style={{width: 20, height: 20, tintColor: isStar ? "#FFE38F" : "grey"}}
         source={require('../images/navigation/thumb_up.png')}
       />
 
+      <Text style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 5,
+        marginRight:10,
+
+      }}>
+        {starNum}
+      </Text>
+
     </TouchableOpacity>
 
-    <Text style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 10,
-      marginBottom: 10
-    }}>
-      {starNum}
-    </Text>
+
 
     <TouchableOpacity
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
+        padding: 10,
+        flexDirection: 'row',
       }}
       onPress={onPressFavor}
     >
       <Image
         style={{
-          width: 20, height: 20,
+          width: 25, height: 25,
           tintColor: isFavor ? "#FFE38F" : "grey"
         }}
         source={require('../images/navigation/star.png')}
       />
 
+      <Text style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 10,
+        marginRight:10,
+
+      }}>
+        {favorNum}
+      </Text>
+
     </TouchableOpacity>
 
-    <Text style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 10,
-      marginBottom: 10
-    }}>
-      {favorNum}
-    </Text>
+
 
 
   </View>

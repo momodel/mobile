@@ -24,7 +24,9 @@ class Home extends Component {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: 10,
+            // margin: 10,
+            width: 50,
+            height: 40,
           }}
           onPress={() => {
             navigation.dispatch(
@@ -43,7 +45,8 @@ class Home extends Component {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: 10,
+            width: 50,
+            height: 40,
           }}
           onPress={() => {
             navigation.dispatch(

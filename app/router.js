@@ -25,7 +25,7 @@ import {RequestEdit} from './containers/RequestEdit'
 import SpeechToText from './containers/SpeechToText'
 import UserInfo from './containers/UserInfo'
 // import Predict from './containers/Predict'
-import ImagePickerExample from './containers/Test'
+// import ImagePickerExample from './containers/Test'
 
 import Test from './containers/Test'
 import {RequestHeaderCard} from './components/RequestHeader'
@@ -34,7 +34,7 @@ import {RequestHeaderCard} from './components/RequestHeader'
 const HomeNavigator = TabNavigator(
   {
     Home: {
-      screen: ImagePickerExample,
+      screen: Home,
       navigationOptions: {
         tabBarVisible: false,
       },

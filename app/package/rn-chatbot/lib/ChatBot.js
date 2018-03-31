@@ -333,7 +333,7 @@ class ChatBot extends Component {
 
       if (nextStep.user) {
         this.setState({ editable: true })
-        this.inputRef.focus()
+        // this.inputRef.focus()
       } else {
         renderedSteps.push(nextStep)
         previousSteps.push(nextStep)

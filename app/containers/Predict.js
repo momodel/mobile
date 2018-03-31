@@ -3,10 +3,12 @@
  * 示例写在Test里面
  */
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, ScrollView, Dimensions, TextInput} from 'react-native'
+import {StyleSheet, View, Image, Text, ScrollView,
+  Dimensions, TextInput, ImageBackground, TouchableOpacity} from 'react-native'
+import ImagePicker from 'react-native-image-picker'
 
 import {connect} from 'react-redux'
-import {InputItem, Button, List, DatePicker, ActivityIndicator, ImagePicker} from 'antd-mobile'
+import {InputItem, Button, List, DatePicker, ActivityIndicator, Icon} from 'antd-mobile'
 import t from 'tcomb-form-native'
 import _ from "lodash"
 import {py_type_to_antd_components} from '../Global'
@@ -15,7 +17,7 @@ const {height, width} = Dimensions.get('window')
 const Form = t.form.Form
 
 const dict = {
-  'int': 'Number',
+  'int': 'String',
   'str': 'String',
   'datetime': 'Date'
 }
@@ -25,91 +27,45 @@ const typeDict = {
   input: ""
 }
 
+const options = {
+  title: '选择图片',
+  customButtons: [
+    {name: 'fb', title: 'Choose Photo from Facebook'},
+  ],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images'
+  }
+}
+
 @connect(({api}) => ({...api}))
 export default class Predict extends Component {
   constructor(props) {
     super(props)
     this.state = {
       value: {},
-      files: [],
-      multiple: false,
+      image: {},
+      imageLoading: {},
+
+      Type: {},
+      options: {},
     }
     this.setContentRef = this.setContentRef.bind(this)
     this.onContentSizeChange = this.onContentSizeChange.bind(this)
   }
 
-  setContentRef(c) {
-    this.scrollView = c
-  }
-
-  onContentSizeChange(contentWidth, contentHeight) {
-    if (contentHeight > height - 10) {
-      this.scrollView.scrollToEnd()
-    }
-  }
-
-  onSubmit = () => {
-    // todo 将state传入app
-    let value = this.refs.form.getValue()
-    if (value) { // if validation fails, value will be null
-      console.log(value) // value here is an instance of Person
-      if(this.imgDict){
-        // 存进input里
-
-      }
-
-      const app = {
-        input: value
-      }
-
-      // const app = {
-      //   "input": {
-      //     "flight_no": 111, "flight_date": 111
-      //   }
-      // }
-
-      this.props.dispatch({
-        type: "api/runApi",
-        payload: {
-          app_id: this.props.app._id,
-          app
-        }
-      })
-      this.clearForm()
-    }
-  }
-
-  onChange = (value) => {
-    this.setState({value})
-  }
-
-  clearForm() {
-    this.setState({value: null})
-  }
-
-  onChangeFile = (files, type, index) => {
-    console.log(files, type, index)
-    this.setState({
-      files,
-    })
-  }
-
-  componentWillMount(){
-
-  }
-
-  render() {
+  componentWillMount() {
+    // 初始化 state
     const {app: {args}, api_response, fetch_api_response} = this.props
 
-    // 生成样式内容
     let typeJson = {}
     let fieldsJson = {}
-    this.imgDict = []
+    let imageJson = {}
     for (let key in args.input) {
       if (args.input.hasOwnProperty(key)) {
 
         if (args.input[key].type === 'upload') {
-          this.imgDict.push(args.input[key])
+          imageJson[args.input[key].name] = {...args.input[key]}
           continue
         }
 
@@ -131,18 +87,169 @@ export default class Predict extends Component {
     let Type = t.struct(
       {
         ...typeJson,
-        // img: t.String
       }
     )
     let options = {
       fields: {
         ...fieldsJson,
-        // img: {
-        //   template: myCustomTemplate
-        // }
-
       }
     }
+    this.setState({
+      Type,
+      options,
+      image: imageJson
+    })
+
+  }
+
+  setContentRef(c) {
+    this.scrollView = c
+  }
+
+  onContentSizeChange(contentWidth, contentHeight) {
+    if (contentHeight > height - 10) {
+      this.scrollView.scrollToEnd()
+    }
+  }
+
+  onSubmit = () => {
+    // todo 将state传入app
+    let value = this.refs.form.getValue()
+    if (value) { // if validation fails, value will be null
+      console.log(value) // value here is an instance of Person
+      let imageKeyValue = {}
+      if (this.state.image) {
+        // 存进input里
+        for (let key in this.state.image) {
+          imageKeyValue[key] = this.state.image[key].file.data
+        }
+      }
+
+
+      const app = {
+        input: {...value, ...imageKeyValue}
+      }
+
+
+      this.props.dispatch({
+        type: "api/runApi",
+        payload: {
+          app_id: this.props.app._id,
+          app
+        }
+      })
+      this.clearForm()
+    }
+  }
+
+  onChange = (value) => {
+    this.setState({value})
+  }
+
+  clearForm() {
+    this.setState({value: null})
+  }
+
+  handleAddImage(imageKey) {
+    let imageLoading = this.state.imageLoading
+    imageLoading[imageKey] = true
+
+    this.setState({
+      imageLoading
+    })
+    ImagePicker.showImagePicker(options, (response) => {
+      let imageLoading = this.state.imageLoading
+      imageLoading[imageKey] = false
+      this.setState({
+        imageLoading
+      })
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker')
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error)
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton)
+      }
+      else {
+        let image = this.state.image
+        image[imageKey].file = response
+
+        this.setState({
+          image
+        })
+
+
+        // let source = {uri: response.uri}
+
+        // You can also display the image using data:
+        // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        // this.setState({
+        //   avatarSource: source
+        // })
+      }
+    })
+
+  }
+
+  handleDeleteImage(imageKey) {
+    let image = this.state.image
+    image[imageKey].file = ''
+
+    this.setState({
+      image
+    })
+  }
+
+
+  render() {
+    const {app: {args}, api_response, fetch_api_response} = this.props
+
+    // // 生成样式内容
+    // let typeJson = {}
+    // let fieldsJson = {}
+    // this.imgDict = []
+    // for (let key in args.input) {
+    //   if (args.input.hasOwnProperty(key)) {
+    //
+    //     if (args.input[key].type === 'upload') {
+    //       this.imgDict.push(args.input[key])
+    //       continue
+    //     }
+    //
+    //     if (args.input[key].required === false) {
+    //       typeJson[args.input[key].name] = t.maybe(t[(dict[args.input[key].value_type])])
+    //     }
+    //     else {
+    //       typeJson[args.input[key].name] = t[dict[args.input[key].value_type]]
+    //     }
+    //
+    //     fieldsJson[args.input[key].name] = {
+    //       placeholder: args.input[key].placeholder,
+    //       help: `type: ${args.input[key].value_type}`,
+    //       error: `need type: ${args.input[key].value_type}`,
+    //       // label: `${args.input[key].name}(${args.input[key].value_type})`
+    //     }
+    //   }
+    // }
+    // let Type = t.struct(
+    //   {
+    //     ...typeJson,
+    //     // img: t.String
+    //   }
+    // )
+    // let options = {
+    //   fields: {
+    //     ...fieldsJson,
+    //     // img: {
+    //     //   template: myCustomTemplate
+    //     // }
+    //
+    //   }
+    // }
 
     return (
       <ScrollView
@@ -153,11 +260,10 @@ export default class Predict extends Component {
       >
         <Form
           ref="form"
-          type={Type}
-          options={options}
+          type={this.state.Type}
+          options={this.state.options}
           value={this.state.value}
           onChange={this.onChange}
-
         />
 
         {/*<List>*/}
@@ -199,21 +305,67 @@ export default class Predict extends Component {
         {/*</List>*/}
 
         {
-          this.imgDict.map(img => {
+          _.map(this.state.image, (value, key) => {
+
             return (
-              <View key={img.name}>
-                <Text>{img.name}</Text>
-                <ImagePicker
-                  files={this.state.files}
-                  onChange={this.onChangeFile}
-                  onImageClick={(index, fs) => console.log(index, fs)}
-                  selectable={this.state.files.length < 5}
-                  multiple={this.state.multiple}
-                />
+              <View key={key}>
+
+                {
+
+
+                }
+                <Text>{key}</Text>
+                {
+                  this.state.imageLoading[key]?<ActivityIndicator animating/>:
+                    (
+                  value.file ? <ImageBackground
+                      // key={`resizeImage${i}`}
+                      source={{uri: value.file.uri}}
+                      style={{
+                        width: 100,
+                        height: 100,
+                        marginBottom: 30,
+                      }}
+                    >
+                      <TouchableOpacity
+                        underlayColor="#ffa456"
+                        // activeOpacity={0.9}
+                        // style={{ borderRadius: 8,padding: 6,marginTop:5}}
+                        style={{
+                          backgroundColor: 'transparent',
+                          opacity: 0.5,
+                          justifyContent: 'flex-end',
+                          alignItems: 'flex-end',
+                        }}
+                        onPress={
+                          () => this.handleDeleteImage(key)
+                        }
+                      >
+                        <Icon type="cross" size="md" color="white"/>
+                      </TouchableOpacity>
+                    </ImageBackground>
+                    :
+                    < TouchableOpacity
+                      onPress={() => this.handleAddImage(key)}
+                      style={{
+                        width: 100, height: 100,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        // boxSizing: "border-box",
+                        // borderRadius: 3,
+                        // border: "1pX solid #ddd",
+                        backgroundColor: "#fff",
+                      }}
+                    >
+                      <Image style={{width: 50, height: 50}} source={require("../images/icons/add.png")}/>
+                    </TouchableOpacity>
+                    )
+                }
               </View>
             )
           })
         }
+
 
         <Button
           type="primary"

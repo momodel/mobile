@@ -9,6 +9,8 @@ import {
   NativeAppEventEmitter,
   Alert,
   TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView
 } from 'react-native'
 import {InputItem, Button, Tabs} from 'antd-mobile'
 import {Touchable} from '../components'
@@ -108,7 +110,11 @@ class LoginPage extends Component {
   render() {
     const { count } = this.state;
     return (
-        <View style={styles.container}>
+
+        <KeyboardAvoidingView style={styles.container}
+                              behavior='position'
+
+        >
           <View style={styles.icon}>
             <Image
               style={{height: 150, width: 150}}
@@ -158,7 +164,7 @@ class LoginPage extends Component {
                       type: "phone"
                     })
                   }}
-                  style={{justifyContent: "center", alignItems: 'center', marginTop: 5}}
+                  style={{justifyContent: "center", alignItems: 'center', marginTop: 15}}
                 >
                   <Text style={{color: '#34C0E2'}}>使用手机号登录</Text>
                 </TouchableOpacity>
@@ -272,7 +278,8 @@ class LoginPage extends Component {
 
 
 
-        </View>
+        </KeyboardAvoidingView>
+
 
     )
   }
