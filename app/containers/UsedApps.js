@@ -15,9 +15,10 @@ export default class UsedApps extends Component {
   render() {
     const {usedApps} = this.props
     return (
-      <View >
-        <ScrollView
-          keyboardShouldPersistTaps="always">
+        <View
+
+          // keyboardShouldPersistTaps="always"
+          >
           {usedApps.map(usedApp => (
             <UsedAppItem
               key={usedApp._id}
@@ -32,8 +33,8 @@ export default class UsedApps extends Component {
               }
             />
           ))}
-        </ScrollView>
-      </View>
+        </View>
+
     )
   }
 }

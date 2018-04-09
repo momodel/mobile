@@ -1,9 +1,9 @@
 import _ from 'lodash'
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Random from 'random-id'
-import { Dimensions, TextInput, ScrollView } from 'react-native'
-import { CustomStep, OptionsStep, TextStep } from './steps/steps'
+import {Dimensions, TextInput, ScrollView, TouchableOpacity, Text, View, Image} from 'react-native'
+import {CustomStep, OptionsStep, TextStep} from './steps/steps'
 import schema from './schemas/schema'
 import ChatBotContainer from './ChatBotContainer'
 import InputView from './InputView'
@@ -11,9 +11,10 @@ import Footer from './Footer'
 import Button from './Button'
 import ButtonText from './ButtonText'
 
-import { WebChatId, optionStep } from '../../../components/Chat/WebChat'
+import {WebChatId, optionStep} from '../../../components/Chat/WebChat'
+import {FooterInput} from '../../../components/FooterInput'
 
-const { height, width } = Dimensions.get('window')
+const {height, width} = Dimensions.get('window')
 
 class ChatBot extends Component {
   /* istanbul ignore next */
@@ -30,6 +31,8 @@ class ChatBot extends Component {
       inputValue: '',
       inputInvalid: false,
       defaultUserSettings: {},
+
+      inputType: "speech"
     }
 
     this.getStepMessage = this.getStepMessage.bind(this)
@@ -165,7 +168,7 @@ class ChatBot extends Component {
       inputValue,
       defaultUserSettings,
     } = this.state
-    let { currentStep } = this.state
+    let {currentStep} = this.state
 
     const isInvalid = currentStep.validator && this.checkInvalidInput()
 
@@ -203,19 +206,19 @@ class ChatBot extends Component {
   }
 
   getStepMessage(message) {
-    const { previousSteps } = this.state
+    const {previousSteps} = this.state
     const lastStepIndex =
       previousSteps.length > 0 ? previousSteps.length - 1 : 0
     const steps = this.generateRenderedStepsById()
     const previousValue = previousSteps[lastStepIndex].value
     return typeof message === 'function'
-      ? message({ previousValue, steps })
+      ? message({previousValue, steps})
       : message
   }
 
   getTriggeredStep(trigger, value) {
     const steps = this.generateRenderedStepsById()
-    return typeof trigger === 'function' ? trigger({ value, steps }) : trigger
+    return typeof trigger === 'function' ? trigger({value, steps}) : trigger
   }
 
   setContentRef(c) {
@@ -227,18 +230,18 @@ class ChatBot extends Component {
   }
 
   handleEnd() {
-    const { previousSteps } = this.state
+    const {previousSteps} = this.state
 
     const renderedSteps = previousSteps.map(step => {
-      const { id, message, value } = step
-      return { id, message, value }
+      const {id, message, value} = step
+      return {id, message, value}
     })
 
     const steps = []
 
     for (let i = 0, len = previousSteps.length; i < len; i += 1) {
-      const { id, message, value } = previousSteps[i]
-      steps[id] = { id, message, value }
+      const {id, message, value} = previousSteps[i]
+      steps[id] = {id, message, value}
     }
 
     const values = previousSteps
@@ -246,7 +249,7 @@ class ChatBot extends Component {
       .map(step => step.value)
 
     if (this.props.handleEnd) {
-      this.props.handleEnd({ renderedSteps, steps, values })
+      this.props.handleEnd({renderedSteps, steps, values})
     }
   }
 
@@ -257,7 +260,7 @@ class ChatBot extends Component {
       steps,
       defaultUserSettings,
     } = this.state
-    let { currentStep, previousStep } = this.state
+    let {currentStep, previousStep} = this.state
     const isEnd = currentStep.end
 
     if (data && data.value) {
@@ -332,7 +335,7 @@ class ChatBot extends Component {
       currentStep = nextStep
 
       if (nextStep.user) {
-        this.setState({ editable: true })
+        this.setState({editable: true})
         // this.inputRef.focus()
       } else {
         renderedSteps.push(nextStep)
@@ -358,7 +361,7 @@ class ChatBot extends Component {
       defaultUserSettings,
     } = this.state
 
-    let { currentStep, previousStep } = this.state
+    let {currentStep, previousStep} = this.state
     const isEnd = currentStep.end
     // 添加 nextStep
     // previousStep = currentStep， currentStep = nextStep
@@ -507,19 +510,19 @@ class ChatBot extends Component {
   }
 
   generateRenderedStepsById() {
-    const { previousSteps } = this.state
+    const {previousSteps} = this.state
     const steps = {}
 
     for (let i = 0, len = previousSteps.length; i < len; i += 1) {
-      const { id, message, value } = previousSteps[i]
-      steps[id] = { id, message, value }
+      const {id, message, value} = previousSteps[i]
+      steps[id] = {id, message, value}
     }
 
     return steps
   }
 
   isLastPosition(step) {
-    const { renderedSteps } = this.state
+    const {renderedSteps} = this.state
     const length = renderedSteps.length
     const stepIndex = renderedSteps.map(s => s.key).indexOf(step.key)
 
@@ -539,7 +542,7 @@ class ChatBot extends Component {
   }
 
   isFirstPosition(step) {
-    const { renderedSteps } = this.state
+    const {renderedSteps} = this.state
     const stepIndex = renderedSteps.map(s => s.key).indexOf(step.key)
 
     if (stepIndex === 0) {
@@ -564,7 +567,7 @@ class ChatBot extends Component {
   }
 
   checkInvalidInput() {
-    const { currentStep, inputValue } = this.state
+    const {currentStep, inputValue} = this.state
     const result = currentStep.validator(inputValue)
     const value = inputValue
 
@@ -591,7 +594,7 @@ class ChatBot extends Component {
   }
 
   renderStep(step, index) {
-    const { renderedSteps, previousSteps } = this.state
+    const {renderedSteps, previousSteps} = this.state
     const {
       avatarStyle,
       bubbleStyle,
@@ -600,7 +603,7 @@ class ChatBot extends Component {
       hideBotAvatar,
       hideUserAvatar,
     } = this.props
-    const { options, component, asMessage } = step
+    const {options, component, asMessage} = step
     const steps = {}
     const stepIndex = renderedSteps.map(s => s.id).indexOf(step.id)
     const previousStep = stepIndex > 0 ? renderedSteps[index - 1] : {}
@@ -628,7 +631,7 @@ class ChatBot extends Component {
           previousStep={previousStep}
           triggerNextStep={this.triggerNextStep}
 
-          triggerCustomOption={(data)=>this.triggerCustomOption(customOptionsStep, data)}
+          triggerCustomOption={(data) => this.triggerCustomOption(customOptionsStep, data)}
         />
       )
     }
@@ -692,11 +695,11 @@ class ChatBot extends Component {
         paddingRight: 16,
         paddingLeft: 16,
         height: 50,
-        width: width - 80,
+        width: width - 120,
       },
       content: {
         height: height - 50,
-        backgroundColor: '#eee',
+        backgroundColor: 'white',
       },
     }
 
@@ -721,7 +724,7 @@ class ChatBot extends Component {
           {_.map(renderedSteps, this.renderStep)}
         </ScrollView>
 
-        {/* 一排选择框 */}
+        {/*一排选择框*/}
         <OptionsStep
           key={customOptionStep.id}
           step={customOptionStep}
@@ -729,49 +732,85 @@ class ChatBot extends Component {
             this.triggerCustomOption(customOptionStep, data)
           }
           bubbleStyle={bubbleStyle}
+          // style={{backgroundColor: "white"}}
         />
 
-        <InputView behavior="padding">
-          <Footer
-            className="rsc-footer"
-            style={footerStyle}
-            disabled={!editable}
-            invalid={inputInvalid}
-            color={botBubbleColor}
-          >
-            <TextInput
-              type="textarea"
-              style={textInputStyle}
-              className="rsc-input"
-              placeholder={placeholder}
-              ref={this.setInputRef}
-              onKeyPress={this.handleKeyPress}
-              onFocus={this.onInputFocus}
-              onBlur={this.onInputFocus}
-              onChangeText={text => this.setState({ inputValue: text })}
-              value={inputValue}
-              underlineColorAndroid="transparent"
-              invalid={inputInvalid}
-              editable={editable}
-            />
-            <Button
-              className="rsc-button"
-              style={submitButtonStyle}
+        <InputView behavior="padding" keyboardVerticalOffset={55}>
+
+          {this.state.inputType === 'speech' ?
+            <Footer
+              className="rsc-footer"
+              style={{backgroundColor: "white"}}
               disabled={!editable}
-              onPress={this.onButtonPress}
               invalid={inputInvalid}
-              backgroundColor={botBubbleColor}
+              color={botBubbleColor}
             >
-              <ButtonText
-                className="rsc-button-text"
-                invalid={inputInvalid}
-                fontColor={botFontColor}
+              <FooterInput
+                toggleInputType={() => this.setState({inputType: "text"})}
+                sendSpeechResult={(result) => {
+                  if(result ){
+                    this.setState({inputValue: result}, ()=>this.onButtonPress())
+                  }
+                }
+                }
+              />
+            </Footer> :
+
+            <Footer
+              className="rsc-footer"
+              style={footerStyle}
+              disabled={!editable}
+              invalid={inputInvalid}
+              color={botBubbleColor}
+            >
+              <TouchableOpacity
+                onPress={() => this.setState({inputType: "speech"})}
               >
-                SEND
-              </ButtonText>
-            </Button>
-          </Footer>
+                <Image
+                  style={{width: 40, height: 40, margin: 5}}
+                  source={require('../../../images/icons/microphone.png')}
+                />
+              </TouchableOpacity>
+
+              <TextInput
+                type="textarea"
+                style={textInputStyle}
+                className="rsc-input"
+                placeholder={placeholder}
+                ref={this.setInputRef}
+                onKeyPress={this.handleKeyPress}
+                onFocus={this.onInputFocus}
+                onBlur={this.onInputFocus}
+                onChangeText={text => this.setState({inputValue: text})}
+                value={inputValue}
+                underlineColorAndroid="transparent"
+                invalid={inputInvalid}
+                editable={editable}
+              />
+
+              <Button
+                className="rsc-button"
+                style={submitButtonStyle}
+                disabled={!editable}
+                onPress={this.onButtonPress}
+                invalid={inputInvalid}
+                backgroundColor={botBubbleColor}
+              >
+                <ButtonText
+                  className="rsc-button-text"
+                  invalid={inputInvalid}
+                  fontColor={botFontColor}
+                >
+                  发送
+                </ButtonText>
+              </Button>
+            </Footer>
+          }
+
+
         </InputView>
+
+
       </ChatBotContainer>
     )
   }

@@ -6,11 +6,16 @@ import {
   Image,
   AppRegistry,
   TouchableHighlight,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
-import Voice from 'react-native-voice';
+import {Modal} from 'antd-mobile'
 
-export default class VoiceTest extends Component {
+import Voice from 'react-native-voice';
+const { width, height } = Dimensions.get('window')
+
+export class Speech extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +28,7 @@ export default class VoiceTest extends Component {
       partialResults: [],
 
       isEnd: false,
+      modal1: false,
     };
     Voice.onSpeechStart = this.onSpeechStart.bind(this);
     Voice.onSpeechRecognized = this.onSpeechRecognized.bind(this);
@@ -62,10 +68,13 @@ export default class VoiceTest extends Component {
   }
 
   onSpeechResults(e) {
-
     this.setState({
       results: e.value,
     });
+    if(this.state.isEnd){
+
+      this.props.setResult(e.value[0])
+    }
   }
 
   onSpeechPartialResults(e) {
@@ -82,16 +91,15 @@ export default class VoiceTest extends Component {
 
   async _startRecognizing(e) {
     this.setState({
-      isEnd: false
-    })
-    this.setState({
       recognized: '',
       pitch: '',
       error: '',
       started: '',
       results: [],
       partialResults: [],
-      end: ''
+      end: '',
+      isEnd: false,
+      modal1: true,
     });
     try {
       await Voice.start('zh-CN');
@@ -101,9 +109,7 @@ export default class VoiceTest extends Component {
   }
 
   async _stopRecognizing(e) {
-    this.setState({
-      isEnd: true
-    })
+    this.setState({isEnd: true, modal1: false})
     try {
       await Voice.stop();
     } catch (e) {
@@ -138,83 +144,34 @@ export default class VoiceTest extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native Voice!
-        </Text>
-        <Text style={styles.instructions}>
-          Press the button and start speaking.
-        </Text>
-        <Text
-          style={styles.stat}>
-          {`Started: ${this.state.started}`}
-        </Text>
-        <Text
-          style={styles.stat}>
-          {`Recognized: ${this.state.recognized}`}
-        </Text>
-        <Text
-          style={styles.stat}>
-          {`Pitch: ${this.state.pitch}`}
-        </Text>
-        <Text
-          style={styles.stat}>
-          {`Error: ${this.state.error}`}
-        </Text>
-        <Text
-          style={styles.stat}>
-          Results
-        </Text>
-        {this.state.results.map((result, index) => {
-          return (
-            <Text
-              key={`result-${index}`}
-              style={styles.stat}>
-              {result}
-            </Text>
-          )
-        })}
-        <Text
-          style={styles.stat}>
-          Partial Results
-        </Text>
-        {this.state.partialResults.map((result, index) => {
-          return (
-            <Text
-              key={`partial-result-${index}`}
-              style={styles.stat}>
-              {result}
-            </Text>
-          )
-        })}
-        <Text
-          style={styles.stat}>
-          {`End: ${this.state.end}`}
-        </Text>
-        <TouchableHighlight onPress={this._startRecognizing.bind(this)}>
-          <Image
-            style={styles.button}
-            source={require('../images/button.png')}
-          />
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this._stopRecognizing.bind(this)}>
-          <Text
-            style={styles.action}>
-            Stop Recognizing
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this._cancelRecognizing.bind(this)}>
-          <Text
-            style={styles.action}>
-            Cancel
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this._destroyRecognizer.bind(this)}>
-          <Text
-            style={styles.action}>
-            Destroy
-          </Text>
-        </TouchableHighlight>
+      <View>
+      <TouchableOpacity
+        onPressIn={this._startRecognizing.bind(this)}
+        onPressOut={this._stopRecognizing.bind(this)}
+      >
+        <Image
+          style={styles.button}
+          source={require('../images/icons/microphone.png')}
+        />
+      </TouchableOpacity>
+        <Modal
+          visible={this.state.modal1}
+          transparent
+          maskClosable={false}
+          style={{width: width, height: height, backgroundColor: "transparent",  alignItems:"center", justifyContent:"center"}}
+          // onClose={this.onClose('modal1')}
+          title="松开发送"
+          // footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
+          // wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+        >
+          <View >
+            <Text>语音助手</Text>
+            <Text>我要使用app</Text>
+            <Text>我要发布需求</Text>
+            <Text>我要查看我的收藏</Text>
+          </View>
+        </Modal>
+
       </View>
     );
   }
@@ -222,8 +179,8 @@ export default class VoiceTest extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
   },
   container: {
     flex: 1,
@@ -254,4 +211,3 @@ const styles = StyleSheet.create({
   },
 });
 
-// AppRegistry.registerComponent('VoiceTest', () => VoiceTest);

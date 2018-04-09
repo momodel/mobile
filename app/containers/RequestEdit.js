@@ -21,7 +21,6 @@ export class RequestEdit extends Component {
 
   componentWillMount() {
     const {title, description, input, output, tags} = this.props
-    console.log("this.props", this.props)
     this.setState({
       value: {
         title: title,
@@ -94,8 +93,6 @@ export class RequestEdit extends Component {
         }
       }
     }
-    console.log("this.state.tags", this.state.tags)
-
     return (
       <View
         style={{

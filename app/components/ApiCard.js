@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 import PropTypes from 'prop-types'
 
-import {HearderRightV} from './Header'
+import {HearderRightV, HearderRight} from './Header'
 export const ApiCard = ({ app, onPress, isFavor, isStar}) => {
 
   const {favor_users=[], star_users=[], name: title, description, score} = app
 
   return <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
     <View style={styles.title}>
-      <Text style={{fontSize: 18}}>{title}</Text>
+      <Text style={{fontSize: 20, color: "#6D9CF9"}}>{title}</Text>
     </View>
 
     <View style={styles.desc}>
@@ -20,7 +20,7 @@ export const ApiCard = ({ app, onPress, isFavor, isStar}) => {
       {/*{score && <Text>匹配度：{score.toFixed(2)}</Text>}*/}
     {/*</View>*/}
 
-    <HearderRightV isFavor={isFavor} isStar={isStar} favorNum={favor_users.length} starNum={star_users.length}/>
+    <HearderRight isFavor={isFavor} isStar={isStar} favorNum={favor_users.length} starNum={star_users.length}/>
 
 
   </TouchableOpacity>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     padding: 3,
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#F9F9F9',
     margin: 8,
     // borderColor: "grey",
     // borderWidth: 0.5,

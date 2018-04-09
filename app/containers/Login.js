@@ -72,7 +72,6 @@ class LoginPage extends Component {
 
 
   onLoginWithPhone = () => {
-    console.log("onLoginWithPhone")
     if (this.state.phone === '' || this.state.code === '') {
       Alert.alert('警告', '请输入手机号和验证码', [{text: '确定'}])
       return

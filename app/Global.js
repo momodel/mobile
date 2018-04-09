@@ -1,13 +1,15 @@
+import avatar1 from './images/avatar/1.png'
+import avatar2 from './images/avatar/2.png'
+import avatar3 from './images/avatar/3.png'
+import avatar4 from './images/avatar/4.png'
+import avatar5 from './images/avatar/5.png'
+import avatar6 from './images/avatar/6.png'
+
 const Global = {
   // localhost
-  // URL: "http://10.52.22.150:3080",
-
-  // develop
-  // URL: "http://122.227.52.114:3080",
-  // URL: 'http://localhost:3080',
-
-  // URL1: 'http://122.224.116.44:8899',
-  URL: 'http://192.168.31.2:5005',
+  // URL: 'http://192.168.31.2:5005',
+  // production
+  URL: 'http://192.168.31.7:5005',
   MOCK: false,
   // production (demo)
   // URL: "http://10.52.22.196:3080",
@@ -66,7 +68,9 @@ const Global = {
     "float": "number",
     'datetime': 'Date',
     "image": {},
-  }
+  },
+
+  avatarList: [avatar1,avatar2,avatar3,avatar4,avatar5,avatar6]
 
 }
 module.exports = Global

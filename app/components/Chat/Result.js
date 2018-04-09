@@ -8,9 +8,6 @@ class ShowApiDetail extends Component {
     super(props)
   }
   componentWillMount() {
-    // const {steps} = this.props
-    // console.log("steps", steps)
-
     this.props.triggerNextStep()
   }
 

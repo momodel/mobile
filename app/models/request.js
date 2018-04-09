@@ -40,7 +40,6 @@ export default {
       const result = yield call(userRequestService.getRequest, {
         ...payload,
       })
-      console.log("result", result)
 
       yield put({
         type: 'updateState',
@@ -59,7 +58,6 @@ export default {
         ...payload,
         // requestId
       })
-      console.log("result", result)
 
       yield put({
         type: 'updateState',
@@ -74,7 +72,6 @@ export default {
       const result = yield call(requestAnswerService.getRequestAnswer, {
         ...payload,
       })
-      console.log("result", result)
 
       yield put({
         type: 'updateState',
@@ -95,7 +92,6 @@ export default {
         user_request_id,
         user_id
       })
-      console.log("result", result)
       // 如果成功， 提示成功，更新 comments
       if(result.response === "create user_request_comments success"){
         // 重新获取comments
@@ -124,7 +120,6 @@ export default {
         user_request_id,
         user_id
       })
-      console.log("result", result)
       // 如果成功， 提示成功，更新 comments
       if(result.response === "create user_request_comments success"){
         // 重新获取comments
@@ -148,8 +143,6 @@ export default {
       const result = yield call(userRequestService.updateUserRequest, {
         ...payload,
       })
-
-      console.log("result", result)
 
       yield put({
         type: 'updateState',

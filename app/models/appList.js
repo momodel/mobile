@@ -15,7 +15,6 @@ export default {
   effects: {
     * getUsedApps({payload}, {call, put, select}) {
       const result = yield call(userService.getUsedApps, {})
-      console.log("result", result)
       yield put({
         type: 'updateState',
         payload: {

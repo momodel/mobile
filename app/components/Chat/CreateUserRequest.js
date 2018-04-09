@@ -34,7 +34,6 @@ export default class CreateUserRequest extends Component {
       user_ID: this.props.username,
       type: this.props.type,
       onSuccess: (res) => {
-        console.log("res", res)
         this.setState({
           submitSuccess: true
         })

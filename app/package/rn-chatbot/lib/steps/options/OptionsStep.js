@@ -32,7 +32,7 @@ class OptionsStep extends Component {
   renderOption(option) {
     const { bubbleStyle } = this.props
     const { bubbleColor, fontColor } = this.props.step
-    const { value, label, route } = option
+    const { value, label, route, backgroundColor } = option
 
     return (
       <Option
@@ -42,9 +42,10 @@ class OptionsStep extends Component {
       >
         <OptionElement
           className="rsc-os-option-element"
-          style={bubbleStyle}
+          // style={{bubbleStyle}}
           bubbleColor={bubbleColor}
           borderColor={option.borderColor?option.borderColor:"white"}
+          backgroundColor={backgroundColor?option.backgroundColor:"#F9F9F9"}
         >
           <OptionText class="rsc-os-option-text" fontColor={fontColor}>
             {label}
@@ -87,7 +88,7 @@ class OptionsStep extends Component {
     const { options } = this.props.step
 
     return (
-      <Options className="rsc-os">
+      <Options className="rsc-os" style={{backgroundColor: "white"}}>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}

@@ -3,8 +3,10 @@
  * 示例写在Test里面
  */
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, ScrollView,
-  Dimensions, TextInput, ImageBackground, TouchableOpacity} from 'react-native'
+import {
+  StyleSheet, View, Image, Text, ScrollView,
+  Dimensions, TextInput, ImageBackground, TouchableOpacity
+} from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 
 import {connect} from 'react-redux'
@@ -64,7 +66,7 @@ export default class Predict extends Component {
     for (let key in args.input) {
       if (args.input.hasOwnProperty(key)) {
 
-        if (args.input[key].type === 'upload') {
+        if (args.input[key].value_type === 'img') {
           imageJson[args.input[key].name] = {...args.input[key]}
           continue
         }
@@ -116,7 +118,6 @@ export default class Predict extends Component {
     // todo 将state传入app
     let value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
-      console.log(value) // value here is an instance of Person
       let imageKeyValue = {}
       if (this.state.image) {
         // 存进input里
@@ -258,6 +259,12 @@ export default class Predict extends Component {
         ref={this.setContentRef}
         onContentSizeChange={this.onContentSizeChange}
       >
+        <View style={{justifyContent: "center", alignItems: "center", margin: 10}}>
+          <Text>
+            输入
+          </Text>
+        </View>
+
         <Form
           ref="form"
           type={this.state.Type}
@@ -265,100 +272,56 @@ export default class Predict extends Component {
           value={this.state.value}
           onChange={this.onChange}
         />
-
-        {/*<List>*/}
-        {/*{*/}
-        {/*_.map(args.input, (value, key) => {*/}
-        {/*if (value.value_type === "datetime") {*/}
-        {/*return <DatePicker*/}
-        {/*value={this.state[key]}*/}
-        {/*key={key}*/}
-        {/*onChange={date => this.setState({*/}
-        {/*form: {*/}
-        {/*...this.state.form,*/}
-        {/*[value.name]: v*/}
-        {/*}*/}
-        {/*})}*/}
-        {/*>*/}
-        {/*<List.Item arrow="horizontal">Datetime</List.Item>*/}
-        {/*</DatePicker>*/}
-        {/*}*/}
-        {/*return <InputItem*/}
-        {/*type={py_type_to_antd_components[value.value_type]}*/}
-        {/*placeholder={value.name}*/}
-        {/*onChange={v =>{*/}
-        {/*this.setState({*/}
-        {/*form: {*/}
-        {/*...this.state.form,*/}
-        {/*[value.name]: v*/}
-        {/*}*/}
-        {/*})*/}
-
-        {/*// this.setState({*/}
-        {/*//   [value.name]: v,*/}
-        {/*// })*/}
-        {/*}}*/}
-        {/*key={key}*/}
-        {/*/>*/}
-        {/*}*/}
-        {/*)}*/}
-        {/*</List>*/}
-
         {
           _.map(this.state.image, (value, key) => {
 
             return (
               <View key={key}>
-
-                {
-
-
-                }
                 <Text>{key}</Text>
                 {
-                  this.state.imageLoading[key]?<ActivityIndicator animating/>:
+                  this.state.imageLoading[key] ? <ActivityIndicator animating/> :
                     (
-                  value.file ? <ImageBackground
-                      // key={`resizeImage${i}`}
-                      source={{uri: value.file.uri}}
-                      style={{
-                        width: 100,
-                        height: 100,
-                        marginBottom: 30,
-                      }}
-                    >
-                      <TouchableOpacity
-                        underlayColor="#ffa456"
-                        // activeOpacity={0.9}
-                        // style={{ borderRadius: 8,padding: 6,marginTop:5}}
-                        style={{
-                          backgroundColor: 'transparent',
-                          opacity: 0.5,
-                          justifyContent: 'flex-end',
-                          alignItems: 'flex-end',
-                        }}
-                        onPress={
-                          () => this.handleDeleteImage(key)
-                        }
-                      >
-                        <Icon type="cross" size="md" color="white"/>
-                      </TouchableOpacity>
-                    </ImageBackground>
-                    :
-                    < TouchableOpacity
-                      onPress={() => this.handleAddImage(key)}
-                      style={{
-                        width: 100, height: 100,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        // boxSizing: "border-box",
-                        // borderRadius: 3,
-                        // border: "1pX solid #ddd",
-                        backgroundColor: "#fff",
-                      }}
-                    >
-                      <Image style={{width: 50, height: 50}} source={require("../images/icons/add.png")}/>
-                    </TouchableOpacity>
+                      value.file ? <ImageBackground
+                          // key={`resizeImage${i}`}
+                          source={{uri: value.file.uri}}
+                          style={{
+                            width: 250,
+                            height: 250,
+                            marginBottom: 30,
+                          }}
+                        >
+                          <TouchableOpacity
+                            underlayColor="#ffa456"
+                            // activeOpacity={0.9}
+                            // style={{ borderRadius: 8,padding: 6,marginTop:5}}
+                            style={{
+                              backgroundColor: 'transparent',
+                              opacity: 0.5,
+                              justifyContent: 'flex-end',
+                              alignItems: 'flex-end',
+                            }}
+                            onPress={
+                              () => this.handleDeleteImage(key)
+                            }
+                          >
+                            <Icon type="cross" size="md" color="white"/>
+                          </TouchableOpacity>
+                        </ImageBackground>
+                        :
+                        < TouchableOpacity
+                          onPress={() => this.handleAddImage(key)}
+                          style={{
+                            width: 100, height: 100,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            // boxSizing: "border-box",
+                            // borderRadius: 3,
+                            // border: "1pX solid #ddd",
+                            backgroundColor: "#fff",
+                          }}
+                        >
+                          <Image style={{width: 50, height: 50}} source={require("../images/icons/add.png")}/>
+                        </TouchableOpacity>
                     )
                 }
               </View>
@@ -371,56 +334,88 @@ export default class Predict extends Component {
           type="primary"
           onClick={this.onSubmit}
           style={{marginTop: 20}}
+          disable={Boolean(fetch_api_response)}
         >
           提交
         </Button>
 
-
-        {/*<Text>输出</Text>*/}
-        {/*<View style={{justifyContent: "center", alignItems: "center"}}>*/}
-        {/*{_.map(args.output, (value, key) => {*/}
-        {/*return <Text key={key}>key: {key}</Text>*/}
-        {/*})}*/}
-        {/*</View>*/}
+        <View style={{justifyContent: "center", alignItems: "center", margin: 10}}>
+          <Text>
+            输出
+          </Text>
+        </View>
 
         {
-          fetch_api_response ? <ActivityIndicator animating/> : (
-            api_response &&
-            _.map(api_response, (value, key) => {
-              console.log("api_response", api_response)
-              return (
-                <ResultItem value={value} key={key} keyIn={key}/>
-              )
-            })
-          )
+          _.map(args.output, (value, key) => {
+            let responseValue = api_response ? api_response[key] : null
+            return fetch_api_response ?
+              <ActivityIndicator animating key={key}/> :
+              <ResultItem defaultValue={value}
+                          key={key} keyIn={key}
+                          value={responseValue}
+              />
+          })
         }
+
+
       </ScrollView>
     )
   }
 }
 
-const ResultItem = ({keyIn, value}) => {
-  return (
-    <View style={{display: "flex", justifyContent: 'center', marginTop: 10}}>
-      <Text style={{fontSize: 20, color: "black"}}>
-        {keyIn}:
-      </Text>
-
-      <View style={{
-        backgroundColor: '#F5F5F5',
-        padding: 10, display: "flex",
-        alignItems: "center", justifyContent: 'center',
-        marginTop: 5,
-        height: 80
-      }}>
-        <Text style={{fontSize: 25, color: "#759DF2"}}>
-          {value}
+const ResultItem = ({keyIn, defaultValue, value}) => {
+  const {value_type} = defaultValue
+  if (value_type === 'img') {
+    return (
+      <View style={{display: "flex", justifyContent: 'center', marginTop: 10}}>
+        <Text style={{fontSize: 20, color: "black"}}>
+          {keyIn}:
         </Text>
+        <View style={{
+          backgroundColor: '#F5F5F5',
+          padding: 10, display: "flex",
+          alignItems: "center", justifyContent: 'center',
+          marginTop: 5,
+          // height: 80
+        }}>
+          {
+            value ?
+              <Image style={{
+                width: 250, height: 250,
+                resizeMode: "contain", borderWidth: 1, borderColor: 'black'
+              }}
+                     source={{uri: "data:image/jpeg;base64," + value}}/>
+              :
+              <View style={{
+                borderWidth: 1, borderColor: 'black', width: 250, height: 250,
+              }}/>
+          }
+        </View>
       </View>
+    )
+  } else {
+    return (
+      <View style={{display: "flex", justifyContent: 'center', marginTop: 10}}>
+        <Text style={{fontSize: 20, color: "black"}}>
+          {keyIn}:
+        </Text>
+
+        <View style={{
+          backgroundColor: '#F5F5F5',
+          padding: 10, display: "flex",
+          alignItems: "center", justifyContent: 'center',
+          marginTop: 5,
+          height: 80
+        }}>
+          <Text style={{fontSize: 25, color: "#759DF2"}}>
+            {value}
+          </Text>
+        </View>
+      </View>
+    )
+  }
 
 
-    </View>
-  )
 }
 
 function myCustomTemplate(locals) {

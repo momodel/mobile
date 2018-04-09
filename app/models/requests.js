@@ -20,8 +20,6 @@ export default {
       const result = yield call(userRequestService.getRequests, {
         user_ID
       })
-      console.log("result", result)
-
       yield put({
         type: 'updateState',
         payload: {

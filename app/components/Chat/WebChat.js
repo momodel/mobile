@@ -76,41 +76,47 @@ export const optionStep = {
       value: 1,
       label: '使用app',
       trigger: WebChatId.requirement.text,
-      borderColor: 'yellow',
+      borderColor: '#6D9CF9',
+      backgroundColor: 'white'
     },
     {
       value: 2,
       label: '发布需求',
       trigger: "createUserRequest", // WebChatId.asking.text,
-      borderColor: 'yellow',
+      borderColor: '#6D9CF9',
+      backgroundColor: 'white'
     },
 
     {
       value: 6,
       label: '我发布的需求',
       // trigger: "createUserRequest", // WebChatId.asking.text,
-      borderColor: 'yellow',
-      route: "Requests"
+      borderColor: '#6D9CF9',
+      route: "Requests",
+      backgroundColor: 'white'
     },
 
     {
       value: 3,
       label: '我收藏的服务',
       trigger: "favor_api_list",
-      borderColor: 'white',
+      borderColor: 'black',
+      backgroundColor: 'white'
     },
 
     {
       value: 4,
       label: '夫妻脸',
       trigger: WebChatId.failed.not_opened,
-      borderColor: 'white',
+      borderColor: 'black',
+      backgroundColor: 'white'
     },
     {
       value: 5,
       label: '购物推荐',
       trigger: WebChatId.failed.not_opened,
-      borderColor: 'white',
+      borderColor: 'black',
+      backgroundColor: 'white'
     },
 
   ],
@@ -166,6 +172,12 @@ function finalSteps() {
       id: "custom_message",
       message: ({previousValue}) => `${previousValue}`,
       trigger: WebChatId.message.hello,
+    },
+
+    {
+      id: "custom_message_no_trigger",
+      message: ({previousValue}) => `${previousValue}`,
+      // trigger: WebChatId.message.hello,
     },
 
     /*********** 分割线  **********/
@@ -347,10 +359,10 @@ class WebChat extends Component {
           hideBotAvatar
           botDelay={100}
           userDelay={10}
-          botBubbleColor="white"
+          botBubbleColor="#F9F9F9"
           botFontColor="black"
           // customStyle={{"background-color": "red"}}
-          userBubbleColor='#ffe695'
+          userBubbleColor='#DBEAFF'
           // userFontColor=''
         />
       </ThemeProvider>

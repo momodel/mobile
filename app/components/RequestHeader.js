@@ -134,7 +134,6 @@ const RequestInfo = ({category, tags, input, output}) => {
 
 
 const Steps = ({array}) => {
-  console.log("array1", array)
   let count = 0
   array = array.map(e => {
     if (e !== undefined && e !== null && e.length !== 0) {

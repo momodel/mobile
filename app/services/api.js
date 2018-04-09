@@ -25,7 +25,9 @@ export const getApiList = async (payload, callback, onSuccess, onError) => {
   //   return {response: apiList_1}
   // }
   return await customRequest(
-    `${prefix}/chat?${formatParam({search_query, page_no, page_size, max_score})}`,
+    `${prefix}/chat?${formatParam({search_query, page_no, page_size, max_score,
+      privacy: "public"
+    })}`,
     {},
     callback,
     onSuccess,

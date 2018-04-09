@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text
 } from 'react-native'
+import {showTime} from '../utils'
 
 
 export const Header = ({title, create_time, onPressFavor, isFavor, isStar,starNum, favorNum, onPressStar}) => {
@@ -20,7 +21,7 @@ export const Header = ({title, create_time, onPressFavor, isFavor, isStar,starNu
         <HearderRight {...{onPressFavor, isFavor, isStar, starNum, favorNum, onPressStar}}/>
       </View>
       <Text style={{fontSize: 15, color: "grey", marginTop: 10}}>
-        发布于{create_time}
+        发布于{showTime(create_time)}
       </Text>
     </View>
   )
@@ -118,7 +119,7 @@ export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, 
       onPress={onPressStar}
     >
       <Image
-        style={{width: 20, height: 20, tintColor: isStar ? "#FFE38F" : "grey"}}
+        style={{width: 20, height: 20, tintColor: isStar ? "#6D9CF9" : "grey"}}
         source={require('../images/navigation/thumb_up.png')}
       />
 
@@ -150,7 +151,7 @@ export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, 
       <Image
         style={{
           width: 25, height: 25,
-          tintColor: isFavor ? "#FFE38F" : "grey"
+          tintColor: isFavor ? "#FFC923" : "grey"
         }}
         source={require('../images/navigation/star.png')}
       />

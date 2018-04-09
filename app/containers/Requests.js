@@ -20,12 +20,12 @@ export default class Requests extends Component {
         keyboardShouldPersistTaps="always">
         {
           requests.map((request) => {
-            const {_id, title, create_time, answer_number, star_user} = request
+            const {_id, title, create_time, answer_number, star_user, comment_number} = request
             return <View style={styles.container} key={_id}>
               <RequestItem
                 title={title}
                 datetime={showTime(create_time)}
-                commitNum={"暂无"} answerNum={answer_number} favorNum={star_user.length}
+                commitNum={comment_number} answerNum={answer_number} favorNum={star_user.length}
                 onPress={() => {
                   this.props.dispatch(
                     NavigationActions.navigate({

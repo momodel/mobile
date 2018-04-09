@@ -62,13 +62,12 @@ export default async function request(url, options) {
   console.log(newUrl, newOptions)
 
   const response = await fetch(newUrl, newOptions)
-  console.log("response", response)
   const ret = {
     ...await response.json(),
     headers: {},
     status: response.status,
   }
-  console.log("ret", ret)
+  // console.log("ret", ret)
   return ret
 
   // return fetch(newUrl, newOptions)
@@ -161,8 +160,8 @@ export async function customRequest(
 
   console.log('newUrl, newOptions')
   console.log(newUrl, newOptions)
-  console.log(JSON.stringify(newUrl))
-  console.log(JSON.stringify(newOptions))
+  // console.log(JSON.stringify(newUrl))
+  // console.log(JSON.stringify(newOptions))
 
 
   return fetch(newUrl, newOptions)

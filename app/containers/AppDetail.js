@@ -62,11 +62,12 @@ export default class AppDetail extends Component {
 
     let inputTypes = []
     let outputTypes = []
+
+
     if(args){
       const {input, output} = args
       inputTypes = _.map(input, (value, key)=> value.value_type)
       outputTypes = _.map(output, (value, key)=> value.type)
-      console.log("inputTypes", inputTypes)
       // 筛选
       inputTypes = inputTypes.filter(function (item, index, self) {
         return self.indexOf(item) === index;
@@ -76,7 +77,6 @@ export default class AppDetail extends Component {
       outputTypes = outputTypes.filter(function (item, index, self) {
         return self.indexOf(item) === index;
       });
-      console.log("inputTypes2", inputTypes)
 
     }
 

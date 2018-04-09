@@ -26,7 +26,10 @@ export default {
       const username = yield call(Storage.get, 'username', '')
       const password = yield call(Storage.get, 'password', '')
       const token = yield call(Storage.get, 'token', '')
-
+      let user = ''
+      if (login){
+        user = login.response.user
+      }
       yield put(
         createAction('updateState')({
           login,
@@ -34,6 +37,7 @@ export default {
           password,
           token,
           loading: false,
+          user
         })
       )
     },
@@ -47,7 +51,7 @@ export default {
         yield call(Storage.set, 'password', payload.password)
         yield call(Storage.set, 'token', login.response.token)
         yield put(NavigationActions.navigate({ routeName: 'Main' }))
-        yield put(createAction('updateState')({ login, username, password,fetching: false }))
+        yield put(createAction('updateState')({ login, username, password,fetching: false, user: login.response.user }))
         yield call(Storage.set, 'login', login)
       }
     },
@@ -56,7 +60,6 @@ export default {
       // const {username, password} = payload
       yield put(createAction('updateState')({ fetching: true }))
       const response = yield call(authService.login_with_phone, payload)
-      console.log("response", response)
       if(!(response instanceof Error ) && response.status === 200){
         yield call(Storage.set, 'token', response.response.token)
         yield put(NavigationActions.navigate({ routeName: 'Main' }))
@@ -96,7 +99,6 @@ export default {
     *updateUser({ payload }, { call, put }) {
 
       const response = yield call(authService.updateUser, payload)
-      console.log("response", response)
       if(!(response instanceof Error ) && response.status === 200){
         yield put(createAction('updateState')({
           user: response.response.user

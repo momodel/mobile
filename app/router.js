@@ -22,7 +22,7 @@ import Requests from './containers/Requests'
 import Request from './containers/Request'
 import UsedApps from './containers/UsedApps'
 import {RequestEdit} from './containers/RequestEdit'
-import SpeechToText from './containers/SpeechToText'
+// import SpeechToText from './containers/SpeechToText'
 import UserInfo from './containers/UserInfo'
 // import Predict from './containers/Predict'
 // import ImagePickerExample from './containers/Test'
@@ -69,6 +69,10 @@ const MainNavigator = StackNavigator(
       navigationOptions: {
         title: '我的账户',
         header: null,
+        // headerStyle: {
+        //   backgroundColor: '#AACDFF',
+        //   borderBottom: 0
+        // },
       },
     },
     AppDetail: { screen: AppDetail,

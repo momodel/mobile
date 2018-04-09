@@ -64,7 +64,9 @@ class Home extends Component {
   })
 
   render() {
-    return <WebChat/>
+    return <View style={{backgroundColor:"white"}}>
+      <WebChat/>
+    </View>
   }
 }
 

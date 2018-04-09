@@ -27,7 +27,7 @@ export const RequestItem = ({title, datetime, commitNum, answerNum, favorNum, on
 RequestItem.propTypes = {
   title: PropTypes.string.isRequired,
   datetime: PropTypes.string.isRequired,
-  commitNum: PropTypes.string.isRequired,
+  // commitNum: PropTypes.string.isRequired,
   answerNum: PropTypes.number.isRequired,
   favorNum: PropTypes.number.isRequired,
   onPress: PropTypes.func,

@@ -98,9 +98,18 @@ export default class ApiList extends Component {
             )
           } else {
             // 如果是空的
-            this.setState({
-              displayText: "你还没有收藏任何服务，点击服务右上角收藏按钮，收藏服务"
-            })
+            if (this.props.get_type === "chat") {
+              this.setState({
+                displayText: "没有匹配到任何服务"
+              })
+            }
+            else{
+              this.setState({
+                displayText: "你还没有收藏任何服务，点击服务右上角收藏按钮，收藏服务"
+              })
+            }
+
+
             // Toast.fail('没有更多了')
           }
         }
@@ -160,7 +169,6 @@ export default class ApiList extends Component {
                 this.setState({showButton: false})
               }}/>) :
               <NoMoreCard onPress={() => {
-                console.log("this.props", this.props)
                 this.props.triggerCustomOption({
                   value: 2,
                   label: '发布需求',

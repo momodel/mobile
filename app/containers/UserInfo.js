@@ -3,6 +3,7 @@ import {StyleSheet, View, Image, Text, ImageBackground} from 'react-native'
 import {connect} from 'react-redux'
 import {List} from 'antd-mobile'
 import {Modal, Button, WingBlank, WhiteSpace, Toast} from 'antd-mobile'
+import {createAction} from "../utils"
 
 const prompt = Modal.prompt
 const operation = Modal.operation;
@@ -35,14 +36,15 @@ export default class UserInfo extends Component {
     })
   }
 
-
+  logout = () => {
+    this.props.dispatch(createAction('app/logout')())
+  }
 
 
   render() {
     const {username, login, user = {}} = this.props
     // const {email, phone, gender} = login.response.user
     const {email, phone, gender} = user
-    console.log("this.props", this.props)
 
     const lists = [
       {
@@ -132,8 +134,38 @@ export default class UserInfo extends Component {
           性别
         </Item>
 
+
+        <View style={{height: 50}}/>
+        {
+          login && <Item
+            style={styles.logout}
+            // arrow="horizontal"
+            onClick={this.logout}
+          >
+            <Text style={styles.logout_text}>退出登录</Text>
+          </Item>
+        }
       </List>
     )
   }
 
 }
+
+const styles = StyleSheet.create({
+  logout: {
+    height: 40,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    padding: 5,
+    margin: 5,
+  },
+  logout_text: {
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 18,
+    color: 'white',
+  },
+})

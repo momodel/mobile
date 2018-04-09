@@ -72,7 +72,6 @@ export default class Request extends Component {
                 initialPage={0}
                 style={{marginTop: 10}}
                 onTabClick={(tab, index) => {
-                  console.log('onTabClick', index, tab)
                   if (index === 1) {
                     this.setState({
                       showReplyTextSend: false,

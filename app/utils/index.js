@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export { NavigationActions } from 'react-navigation'
 
 export { default as Storage } from './storage'
@@ -22,10 +24,10 @@ export const createAction = type => payload => ({ type, payload })
 // }
 
 export function showTime(time, format = "yyyy-MM-dd hh:mm") {
-  if (typeof time === 'string' && time.toLowerCase().indexOf('z') === -1) {
-    time = formatTimeZ(time);
-  }
-  var date = new Date(time).Format(format);
+  // if (typeof time === 'string' && time.toLowerCase().indexOf('z') === -1) {
+  //   time = formatTimeZ(time);
+  // }
+  let date = moment(time).toDate().Format(format);
   return date.toLocaleString();
 }
 

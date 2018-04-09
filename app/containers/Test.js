@@ -22,9 +22,7 @@ export default class ImagePickerExample extends React.Component {
   }
 
   onClick = () => {
-    console.log("onClick")
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response)
 
       if (response.didCancel) {
         console.log('User cancelled image picker')
@@ -118,4 +116,47 @@ export default class ImagePickerExample extends React.Component {
       </View>
     )
   }
+}
+
+const ResultItem = ({keyIn, defaultValue, value}) => {
+  const {value_type} = defaultValue
+  if (value_type==='img'){
+    return (
+      <View style={{display: "flex", justifyContent: 'center', marginTop: 10}}>
+        <Text style={{fontSize: 20, color: "black"}}>
+          {keyIn}:
+        </Text>
+        {
+          value? <Image style={{width: 100, height: 50,
+              resizeMode: "contain", borderWidth: 1, borderColor: 'red'}}
+                        source={{uri: value}}/>
+            : <Text>
+              图片
+            </Text>
+        }
+      </View>
+    )
+  }else{
+    return (
+      <View style={{display: "flex", justifyContent: 'center', marginTop: 10}}>
+        <Text style={{fontSize: 20, color: "black"}}>
+          {keyIn}:
+        </Text>
+
+        <View style={{
+          backgroundColor: '#F5F5F5',
+          padding: 10, display: "flex",
+          alignItems: "center", justifyContent: 'center',
+          marginTop: 5,
+          height: 80
+        }}>
+          <Text style={{fontSize: 25, color: "#759DF2"}}>
+            {value}
+          </Text>
+        </View>
+      </View>
+    )
+  }
+
+
 }
