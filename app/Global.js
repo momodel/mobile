@@ -14,7 +14,7 @@ const Global = {
   // production (demo)
   // URL: "http://10.52.22.196:3080",
 
-  version: 0.1,
+  version: "0.1.1",
   // text font
   titleFontSize: 15,
   titleFontSizeBig: 18,
@@ -55,11 +55,11 @@ const Global = {
   },
 
   py_type_to_image: {
-    datetime: "datetime",
-    float: "digit",
-    "image": require('./images/icons/favor.png'),
-    "int": require('./images/icons/user.png'),
-    "str": require('./images/icons/message.png'),
+    datetime: require('./images/icons/py_type/date.png'),
+    float: require('./images/icons/py_type/number.png'),
+    "image": require('./images/icons/py_type/image.png'),
+    "int": require('./images/icons/py_type/number.png'),
+    "str": require('./images/icons/py_type/text.png'),
   },
 
   py_type_to_form: {

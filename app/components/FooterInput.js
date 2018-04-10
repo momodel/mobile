@@ -21,19 +21,21 @@ export class FooterInput extends Component {
           style={{margin: 10, justifyContent: "center", alignItems: "center"}}
         >
           <Image
-            style={{width: 20, height: 20}}
+            style={{width: 25, height: 25, tintColor: '#A7A8AA', justifyContent: "center", alignItems: "center"}}
             source={require('../images/icons/keyboard.png')}
           />
-          <Text style={{marginTop:5}}>
+
+          <Text style={{marginTop: 5, color: '#A7A8AA'}}>
             键盘
           </Text>
+
         </TouchableOpacity>
 
 
         <View style={{margin: 10, width: "40%", justifyContent: "center", alignItems: "center"}}>
           <Speech
             setResult={(result) => {
-              if(result !== this.state.result){
+              if (result !== this.state.result) {
                 this.setState({result: result})
                 this.props.sendSpeechResult(result)
               }
@@ -43,14 +45,14 @@ export class FooterInput extends Component {
 
 
         <TouchableOpacity
-          style={{margin: 10}}
+          style={{margin: 10, justifyContent: "center", alignItems: "center"}}
         >
           <Image
-            style={{width: 20, height: 20}}
+            style={{width: 20, height: 20, tintColor: '#A7A8AA', justifyContent: "center", alignItems: "center"}}
             source={require('../images/icons/category.png')}
           />
 
-          <Text style={{marginTop:5}}>
+          <Text style={{marginTop: 5, color: '#A7A8AA'}}>
             分类
           </Text>
         </TouchableOpacity>

@@ -47,7 +47,9 @@ class OptionsStep extends Component {
           borderColor={option.borderColor?option.borderColor:"white"}
           backgroundColor={backgroundColor?option.backgroundColor:"#F9F9F9"}
         >
-          <OptionText class="rsc-os-option-text" fontColor={fontColor}>
+          <OptionText class="rsc-os-option-text" fontColor={option.borderColor?option.borderColor:fontColor}
+
+          >
             {label}
           </OptionText>
         </OptionElement>

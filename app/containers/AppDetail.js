@@ -110,21 +110,32 @@ export default class AppDetail extends Component {
                     isFavor={this.isFavor()}
                     isStar={this.isStar()}
             />
+
+            <View style={{height: 1, backgroundColor: "#E7E7E7",
+              width: "100%", marginTop: 5, marginBottom: 5}}/>
+
             <View style={{flexDirection: "row", padding: 10}}>
               <Cube title="输入" content={inputTypes}/>
               <Cube title="输出" content={outputTypes}/>
               <Cube title="分类" content={category}/>
               <Cube title="发布者" content={user_ID} type="text"/>
             </View>
+
+            <View style={{height: 1, backgroundColor: "#E7E7E7",
+              width: "100%", marginTop: 5, marginBottom: 5}}/>
+
             <View style={{padding: 10}}>
-              <Text style={{marginTop: 10, marginBottom: 10, fontSize: 20}}>
-                应用描述
-              </Text>
+              {/*<Text style={{marginTop: 10, marginBottom: 10, fontSize: 20}}>*/}
+                {/*应用描述*/}
+              {/*</Text>*/}
               <Text style={{lineHeight: 20}}>{description}</Text>
               <Text>{doc}</Text>
             </View>
+
+
             <View style={{flexDirection: "row", padding: 10}}>
-              {tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
+
+              {tags?tags.map(tag => <Tag key={tag}>{tag}</Tag>): <Tag key={"tag"}>无标签</Tag>}
             </View>
           </View>
         </ScrollView>

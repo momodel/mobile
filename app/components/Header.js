@@ -106,6 +106,7 @@ export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, 
     style={{
       display: 'flex',
       flexDirection: 'row',
+      justifyContent: "space-between",
     }}
   >
     <TouchableOpacity
@@ -113,13 +114,18 @@ export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, 
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10,
         flexDirection: 'row',
+
+        paddingLeft: 0,
+        paddingRight: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+
       }}
       onPress={onPressStar}
     >
       <Image
-        style={{width: 20, height: 20, tintColor: isStar ? "#6D9CF9" : "grey"}}
+        style={{width: 19, height: 19, tintColor: isStar ? "#6D9CF9" : "grey"}}
         source={require('../images/navigation/thumb_up.png')}
       />
 
@@ -127,7 +133,7 @@ export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, 
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 5,
+        marginLeft: 3,
         marginRight:10,
 
       }}>
@@ -136,32 +142,32 @@ export const HearderRight = ({onPressFavor, isFavor, isStar, starNum, favorNum, 
 
     </TouchableOpacity>
 
-
-
     <TouchableOpacity
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10,
         flexDirection: 'row',
+        paddingLeft: 10,
+        paddingRight: 0,
+        paddingTop: 10,
+        paddingBottom: 10,
       }}
       onPress={onPressFavor}
     >
       <Image
         style={{
-          width: 25, height: 25,
+          width: 19, height: 19,
           tintColor: isFavor ? "#FFC923" : "grey"
         }}
-        source={require('../images/navigation/star.png')}
+        source={require('../images/navigation/star1.png')}
       />
 
       <Text style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 10,
-        marginRight:10,
+        marginLeft: 3,
 
       }}>
         {favorNum}

@@ -169,7 +169,7 @@ class LoginPage extends Component {
                 </TouchableOpacity>
 
 
-                <View style={styles.textContainer}>
+                <View style={[styles.textContainer]}>
                   <TouchableOpacity
                     onPress={() => {
                       this.props.dispatch(
@@ -180,14 +180,13 @@ class LoginPage extends Component {
                     <Text style={styles.text}>注册</Text>
                   </TouchableOpacity>
 
+
                   <TouchableOpacity
                     onPress={() => {
                       this.props.dispatch(
                         NavigationActions.navigate({ routeName: 'Forget' })
                       )
                     }}
-
-
                   >
                     <Text style={styles.text}>忘记密码</Text>
                   </TouchableOpacity>
@@ -335,6 +334,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: '#FBFAFA',
+    alignItems: "center"
   },
   icon: {
     top: 80,

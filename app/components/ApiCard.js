@@ -15,11 +15,9 @@ export const ApiCard = ({ app, onPress, isFavor, isStar}) => {
     <View style={styles.desc}>
       <Text style={{color: 'grey'}} numberOfLines={3}>{description}</Text>
     </View>
-
     {/*<View style={styles.text}>*/}
       {/*{score && <Text>匹配度：{score.toFixed(2)}</Text>}*/}
     {/*</View>*/}
-
     <HearderRight isFavor={isFavor} isStar={isStar} favorNum={favor_users.length} starNum={star_users.length}/>
 
 
@@ -71,19 +69,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F9F9F9',
     margin: 8,
-    // borderColor: "grey",
-    // borderWidth: 0.5,
     borderRadius: 8,
-    // boxShadow: "10px 10px 5px #888888"
-
     shadowColor: 'grey',
-    shadowOffset: {h: 2, w: 2},
+    shadowOffset: {h: 1, w: 1},
     shadowRadius: 8,
     shadowOpacity: 0.5,
-    // minWidth: 150,
-    // maxWidth: 300,
     width: 150,
-    height: 200,
+    height: 180,
     justifyContent: "space-between"
   },
   title: {
@@ -93,13 +85,9 @@ const styles = StyleSheet.create({
 
   desc: {
     alignItems: 'center',
-    // marginBottom: 5,
     marginLeft: 10,
     marginRight: 10,
     height: "35%",
-    // maxHeight: 100,
-    // minHeight: 100,
-
   },
 
   text: {

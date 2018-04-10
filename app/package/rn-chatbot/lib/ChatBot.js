@@ -806,11 +806,7 @@ class ChatBot extends Component {
               </Button>
             </Footer>
           }
-
-
         </InputView>
-
-
       </ChatBotContainer>
     )
   }
