@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 // import { connect } from 'dva'
 import {View, Text, StyleSheet} from 'react-native'
-import {List, InputItem, Button, Toast,} from 'antd-mobile'
+import {List, InputItem, Button, Toast, TouchableOpacity} from 'antd-mobile'
 import {WebChatId} from './WebChat'
 import {connect} from 'react-redux'
 
 import {createNewUserRequest} from "../../services/userRequest"
+import {NavigationActions} from "../../utils"
 
 @connect(({app}) => ({...app}))
 export default class CreateUserRequest extends Component {
@@ -26,7 +27,6 @@ export default class CreateUserRequest extends Component {
   }
 
   submit = () => {
-
     // 不能使用dispatch 直接调用service
     createNewUserRequest({
       requestTitle: this.state['requestTitle'],
@@ -43,20 +43,6 @@ export default class CreateUserRequest extends Component {
         Toast.fail("提交失败")
       }
     })
-
-
-    // this.props.dispatch({
-    //   type: 'allRequest/makeNewRequest',
-    //   payload: {
-    //     requestTitle: this.state['requestTitle'],
-    //     requestDescription: this.state['requestDescription'],
-    //     // requestDataset: this.state['requestDataset'],
-    //     // requestInput: this.state['requestInput'],
-    //     // requestOutput: this.state['requestOutput'],
-    //     // requestTags: this.state['requestTags'],
-    //     // requestCategory: this.state['requestCategory'],
-    //   }
-    // })
   }
 
 
@@ -66,9 +52,19 @@ export default class CreateUserRequest extends Component {
 
       this.state.submitSuccess ?
         <View style={[styles.cardContainer, {justifyContent: "center", alignItems: "center"}]}>
-          <Text style={{color: "blue"}}>
-            提交成功
-          </Text>
+          {/*<TouchableOpacity onPress={}>*/}
+            <Text style={{color: "blue", fontSize: 20}} onPress={
+              ()=>{
+                // todo Fixed
+                const request = {_id: "sss"}
+                this.props.dispatch(NavigationActions.navigate({
+                  routeName: "Request", params: {request}}))
+              }
+            }>
+              需求已成功发布， 你可以在我的-需求补充完整~
+            </Text>
+          {/*</TouchableOpacity>*/}
+
         </View> :
         <View style={styles.cardContainer}>
           <View>
@@ -85,6 +81,7 @@ export default class CreateUserRequest extends Component {
                 onChangeText={text => this.setState({requestDescription: text})}
               >需求描述</InputItem>
             </List>
+
             <Button type="primary" onClick={this.submit}>
               提交
             </Button>

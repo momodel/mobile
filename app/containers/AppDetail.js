@@ -15,6 +15,11 @@ import {Cube} from '../components/Cube'
 
 @connect(({api, app}) => ({api, app}))
 export default class AppDetail extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: navigation.state.params.api.name
+  })
+
+
   // help function, 判断是否收藏
   isFavor() {
     const {favor_users = []} = this.props.api.app
@@ -117,12 +122,12 @@ export default class AppDetail extends Component {
             <View style={{flexDirection: "row", padding: 10}}>
               <Cube title="输入" content={inputTypes}/>
               <Cube title="输出" content={outputTypes}/>
-              <Cube title="分类" content={category}/>
+              {/*<Cube title="分类" content={category}/>*/}
               <Cube title="发布者" content={user_ID} type="text"/>
             </View>
 
             <View style={{height: 1, backgroundColor: "#E7E7E7",
-              width: "100%", marginTop: 5, marginBottom: 5}}/>
+              width: "100%", marginTop: 0, marginBottom: 5}}/>
 
             <View style={{padding: 10}}>
               {/*<Text style={{marginTop: 10, marginBottom: 10, fontSize: 20}}>*/}
@@ -134,8 +139,7 @@ export default class AppDetail extends Component {
 
 
             <View style={{flexDirection: "row", padding: 10}}>
-
-              {tags?tags.map(tag => <Tag key={tag}>{tag}</Tag>): <Tag key={"tag"}>无标签</Tag>}
+              {(tags || tags.length === 0) ?tags.map(tag => <Tag key={tag}>{tag}</Tag>): <Tag key={"tag"}>无标签</Tag>}
             </View>
           </View>
         </ScrollView>

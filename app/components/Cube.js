@@ -19,7 +19,7 @@ export const Cube = ({title, content, type = "icon"}) => {
     return (
       <View style={{
         margin: 10, alignItems: "center", justifyContent: "center",
-        flex: 0.25
+        flex: 0.32
       }}>
         <Text style={{height: 40}}>
           {title}
@@ -44,7 +44,7 @@ export const Cube = ({title, content, type = "icon"}) => {
     return (
       <View style={{
         margin: 10, alignItems: "center", justifyContent: "center",
-        flex: 0.25
+        flex: 0.32
       }}>
         <Text style={{height: 40}}>
           {title}

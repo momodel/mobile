@@ -209,49 +209,6 @@ export default class Predict extends Component {
   render() {
     const {app: {args}, api_response, fetch_api_response} = this.props
 
-    // // 生成样式内容
-    // let typeJson = {}
-    // let fieldsJson = {}
-    // this.imgDict = []
-    // for (let key in args.input) {
-    //   if (args.input.hasOwnProperty(key)) {
-    //
-    //     if (args.input[key].type === 'upload') {
-    //       this.imgDict.push(args.input[key])
-    //       continue
-    //     }
-    //
-    //     if (args.input[key].required === false) {
-    //       typeJson[args.input[key].name] = t.maybe(t[(dict[args.input[key].value_type])])
-    //     }
-    //     else {
-    //       typeJson[args.input[key].name] = t[dict[args.input[key].value_type]]
-    //     }
-    //
-    //     fieldsJson[args.input[key].name] = {
-    //       placeholder: args.input[key].placeholder,
-    //       help: `type: ${args.input[key].value_type}`,
-    //       error: `need type: ${args.input[key].value_type}`,
-    //       // label: `${args.input[key].name}(${args.input[key].value_type})`
-    //     }
-    //   }
-    // }
-    // let Type = t.struct(
-    //   {
-    //     ...typeJson,
-    //     // img: t.String
-    //   }
-    // )
-    // let options = {
-    //   fields: {
-    //     ...fieldsJson,
-    //     // img: {
-    //     //   template: myCustomTemplate
-    //     // }
-    //
-    //   }
-    // }
-
     return (
       <ScrollView
         style={styles.container}
@@ -259,11 +216,11 @@ export default class Predict extends Component {
         ref={this.setContentRef}
         onContentSizeChange={this.onContentSizeChange}
       >
-        <View style={{justifyContent: "center", alignItems: "center", margin: 10}}>
-          <Text>
-            输入
-          </Text>
-        </View>
+        {/*<View style={{justifyContent: "center", alignItems: "center", margin: 10}}>*/}
+          {/*<Text>*/}
+            {/*输入*/}
+          {/*</Text>*/}
+        {/*</View>*/}
 
         <Form
           ref="form"
@@ -272,12 +229,14 @@ export default class Predict extends Component {
           value={this.state.value}
           onChange={this.onChange}
         />
+
         {
           _.map(this.state.image, (value, key) => {
-
             return (
               <View key={key}>
-                <Text>{key}</Text>
+                <Text style={{fontSize: 20, color: "black"}}>
+                  {key}:
+                </Text>
                 {
                   this.state.imageLoading[key] ? <ActivityIndicator animating/> :
                     (

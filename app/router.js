@@ -77,7 +77,7 @@ const MainNavigator = StackNavigator(
     },
     AppDetail: { screen: AppDetail,
       navigationOptions: {
-        title: '应用详情',
+        // title: '应用详情',
       },
     },
     Predict: { screen: Predict },
