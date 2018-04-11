@@ -16,7 +16,8 @@ export default class CreateUserRequest extends Component {
       requestTitle: null,
       requestDescription: null,
 
-      submitSuccess: false
+      submitSuccess: false,
+      request: null
       // requestDataset: values['requestDataset'],
       // requestInput: values['requestInput'],
       // requestOutput: values['requestOutput'],
@@ -35,8 +36,10 @@ export default class CreateUserRequest extends Component {
       type: this.props.type,
       onSuccess: (res) => {
         this.setState({
-          submitSuccess: true
+          submitSuccess: true,
+          request: res.response
         })
+
       },
       onError: (res) => {
         console.log("res1", res)
@@ -48,21 +51,20 @@ export default class CreateUserRequest extends Component {
 
   render() {
     return (
-
-
       this.state.submitSuccess ?
-        <View style={[styles.cardContainer, {justifyContent: "center", alignItems: "center"}]}>
+        <View style={[styles.bubble]}>
           {/*<TouchableOpacity onPress={}>*/}
-            <Text style={{color: "blue", fontSize: 20}} onPress={
-              ()=>{
-                // todo Fixed
-                const request = {_id: "sss"}
-                this.props.dispatch(NavigationActions.navigate({
-                  routeName: "Request", params: {request}}))
-              }
-            }>
-              需求已成功发布， 你可以在我的-需求补充完整~
-            </Text>
+          <Text style={{ fontSize: 15}} onPress={
+            () => {
+              this.props.dispatch(NavigationActions.navigate({
+                routeName: "Request", params: {request: this.state.request}
+              }))
+            }
+          }>
+            <Text >你的需求 {this.state.request.name} 已成功发布， 你可以在我的-需求补充完整~ ，</Text>
+            <Text style={{color: "#6798F6",}}>轻触前往需求</Text>
+
+          </Text>
           {/*</TouchableOpacity>*/}
 
         </View> :
@@ -106,5 +108,24 @@ const styles = StyleSheet.create({
     shadowOffset: {h: 2, w: 2},
     shadowRadius: 8,
     shadowOpacity: 0.5,
+  },
+  bubble: {
+    width: "60%",
+    backgroundColor: "#F9F9F9",
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 18,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 18,
+
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 12,
+    paddingRight: 12,
+    minHeight: 42,
+
+    shadowOffset: {h: 1, w: 1},
+    shadowRadius: 2,
+    shadowOpacity: 0.3,
   }
+
 })

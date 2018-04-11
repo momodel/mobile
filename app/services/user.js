@@ -98,10 +98,14 @@ export const favorApi = async payload => {
   })
 }
 
-export const getfavorApps = async (payload, callback, onSuccess, onError) => {
-  // return request(`${prefix}/favor_apps`, {
-  //   method: 'get',
-  // })
+export const getfavorApps = async (payload, callback, onSuccess, onError, ) => {
+  const {pageNo: page_no, pageSize: page_size} = payload
+  return await request(
+    `${prefix}/action_entity?${formatParam({page_no, page_size, action_entity: "favor_apps"})}`
+  )
+}
+
+export const getfavorAppsCustom = async (payload, callback, onSuccess, onError, ) => {
   const {pageNo: page_no, pageSize: page_size} = payload
   return await customRequest(
     `${prefix}/action_entity?${formatParam({page_no, page_size, action_entity: "favor_apps"})}`,
@@ -110,14 +114,6 @@ export const getfavorApps = async (payload, callback, onSuccess, onError) => {
     onSuccess,
     onError
   )
-  //
-  // return await customRequest(
-  //   `${prefix}/favor_apps?${formatParam({page_no, page_size})}`,
-  //   {},
-  //   callback,
-  //   onSuccess,
-  //   onError
-  // )
 }
 
 export const getUsedApps = async payload => {
@@ -139,6 +135,13 @@ export const getUserInfo = async payload => {
   // const {} = payload
   return await request(`${prefix}/profile/${payload.user_ID}`)
 }
+
+export const getUserStatistics = async payload => {
+  // const {} = payload
+  return await request(`${prefix}/user_statistics`)
+}
+
+
 
 
 // export const starApi = async payload => {

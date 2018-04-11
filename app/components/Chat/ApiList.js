@@ -12,7 +12,8 @@ import _ from 'lodash'
 import {ApiCard, NoMoreCard, MoreCard} from '../../components/ApiCard'
 import {WebChatId} from './WebChat'
 import {getApiList} from '../../services/api'
-import {getfavorApps} from '../../services/user'
+import {getfavorAppsCustom as getfavorApps} from '../../services/user'
+
 import {NavigationActions} from '../../utils'
 
 

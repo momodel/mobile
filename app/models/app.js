@@ -108,12 +108,27 @@ export default {
 
     *getUserInfo({ payload }, { call, put }) {
       const response = yield call(authService.getUserInfo, payload)
+
+      if(!(response instanceof Error ) && response.status === 200){
+        yield put(createAction('updateState')({
+          user: response.response
+        }))
+      }
+    },
+
+    *getUserStatistics({ payload }, { call, put }) {
+      const response = yield call(authService.getUserStatistics, payload)
+
       if(!(response instanceof Error ) && response.status === 200){
         yield put(createAction('updateState')({
           user: response.response
         }))
       }
     }
+
+
+
+
 
     },
   subscriptions: {

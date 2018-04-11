@@ -20,7 +20,8 @@ import AppDetail from './containers/AppDetail'
 import Predict from './containers/Predict'
 import Requests from './containers/Requests'
 import Request from './containers/Request'
-import UsedApps from './containers/UsedApps'
+import FavorApps from './containers/FavorApps'
+
 import {RequestEdit} from './containers/RequestEdit'
 // import SpeechToText from './containers/SpeechToText'
 import UserInfo from './containers/UserInfo'
@@ -93,11 +94,18 @@ const MainNavigator = StackNavigator(
       }
     },
 
-    UsedApps: { screen: UsedApps,
+    // UsedApps: { screen: UsedApps,
+    //   navigationOptions: {
+    //     title: '使用记录',
+    //   }
+    // },
+
+    FavorApps: { screen: FavorApps,
       navigationOptions: {
-        title: '使用记录',
+        title: '我的收藏',
       }
     },
+
     RequestEdit: { screen: RequestEdit,
       navigationOptions: {
         title: '修改需求',

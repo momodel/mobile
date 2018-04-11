@@ -7,6 +7,7 @@ import {showTime} from '../../utils/index'
 import {RequestItem} from './RequestItem'
 
 export {RequestItem}
+import styles from './styles'
 
 export const ItemWithImage = ({onPress, children}) => (
   <TouchableOpacity style={styles.itemWithImageContainer} onPress={onPress}>
@@ -56,7 +57,7 @@ MessageItem.defaultProps = {
   isRead: false
 }
 
-export const UsedAppItemBack = ({usedApp, onPress}) => {
+export const UsedAppItemBackup = ({usedApp, onPress}) => {
   const {app_obj = {}, datetime} = usedApp
   const {name, description, favor_users = [], star_users = []} = app_obj
 
@@ -125,42 +126,4 @@ export const UsedAppItem = ({usedApp, onPress}) => {
 }
 
 
-const styles = StyleSheet.create({
-  itemWithImageContainer: {
-    flexDirection: "row",
-    margin: 8,
-    padding: 3,
-    backgroundColor: 'white',
 
-    borderRadius: 5,
-    shadowColor: 'grey',
-    shadowOffset: {h: 2, w: 2},
-    shadowRadius: 8,
-    shadowOpacity: 0.5,
-  },
-  itemContainer: {
-    display: 'flex',
-    padding: 3,
-    margin: 8,
-    // alignItems: 'center',
-    backgroundColor: 'white',
-
-    borderRadius: 5,
-    shadowColor: 'grey',
-    shadowOffset: {h: 2, w: 2},
-    shadowRadius: 8,
-    shadowOpacity: 0.5,
-  },
-  title: {
-    padding: 10,
-    marginTop: -10
-  },
-  datetime: {
-    padding: 10,
-  },
-
-  text: {
-    alignItems: 'center',
-    margin: 5,
-  },
-})

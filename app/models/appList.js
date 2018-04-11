@@ -4,7 +4,10 @@ import * as userService from '../services/user'
 export default {
   namespace: 'appList',
   state: {
-    usedApps: []
+    // apps 使用记录
+    usedApps: [],
+    // 收藏的 apps
+    favorApps: [],
   },
   reducers: {
     updateState(state, { payload }) {
@@ -21,7 +24,18 @@ export default {
           usedApps: result.response.objects
         }
       })
-
     },
+
+    * getFavorApps({payload}, {call, put, select}) {
+      const result = yield call(userService.getfavorApps, payload)
+      console.log("result", result)
+
+      yield put({
+        type: 'updateState',
+        payload: {
+          favorApps: result.response.objects
+        }
+      })
+    }
   }
 }

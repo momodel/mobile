@@ -57,26 +57,26 @@ export const getApiList = async (payload, callback, onSuccess, onError) => {
 //   )
 // }
 
-const getFavorApiList = async ({keyword, pageNo = defaultPageNo, pageSize = defaultPageSize, user_ID},
-                               callback,
-                               onSuccess,
-                               onError) => {
-  if (MOCK) {
-    let apiList_1 = pagination(pageNo, pageSize, apiList)
-    onSuccess && onSuccess(apiList_1)
-    return apiList_1
-  }
-  return await customRequest(
-    `${prefix}get_matched_apis?search_query=${keyword}&get_type=favor
-  $user_ID=${user_ID}
-  &page_no=${pageNo}
-  &page_size=${pageSize}`,
-    {},
-    callback,
-    onSuccess,
-    onError
-  )
-}
+// const getFavorApiList = async ({keyword, pageNo = defaultPageNo, pageSize = defaultPageSize, user_ID},
+//                                callback,
+//                                onSuccess,
+//                                onError) => {
+//   if (MOCK) {
+//     let apiList_1 = pagination(pageNo, pageSize, apiList)
+//     onSuccess && onSuccess(apiList_1)
+//     return apiList_1
+//   }
+//   return await customRequest(
+//     `${prefix}get_matched_apis?search_query=${keyword}&get_type=favor
+//   $user_ID=${user_ID}
+//   &page_no=${pageNo}
+//   &page_size=${pageSize}`,
+//     {},
+//     callback,
+//     onSuccess,
+//     onError
+//   )
+// }
 
 export const runApi = async payload => {
   return request(`${prefix}/run/${payload.app_id}`, {

@@ -3,16 +3,21 @@ import {StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Dimens
 import {connect} from 'react-redux'
 import {List, Icon} from 'antd-mobile'
 import {createAction, NavigationActions} from '../utils'
-
-import UsedApps from './UsedApps'
 const { width, height } = Dimensions.get('window')
-
+import UsedApps from './UsedApps'
+import AppsList, {UsedAppsList} from '../components/List/AppsList'
 const Item = List.Item
-import  {avatarList} from  '../Global'
+import {avatarList} from  '../Global'
 const radius = 40
 
-@connect(({app}) => ({...app}))
+@connect(({app, appList}) => ({...app, appList}))
 class Account extends Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'appList/getUsedApps'
+    })
+  }
+
   gotoLogin = () => {
     this.props.dispatch(NavigationActions.navigate({routeName: 'Login'}))
   }
@@ -29,6 +34,10 @@ class Account extends Component {
   //   this.props.dispatch(NavigationActions.navigate({routeName: 'UsedApps'}))
   // }
 
+  // FavorApps
+  gotoFavorApps = () => {
+    this.props.dispatch(NavigationActions.navigate({routeName: 'FavorApps'}))
+  }
 
   render() {
     const {username, login, user} = this.props
@@ -56,8 +65,6 @@ class Account extends Component {
           >我的</Text>
           </TouchableOpacity>
         </View>
-
-
 
       <ScrollView style={{backgroundColor: "white"}}
                   keyboardShouldPersistTaps="always">
@@ -87,7 +94,7 @@ class Account extends Component {
 
         <View style={{flexDirection: "row",  alignItems: "center", justifyContent: "center", height: height*0.1, width: width}}>
           <TouchableOpacity style={{alignItems: "center", justifyContent: "center", width: "45%"}}
-                // onPress={this.gotoRequests}
+                onPress={this.gotoFavorApps}
           >
             <Text style={{fontSize: 20, color: "#6D9CF9"}}>
               10
@@ -119,9 +126,17 @@ class Account extends Component {
           </Text>
         </View>
 
-        <UsedApps />
+        {/*<UsedApps />*/}
 
 
+        <UsedAppsList Apps={this.props.appList.usedApps} onPressItem={(App)=>
+          this.props.dispatch(
+            NavigationActions.navigate({
+              routeName: 'AppDetail',
+              params: {api: App},
+            })
+          )
+        }/>
 
         {/*<List style={{*/}
           {/*marginTop: "40%"*/}
