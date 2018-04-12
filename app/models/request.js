@@ -25,7 +25,19 @@ export default {
         ...state,
         comments: state.comments.push(payload.comment)
       }
-    }
+    },
+
+    // updateAcceptAnswer(state, action) {
+    //   let request_answer_id = action.payload.request_answer_id
+    //   return {
+    //     ...state,
+    //     focusUserRequest:
+    //       {
+    //         ...state.focusUserRequest,
+    //         accept_answer:request_answer_id
+    //       }
+    //   }
+    // },
 
   },
   effects: {
@@ -154,9 +166,23 @@ export default {
       yield put(NavigationActions.back())
 
 
-    }
+    },
+
+    * acceptAnswer(action, {call, put, select}) {
+      let payload = action.payload
+      yield call(requestAnswerService.acceptAnswer, payload)
+
+      // TODO 看返回结果， 是一个answer, 更改 answers
+      // 是answer_id 更改对应answer, 添加flag
+      // 更改 request 的 accept answer 既可以了
 
 
+      // yield put({
+      //   type: 'updateAcceptAnswer',
+      //   payload: {request_answer_id:payload.request_answer_id}
+      // })
+
+    },
 
 
 

@@ -3,11 +3,14 @@ import {StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Dimens
 import {connect} from 'react-redux'
 import {List, Icon} from 'antd-mobile'
 import {createAction, NavigationActions} from '../utils'
-const { width, height } = Dimensions.get('window')
+
+const {width, height} = Dimensions.get('window')
 import UsedApps from './UsedApps'
 import AppsList, {UsedAppsList} from '../components/List/AppsList'
+
 const Item = List.Item
-import {avatarList} from  '../Global'
+import {avatarList} from '../Global'
+
 const radius = 40
 
 @connect(({app, appList}) => ({...app, appList}))
@@ -41,111 +44,154 @@ class Account extends Component {
 
   render() {
     const {username, login, user} = this.props
-    const picNumber = parseInt(user._id.slice(20))%6
+    const picNumber = parseInt(user._id.slice(20)) % 6
     return (
       <View>
 
-        <View style={{width: "100%", height: height*0.1, backgroundColor: "#AACDFF",}}>
+        <View style={{width: "100%", height: height * 0.1,
+          backgroundColor: "#AACDFF", flexDirection: "row",
+          justifyContent: "space-between"}}>
           <TouchableOpacity
-          style={{
-          // position: 'absolute',
-          // left: 100,
-          // top: 100,
-          marginTop: "7%",
-          paddingLeft: "2.5%",
-          backgroundColor: 'transparent',
-          flexDirection: "row",
-          // justifyContent: "center",
-          alignItems: "center"
-          }}
-          onPress={() => this.props.dispatch(NavigationActions.back())}
+            style={{
+              // position: 'absolute',
+              // left: 100,
+              // top: 100,
+              marginTop: "7%",
+              paddingLeft: "2.5%",
+              backgroundColor: 'transparent',
+              flexDirection: "row",
+              // justifyContent: "center",
+              alignItems: "center"
+            }}
+            onPress={() => this.props.dispatch(NavigationActions.back())}
           >
-          <Icon type="left" color='#2F7DF6' style={{marginRight: 10, color: "blue"}}/>
-          <Text style={{fontSize: 20, color: "white"}}
-          >我的</Text>
-          </TouchableOpacity>
-        </View>
-
-      <ScrollView style={{backgroundColor: "white"}}
-                  keyboardShouldPersistTaps="always">
-        <View style={{width: "100%", height: height*0.08, backgroundColor: "#AACDFF",}}>
-        </View>
-
-        <TouchableOpacity style={{width: "100%", alignItems: "center", marginTop: -radius}}
-              onPress={() => {
-                this.props.dispatch(NavigationActions.navigate({routeName: 'UserInfo'}))
-              }}
-        >
-          <View style={{width: radius*2, height: radius*2, borderRadius: radius, backgroundColor: "white", alignItems: "center", justifyContent: "center"}} >
-            <Image style={{width: radius*2-2, height: radius*2-2, borderRadius: radius-1}} source={avatarList[picNumber]} />
-          </View>
-
-          <View style={{marginTop: 10}}>
-            <Text style={{fontSize: 20}}>
-              {username}
-            </Text>
-          </View>
-        </TouchableOpacity>
-
-        <View style={{alignItems: "center", justifyContent: "center", margin: 10}}>
-          <View style={{width: "90%", backgroundColor: "#F2F2F2", height: 1}}/>
-        </View>
-
-
-        <View style={{flexDirection: "row",  alignItems: "center", justifyContent: "center", height: height*0.1, width: width}}>
-          <TouchableOpacity style={{alignItems: "center", justifyContent: "center", width: "45%"}}
-                onPress={this.gotoFavorApps}
-          >
-            <Text style={{fontSize: 20, color: "#6D9CF9"}}>
-              10
-            </Text>
-            <Text style={{marginTop: 10}}>
-              收藏
-            </Text>
+            <Icon type="left" color='#2F7DF6' style={{marginRight: 10, color: "blue"}}/>
+            <Text style={{fontSize: 20, color: "white"}}
+            >我的</Text>
           </TouchableOpacity>
 
-          <View style={{alignItems: "center", justifyContent: "center"}}>
-            <View style={{height: "90%", backgroundColor: "#F2F2F2", width: 1}}/>
+
+          <TouchableOpacity
+            style={{
+              marginTop: "7%",
+              paddingRight: "2.5%",
+              backgroundColor: 'transparent',
+
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              // margin: 10,
+              width: 50,
+              height: 40,
+            }}
+            onPress={() => {
+              this.props.dispatch(
+                NavigationActions.navigate({routeName: 'Message'})
+              )
+            }}
+          >
+            <Image
+              style={{width: 25, height: 25, tintColor: 'white'}}
+              source={require('../images/icons/mail.png')}
+            />
+          </TouchableOpacity>
+
+        </View>
+
+        <ScrollView style={{backgroundColor: "white"}}
+                    keyboardShouldPersistTaps="always">
+          <View style={{width: "100%", height: height * 0.08, backgroundColor: "#AACDFF",}}>
           </View>
 
-          <TouchableOpacity style={{alignItems: "center", justifyContent: "center", width: "45%"}}
-                onPress={this.gotoRequests}
+          <TouchableOpacity style={{width: "100%", alignItems: "center", marginTop: -radius}}
+                            onPress={() => {
+                              this.props.dispatch(NavigationActions.navigate({routeName: 'UserInfo'}))
+                            }}
           >
-            <Text style={{fontSize: 20, color: "#6D9CF9"}}>
-              2
-            </Text>
-            <Text style={{marginTop: 10}}>
-              需求
-            </Text>
+            <View style={{
+              width: radius * 2,
+              height: radius * 2,
+              borderRadius: radius,
+              backgroundColor: "white",
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
+              <Image style={{width: radius * 2 - 2, height: radius * 2 - 2, borderRadius: radius - 1}}
+                     source={avatarList[picNumber]}/>
+            </View>
+
+            <View style={{marginTop: 10}}>
+              <Text style={{fontSize: 20}}>
+                {username}
+              </Text>
+            </View>
           </TouchableOpacity>
-        </View>
 
-        <View style={{backgroundColor: "#F2F4F6", height: 30, justifyContent: "center"}}>
-          <Text style={{marginLeft: 30}}>
-            使用记录
-          </Text>
-        </View>
-
-        {/*<UsedApps />*/}
+          <View style={{alignItems: "center", justifyContent: "center", margin: 10}}>
+            <View style={{width: "90%", backgroundColor: "#F2F2F2", height: 1}}/>
+          </View>
 
 
-        <UsedAppsList Apps={this.props.appList.usedApps} onPressItem={(App)=>
-          this.props.dispatch(
-            NavigationActions.navigate({
-              routeName: 'AppDetail',
-              params: {api: App},
-            })
-          )
-        }/>
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            height: height * 0.1,
+            width: width
+          }}>
+            <TouchableOpacity style={{alignItems: "center", justifyContent: "center", width: "45%"}}
+                              onPress={this.gotoFavorApps}
+            >
+              <Text style={{fontSize: 20, color: "#6D9CF9"}}>
+                10
+              </Text>
+              <Text style={{marginTop: 10}}>
+                收藏
+              </Text>
+            </TouchableOpacity>
 
-        {/*<List style={{*/}
+            <View style={{alignItems: "center", justifyContent: "center"}}>
+              <View style={{height: "90%", backgroundColor: "#F2F2F2", width: 1}}/>
+            </View>
+
+            <TouchableOpacity style={{alignItems: "center", justifyContent: "center", width: "45%"}}
+                              onPress={this.gotoRequests}
+            >
+              <Text style={{fontSize: 20, color: "#6D9CF9"}}>
+                2
+              </Text>
+              <Text style={{marginTop: 10}}>
+                需求
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{backgroundColor: "#F2F4F6", height: 30, justifyContent: "center"}}>
+            <Text style={{marginLeft: 30}}>
+              使用记录
+            </Text>
+          </View>
+
+          {/*<UsedApps />*/}
+
+
+          <UsedAppsList Apps={this.props.appList.usedApps} onPressItem={(App) =>
+            this.props.dispatch(
+              NavigationActions.navigate({
+                routeName: 'AppDetail',
+                params: {api: App},
+              })
+            )
+          }/>
+
+          {/*<List style={{*/}
           {/*marginTop: "40%"*/}
-        {/*}}>*/}
+          {/*}}>*/}
           {/*{*/}
-            {/*login && <Item style={{alignItems: "center"}} onClick={() => {*/}
-            {/*}}>*/}
-              {/*{username}*/}
-            {/*</Item>*/}
+          {/*login && <Item style={{alignItems: "center"}} onClick={() => {*/}
+          {/*}}>*/}
+          {/*{username}*/}
+          {/*</Item>*/}
           {/*}*/}
 
           {/*/!*{*!/*/}
@@ -157,18 +203,18 @@ class Account extends Component {
           {/*<View style={{height: 15}}/>*/}
 
           {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-                {/*arrow="horizontal" onClick={() => {*/}
-            {/*this.props.dispatch(NavigationActions.navigate({routeName: 'UserInfo'}))*/}
+          {/*arrow="horizontal" onClick={() => {*/}
+          {/*this.props.dispatch(NavigationActions.navigate({routeName: 'UserInfo'}))*/}
           {/*}}>*/}
-            {/*账号与安全*/}
+          {/*账号与安全*/}
           {/*</Item>*/}
 
           {/*<View style={{height: 15}}/>*/}
 
           {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-                {/*arrow="horizontal" onClick={this.gotoMessage}*/}
+          {/*arrow="horizontal" onClick={this.gotoMessage}*/}
           {/*>*/}
-            {/*消息列表*/}
+          {/*消息列表*/}
           {/*</Item>*/}
 
           {/*/!*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*!/*/}
@@ -180,32 +226,32 @@ class Account extends Component {
           {/*<View style={{height: 15}}/>*/}
 
           {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-                {/*arrow="horizontal" onClick={this.gotoRequests}>*/}
-            {/*我的需求*/}
+          {/*arrow="horizontal" onClick={this.gotoRequests}>*/}
+          {/*我的需求*/}
           {/*</Item>*/}
 
           {/*<View style={{height: 15}}/>*/}
 
           {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-                {/*arrow="horizontal" onClick={this.gotoUsedApps}>*/}
-            {/*我的历史记录*/}
+          {/*arrow="horizontal" onClick={this.gotoUsedApps}>*/}
+          {/*我的历史记录*/}
           {/*</Item>*/}
 
           {/*<View style={{height: 50}}/>*/}
           {/*{*/}
-            {/*login && <Item*/}
-              {/*style={styles.logout}*/}
-              {/*// arrow="horizontal"*/}
-              {/*onClick={this.logout}*/}
-            {/*>*/}
-              {/*<Text style={styles.logout_text}>退出登录</Text>*/}
-            {/*</Item>*/}
+          {/*login && <Item*/}
+          {/*style={styles.logout}*/}
+          {/*// arrow="horizontal"*/}
+          {/*onClick={this.logout}*/}
+          {/*>*/}
+          {/*<Text style={styles.logout_text}>退出登录</Text>*/}
+          {/*</Item>*/}
           {/*}*/}
 
-        {/*</List>*/}
+          {/*</List>*/}
 
-        {/*/!*<List/>*!/*/}
-      </ScrollView>
+          {/*/!*<List/>*!/*/}
+        </ScrollView>
       </View>
     )
   }

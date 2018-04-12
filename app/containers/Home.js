@@ -36,7 +36,7 @@ class Home extends Component {
         >
           <Image
             style={{width: 25, height: 25, tintColor: 'grey'}}
-            source={require('../images/icons/message.png')}
+            source={require('../images/icons/mail.png')}
           />
         </TouchableOpacity>
 

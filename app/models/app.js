@@ -45,6 +45,9 @@ export default {
       const {username, password} = payload
       yield put(createAction('updateState')({ fetching: true }))
       const login = yield call(authService.login, payload)
+
+      console.log("login", login)
+
       if (!(login instanceof Error ) && login.status === 200) {
         // 将 username password token存起来
         yield call(Storage.set, 'username', payload.username)

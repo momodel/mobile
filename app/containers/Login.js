@@ -95,190 +95,180 @@ class LoginPage extends Component {
       }
     })
 
-    let count = 59;
-    this.setState({ count });
+    let count = 59
+    this.setState({count})
     this.interval = setInterval(() => {
-      count -= 1;
-      this.setState({ count });
+      count -= 1
+      this.setState({count})
       if (count === 0) {
-        clearInterval(this.interval);
+        clearInterval(this.interval)
       }
-    }, 1000);
+    }, 1000)
+  }
+
+
+  renderAccount() {
+    return <View style={styles.bg}>
+      <InputItem
+        type="text"
+        placeholder="输入你的用户名"
+        onChange={value => {
+          this.setState({
+            username: value,
+          })
+        }}
+        autoCapitalize="none"
+        value={this.state.username}
+      >
+        用户名
+      </InputItem>
+
+      <InputItem
+        type="password"
+        placeholder="****"
+        onChange={value => {
+          this.setState({
+            password: value,
+          })
+        }}
+        value={this.state.password}
+      >
+        密码
+      </InputItem>
+
+      <Button style={styles.btn} onClick={this.onLogin}>
+        <Text style={{color: 'white'}}>登录</Text>
+      </Button>
+
+      <TouchableOpacity
+        onPress={() => {
+          this.setState({
+            type: "phone"
+          })
+        }}
+        style={{justifyContent: "center", alignItems: 'center', marginTop: 15}}
+      >
+        <Text style={{color: '#34C0E2'}}>使用手机号登录</Text>
+      </TouchableOpacity>
+
+
+      <View style={[styles.textContainer]}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.dispatch(
+              NavigationActions.navigate({routeName: 'Register'})
+            )
+          }}
+        >
+          <Text style={styles.text}>注册</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity
+          onPress={() => {
+            this.props.dispatch(
+              NavigationActions.navigate({routeName: 'Forget'})
+            )
+          }}
+        >
+          <Text style={styles.text}>忘记密码1</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.textContainer1}>
+        <Text style={styles.text}>MO手机版 版本号: {Global.version}</Text>
+      </View>
+
+    </View>
+  }
+
+  renderPhone() {
+    return <View style={[styles.bg, {marginTop: 115}]}>
+
+      <InputItem
+        type="text"
+        placeholder="186 1234 1234"
+        onChange={value => {
+          this.setState({
+            phone: value,
+          })
+        }}
+        // autoCapitalize="none"
+        value={this.state.phone}
+      >
+        手机号码
+      </InputItem>
+
+      <InputItem
+        type="text"
+        placeholder="输入验证码"
+        onChange={value => {
+          this.setState({
+            code: value,
+          })
+        }}
+        value={this.state.code}/>
+
+
+      <Button
+        size="large"
+        disabled={Boolean(count)}
+        onClick={this.onGetCaptcha}
+      >
+        {count ? `${count} s` : '获取验证码'}
+      </Button>
+
+      <Button style={styles.btn} onClick={this.onLoginWithPhone}>
+        <Text style={{color: 'white'}}>登录</Text>
+      </Button>
+
+      <TouchableOpacity
+        onPress={() => {
+          this.setState({
+            type: "account"
+          })
+        }}
+        style={{justifyContent: "center", alignItems: 'center', marginTop: 5}}
+      >
+        <Text style={{color: '#34C0E2'}}>使用账号密码登录</Text>
+      </TouchableOpacity>
+
+      <View style={styles.textContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.dispatch(
+              NavigationActions.navigate({routeName: 'Register'})
+            )
+          }}
+        >
+          <Text style={styles.text}>注册</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.textContainer1}>
+        <Text style={styles.text}>MO手机版 版本号: {Global.version}</Text>
+      </View>
+    </View>
   }
 
   render() {
-    const { count } = this.state;
+    const {count} = this.state
     return (
-
-        <KeyboardAvoidingView style={styles.container}
-                              behavior='position'
-
-        >
-          <View style={styles.icon}>
-            <Image
-              style={{height: 150, width: 150}}
-              source={require('./../images/icons/mo.png')}
-            />
-            <Text style={styles.title}>MO</Text>
-          </View>
-
-
-          {
-            this.state.type === "account" ?
-              <View style={styles.bg}>
-                <InputItem
-                  type="text"
-                  placeholder="输入你的用户名"
-                  onChange={value => {
-                    this.setState({
-                      username: value,
-                    })
-                  }}
-                  autoCapitalize="none"
-                  value={this.state.username}
-                >
-                  用户名
-                </InputItem>
-
-                <InputItem
-                  type="password"
-                  placeholder="****"
-                  onChange={value => {
-                    this.setState({
-                      password: value,
-                    })
-                  }}
-                  value={this.state.password}
-                >
-                  密码
-                </InputItem>
-
-                <Button style={styles.btn} onClick={this.onLogin}>
-                  <Text style={{color: 'white'}}>登录</Text>
-                </Button>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({
-                      type: "phone"
-                    })
-                  }}
-                  style={{justifyContent: "center", alignItems: 'center', marginTop: 15}}
-                >
-                  <Text style={{color: '#34C0E2'}}>使用手机号登录</Text>
-                </TouchableOpacity>
-
-
-                <View style={[styles.textContainer]}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.dispatch(
-                        NavigationActions.navigate({routeName: 'Register'})
-                      )
-                    }}
-                  >
-                    <Text style={styles.text}>注册</Text>
-                  </TouchableOpacity>
-
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.dispatch(
-                        NavigationActions.navigate({ routeName: 'Forget' })
-                      )
-                    }}
-                  >
-                    <Text style={styles.text}>忘记密码</Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.textContainer1}>
-                  <Text style={styles.text}>MO手机版 版本号: {Global.version}</Text>
-                </View>
-
-              </View>:
-
-
-
-
-              <View style={[styles.bg, {marginTop: 115}]}>
-
-                <InputItem
-                  type="text"
-                  placeholder="186 1234 1234"
-                  onChange={value => {
-                    this.setState({
-                      phone: value,
-                    })
-                  }}
-                  // autoCapitalize="none"
-                  value={this.state.phone}
-                >
-                  手机号码
-                </InputItem>
-
-                <InputItem
-                  type="text"
-                  placeholder="输入验证码"
-                  onChange={value => {
-                    this.setState({
-                      code: value,
-                    })
-                  }}
-                  value={this.state.code} />
-
-
-                <Button
-                  size="large"
-                  disabled={Boolean(count)}
-                  onClick={this.onGetCaptcha}
-                >
-                  {count ? `${count} s` : '获取验证码'}
-                </Button>
-
-                <Button style={styles.btn} onClick={this.onLoginWithPhone}>
-                  <Text style={{color: 'white'}}>登录</Text>
-                </Button>
-
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({
-                      type: "account"
-                    })
-                  }}
-                  style={{justifyContent: "center", alignItems: 'center', marginTop: 5}}
-                >
-                  <Text style={{color: '#34C0E2'}}>使用账号密码登录</Text>
-                </TouchableOpacity>
-
-
-                <View style={styles.textContainer}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.dispatch(
-                        NavigationActions.navigate({routeName: 'Register'})
-                      )
-                    }}
-                  >
-                    <Text style={styles.text}>注册</Text>
-                  </TouchableOpacity>
-
-                </View>
-
-                <View style={styles.textContainer1}>
-                  <Text style={styles.text}>MO手机版 版本号: {Global.version}</Text>
-                </View>
-
-              </View>
-
-          }
-
-
-
-
-        </KeyboardAvoidingView>
-
-
+      <KeyboardAvoidingView style={styles.container}
+                            behavior='position'
+      >
+        <View style={styles.icon}>
+          <Image
+            style={{height: 150, width: 150}}
+            source={require('./../images/icons/mo.png')}
+          />
+          <Text style={styles.title}>MO</Text>
+        </View>
+        {
+          this.state.type === "account" ?
+            this.renderAccount()
+            : this.renderPhone()
+        }
+      </KeyboardAvoidingView>
     )
   }
 }
