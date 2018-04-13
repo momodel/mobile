@@ -23,7 +23,11 @@ export default class AppDetail extends Component {
   // help function, 判断是否收藏
   isFavor() {
     const {favor_users = []} = this.props.api.app
+    console.log("favor_users", favor_users)
     const user_id = _.get(this.props.app.login, '[response][user][_id]', null)
+
+    console.log("user_id", user_id)
+    console.log("(this.props.app", this.props.app)
     return favor_users.includes(user_id)
   }
 
@@ -72,7 +76,7 @@ export default class AppDetail extends Component {
     if(args){
       const {input, output} = args
       inputTypes = _.map(input, (value, key)=> value.value_type)
-      outputTypes = _.map(output, (value, key)=> value.type)
+      outputTypes = _.map(output, (value, key)=> value.value_type)
       // 筛选
       inputTypes = inputTypes.filter(function (item, index, self) {
         return self.indexOf(item) === index;

@@ -9,7 +9,7 @@ export const ApiCard = ({ app, onPress, isFavor, isStar}) => {
 
   return <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
     <View style={styles.title}>
-      <Text style={{fontSize: 20, color: "#6D9CF9"}}>{title}</Text>
+      <Text style={{fontSize: 20, color: "#6D9CF9"}} numberOfLines={1}>{title}</Text>
     </View>
 
     <View style={styles.desc}>

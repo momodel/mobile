@@ -36,6 +36,17 @@ export default {
       return {...state, ...payload}
     },
 
+    updateApp(state, {payload}) {
+      const {app} = payload
+      return {
+        ...state,
+        app: {
+          ...state.app,
+          ...app,
+        }
+      }
+    }
+
     // updateApi(state, {payload}) {
     //   return {
     //     ...state,
@@ -65,7 +76,7 @@ export default {
       })
 
       yield put({
-        type: 'updateState',
+        type: 'updateApp',
         payload: {
           app: result.response.entity
         }
@@ -79,7 +90,7 @@ export default {
       })
 
       yield put({
-        type: 'updateState',
+        type: 'updateApp',
         payload: {
           app: result.response.entity
         }
