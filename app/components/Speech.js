@@ -38,6 +38,7 @@ export class Speech extends Component {
     Voice.onSpeechResults = this.onSpeechResults.bind(this)
     Voice.onSpeechPartialResults = this.onSpeechPartialResults.bind(this)
     Voice.onSpeechVolumeChanged = this.onSpeechVolumeChanged.bind(this)
+    // this.setOuterResult = this.setOuterResult.bind(this)
   }
 
   componentWillUnmount() {
@@ -72,10 +73,10 @@ export class Speech extends Component {
     this.setState({
       results: e.value,
     })
-    if (this.state.isEnd) {
-
-      this.props.setResult(e.value[0])
-    }
+    // if (this.state.isEnd) {
+    //
+    //   this.props.setResult(e.value[0])
+    // }
   }
 
   onSpeechPartialResults(e) {
@@ -118,6 +119,10 @@ export class Speech extends Component {
     }
   }
 
+  setOuterResult() {
+    this.props.setResult(this.state.results[0])
+  }
+
   async _cancelRecognizing(e) {
     try {
       await Voice.cancel()
@@ -148,7 +153,12 @@ export class Speech extends Component {
       <View>
         <TouchableOpacity
           onPressIn={this._startRecognizing.bind(this)}
-          onPressOut={this._stopRecognizing.bind(this)}
+          onPressOut={() => {
+            this._stopRecognizing.bind(this)
+            // TODO 手机测试一下这样的新写法， 当松开是吧result给出去
+            this.setOuterResult.bind(this)
+          }
+          }
         >
           <Image
             style={styles.button}
@@ -164,7 +174,7 @@ export class Speech extends Component {
             height: height,
             // backgroundColor: "transparent",
             // opacity: 0.1,
-            backgroundColor: "rgba(255, 255, 255, 0.8)" ,
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
             alignItems: "center",
             justifyContent: "center"
           }}
@@ -175,10 +185,10 @@ export class Speech extends Component {
         >
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
 
-              <Text style={styles.text}>语音助手</Text>
-              <Text style={styles.text}>我要使用app</Text>
-              <Text style={styles.text}>我要发布需求</Text>
-              <Text style={styles.text}>我要查看我的收藏</Text>
+            <Text style={styles.text}>语音助手</Text>
+            <Text style={styles.text}>我要使用app</Text>
+            <Text style={styles.text}>我要发布需求</Text>
+            <Text style={styles.text}>我要查看我的收藏</Text>
 
           </View>
         </Modal>
