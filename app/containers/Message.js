@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 
 import {createAction, NavigationActions} from '../utils'
 import {MessageItem} from '../components/Item'
+import {avatarList} from '../Global'
 
 @connect(({messages}) => ({...messages}))
 class Message extends Component {
@@ -44,8 +45,9 @@ class Message extends Component {
                   _id, create_time, is_read, sender, user_request,
                   user_ID, user_request_title, receiver_id
                 } = message
-
                 const content = `${user_ID}评论了您关注的需求${user_request_title}`
+                const picNumber = parseInt(sender.slice(20)) % 6
+                const source = avatarList[picNumber]
                 return <MessageItem
                   key={_id}
                   content={content}
@@ -56,12 +58,11 @@ class Message extends Component {
                   }
                   }
                   isRead={is_read}
+                  source={source}
                 />
               }
             )
-
         }
-
       </ScrollView>
     )
   }

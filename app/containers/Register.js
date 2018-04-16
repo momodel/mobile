@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   StyleSheet,
   View,
@@ -9,14 +9,34 @@ import {
   NativeAppEventEmitter,
   Alert,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Dimensions,
+  ImageBackground
 } from 'react-native'
-import { InputItem, Button, List } from 'antd-mobile'
-
+import {InputItem, Button, List} from 'antd-mobile'
+import {createAction, NavigationActions, checkMobile} from '../utils'
 import Global from '../Global'
+import InputItemStyle from "antd-mobile/lib/input-item/style/index"
 
-import { createAction, NavigationActions } from '../utils'
+const {width, height} = Dimensions.get('window')
+const nwidth = 375
+const nheight = 667
+const scale = 1 / nheight * height
 
-@connect(({ app }) => ({ ...app }))
+const newStyle = {}
+for (const key in InputItemStyle) {
+  if (Object.prototype.hasOwnProperty.call(InputItemStyle, key)) {
+    // StyleSheet.flatten返回的obj描述中的configurable、writable为false，所以这里要展开赋值
+    newStyle[key] = {...StyleSheet.flatten(InputItemStyle[key])}
+    if (key === 'input') {
+      newStyle[key].fontSize = 15
+    }
+  }
+}
+
+
+
+@connect(({app}) => ({...app}))
 class Register extends Component {
   constructor(props) {
     super(props)
@@ -32,22 +52,28 @@ class Register extends Component {
   onGetCaptcha = () => {
     // 向后端请求验证码
     let phone = this.state.phone
-    this.props.dispatch({
-      type: "register/sendVerificationCode",
-      payload: {
-        phone: phone
-      }
-    })
+    phone = phone.replace(/\s+/g,"");
+    if (checkMobile(phone)) {
+      this.props.dispatch({
+        type: "register/sendVerificationCode",
+        payload: {
+          phone: phone
+        }
+      })
 
-    let count = 59;
-    this.setState({ count });
-    this.interval = setInterval(() => {
-      count -= 1;
-      this.setState({ count });
-      if (count === 0) {
-        clearInterval(this.interval);
-      }
-    }, 1000);
+      let count = 59
+      this.setState({count})
+      this.interval = setInterval(() => {
+        count -= 1
+        this.setState({count})
+        if (count === 0) {
+          clearInterval(this.interval)
+        }
+      }, 1000)
+    }else{
+      Alert.alert('警告', '请输入正确的手机号', [{text: '确定'}])
+    }
+
   }
 
   onSubmit = () => {
@@ -64,194 +90,166 @@ class Register extends Component {
         password: this.state.password
       })
     )
+  }
 
+  renderRigisterBox(){
+    const {count} = this.state
+    return (
+      <View>
+        <View style={{padding: 10}}>
+          <InputItem
+            styles={StyleSheet.create(newStyle)}
+            type="text"
+            placeholder="186 1234 1234"
+            onChange={value => {
+              this.setState({
+                phone: value,
+              })
+            }}
+            value={this.state.phone}
+          >
+            <Text style={{fontSize: 15, color: "#8A8C91"}}>
+              手机号
+            </Text>
+          </InputItem>
+        </View>
+        <View style={{flexDirection: "row", }}>
+          <View style={{padding: 10, flex: 1}}>
+            <InputItem
+              styles={StyleSheet.create(newStyle)}
+              type="text"
+              placeholder="请输入验证码"
+              onChange={value => {
+                this.setState({
+                  code: value,
+                })
+              }}
+              value={this.state.code}/>
+          </View>
+          <View style={{justifyContent: "center", alignItems: "center", paddingRight: 20, }}>
+            <Button
+              style={{width: 100, height: 35, borderRadius: 2, borderColor: "#6D9CF9"}}
+              type="ghost"
+              disabled={Boolean(count)}
+              onClick={this.onGetCaptcha}
+            >
+              <Text style={{fontSize: 13, color: "#6D9CF9"}}>
+                {count ? `${count} s` : '获取验证码'}
+              </Text>
+            </Button>
+          </View>
+        </View>
 
+        <View style={{padding: 10}}>
+          <InputItem
+            styles={StyleSheet.create(newStyle)}
+            type="text"
+            placeholder="用户名长度1-7位"
+            onChange={value => {
+              this.setState({
+                user_ID: value,
+              })
+            }}
+            value={this.state.user_ID}
+          >
+            <Text style={{fontSize: 15, color: "#8A8C91"}}>
+              用户名
+            </Text>
+          </InputItem>
+        </View>
+        <View style={{padding: 10}}>
+          <InputItem
+            styles={StyleSheet.create(newStyle)}
+            type="password"
+            placeholder="密码长度6-14位"
+            onChange={value => {
+              this.setState({
+                password: value,
+              })
+            }}
+            value={this.state.password}
+          >
+            <Text style={{fontSize: 15, color: "#8A8C91"}}>
+              密码
+            </Text>
+          </InputItem>
+        </View>
+
+      </View>
+    )
   }
 
   render() {
-    const { count } = this.state;
     return (
-      <View style={styles.container}>
-        {/*<View style={styles.icon}>*/}
-        {/*<Image*/}
-        {/*style={{height: 150, width: 150}}*/}
-        {/*source={require('./../images/icon.png')}*/}
-        {/*/>*/}
-        {/*<Text style={styles.title}>MO</Text>*/}
-        {/*</View>*/}
+      <KeyboardAvoidingView style={{height: "100%", width: "100%"}}
+                            behavior='position'>
+        <ImageBackground source={require('../images/background.png')}
+                         style={{height: "100%", width: "100%"}}>
+          <View style={{
+            height: "35%", justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <View style={{
+              height: 110 * scale, width: 110 * scale, backgroundColor: 'white',
+              borderRadius: 55 * scale, justifyContent: "center",
+              alignItems: "center",
+              marginTop: 40 * scale,
+              shadowColor: 'black',
+              shadowOffset: {h: 5, w: 5},
+              shadowRadius: 15,
+              shadowOpacity: 0.3,
+            }}>
+              <Image
+                style={{height: 70 * scale, width: 70 * scale}}
+                source={require('./../images/icons/mo.png')}
+              />
+            </View>
+          </View>
 
-        <View style={styles.bg}>
-          <List>
-            <InputItem
-              type="text"
-              placeholder="186 1234 1234"
-              onChange={value => {
-                this.setState({
-                  phone: value,
-                })
-              }}
-              // autoCapitalize="none"
-              value={this.state.phone}
-            >
-              手机号码
-            </InputItem>
+          <View style={{
+            height: "50%", marginLeft: 30, marginRight: 30, backgroundColor: "white",
+            borderRadius: 5
+          }}>
+            {
+              this.renderRigisterBox()
+            }
 
-            <InputItem
-              type="text"
-              placeholder="user_ID"
-              onChange={value => {
-                this.setState({
-                  user_ID: value,
-                })
-              }}
-              // autoCapitalize="none"
-              value={this.state.user_ID}
-            >
-              用户名
-            </InputItem>
-
-            <InputItem
-              type="password"
-              placeholder="****"
-              onChange={value => {
-                this.setState({
-                  password: value,
-                })
-              }}
-              value={this.state.password}
-            >
-              密码
-            </InputItem>
-
-
-            <View >
-              <InputItem
-                type="text"
-                placeholder="输入验证码"
-                onChange={value => {
-                  this.setState({
-                    code: value,
-                  })
-                }}
-                value={this.state.code} />
-
-
-
-              <Button
-                size="large"
-                disabled={Boolean(count)}
-                // style={{
-                //   display: "block",
-                //   width: "100%"
-                // }}
-                onClick={this.onGetCaptcha}
-              >
-                {count ? `${count} s` : '获取验证码'}
+            <View style={{flex: 1, justifyContent: "flex-end"}}>
+              <Button style={{width: "100%", alignSelf: "center", backgroundColor: "#6D9CF9"}}
+                      onClick={this.onSubmit}>
+                <Text style={{color: 'white'}}>注 册</Text>
               </Button>
             </View>
+          </View>
 
-            {/*<FormItem>*/}
-              {/*<Row gutter={8}>*/}
-                {/*<Col span={16}>*/}
-                  {/*{getFieldDecorator('captcha', {*/}
-                    {/*rules: [{*/}
-                      {/*required: true, message: '请输入验证码！',*/}
-                    {/*}],*/}
-                  {/*})(*/}
-                    {/*<Input*/}
-                      {/*size="large"*/}
-                      {/*placeholder="验证码"*/}
-                    {/*/>*/}
-                  {/*)}*/}
-                {/*</Col>*/}
-                {/*<Col span={8}>*/}
-                  {/*<Button*/}
-                    {/*size="large"*/}
-                    {/*disabled={count}*/}
-                    {/*className={styles.getCaptcha}*/}
-                    {/*onClick={this.onGetCaptcha}*/}
-                  {/*>*/}
-                    {/*{count ? `${count} s` : '获取验证码'}*/}
-                  {/*</Button>*/}
-                {/*</Col>*/}
-              {/*</Row>*/}
-            {/*</FormItem>*/}
+          <View style={{
+            flex: 1, justifyContent: "flex-end"
+          }}>
 
-          </List>
+            <View style={{flexDirection: "row", justifyContent: "center",
+              alignItems: "center", margin: 30, backgroundColor: "transparent"}}>
+              <Text style={styles.bottomText}>
+                已有账户？
+              </Text>
 
-          <Button
-            style={styles.btn}
-            onClick={this.onSubmit}
-          >
-            <Text style={{ color: 'white' }}>注册</Text>
-          </Button>
-        </View>
-      </View>
+              <TouchableOpacity
+                onPress={()=>this.props.dispatch(NavigationActions.back())}
+                style={{backgroundColor: "transparent"}}
+              >
+                <Text style={[styles.bottomText, {fontWeight: "700", color: "white"}]}>登录</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
+      </KeyboardAvoidingView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#FBFAFA',
-  },
-  icon: {
-    top: 80,
-    alignItems: 'center',
-  },
-  title: {
-    marginTop: 20,
-    fontSize: Global.titleFontSizeBigBig,
-    color: Global.blue,
-  },
-  bg: {
-    flex: 1,
-    marginTop: 500 / 3,
-    paddingTop: 20,
-    paddingLeft: 50,
-    paddingRight: 50,
-    paddingBottom: 30,
-    bottom: 0,
-  },
-  input: {
-    marginBottom: 20,
-  },
-  btn: {
-    marginTop: 20,
-    width: 260,
-    alignSelf: 'center',
-    backgroundColor: Global.blue,
-  },
-  textContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 20,
-    margin: 10,
-  },
-  textContainer1: {
-    // display: "flex",
-    // flexDirection: "row",
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  text: {
-    fontSize: Global.textFontSize,
-    color: 'grey',
-  },
-
-  close: {
-    position: 'absolute',
-    right: 20,
-    top: 40,
+  bottomText: {
+    color: "#BBC3D2",
+    fontSize: 14
   },
 })
-// const RegisterOut = createForm()(Register)
 export default Register

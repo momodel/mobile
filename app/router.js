@@ -134,6 +134,7 @@ const LoginNavigator = StackNavigator(
     Register: {
       screen: Register,
       navigationOptions: {
+        header: null,
         title: '注册',
       },
     },

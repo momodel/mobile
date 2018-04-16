@@ -6,15 +6,17 @@ import {
 const styles = StyleSheet.create({
   itemWithImageContainer: {
     flexDirection: "row",
-    margin: 8,
+    // margin: 8,
     padding: 3,
     backgroundColor: 'white',
-
     borderRadius: 5,
     shadowColor: 'grey',
-    shadowOffset: {h: 2, w: 2},
-    shadowRadius: 8,
-    shadowOpacity: 0.5,
+    borderBottomWidth: 1,
+    borderColor: '#D5D5D5',
+
+    // shadowOffset: {h: 2, w: 2},
+    // shadowRadius: 8,
+    // shadowOpacity: 0.5,
   },
   itemContainer: {
     display: 'flex',

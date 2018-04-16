@@ -65,7 +65,7 @@ Date.prototype.Format = function (fmt) {
   return fmt;
 }
 
-
+// GET 方法添加 parameters
 export const formatParam = (filter) => {
   let params = ''
   for (let key in filter) {
@@ -81,5 +81,17 @@ export const formatParam = (filter) => {
     }
   }
   return params
+}
+
+// 检查手机号
+export const checkMobile = (value) => {
+  return /^1[3|4|5|7|8][0-9]\d{4,8}$/.test(value)
+  // if (!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(value))) {
+  //   // alert("不是完整的11位手机号或者正确的手机号前七位");
+  //   // document.mobileform.mobile.focus();
+  //   return false
+  // } else {
+  //   return true
+  // }
 }
 

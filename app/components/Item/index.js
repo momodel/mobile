@@ -9,16 +9,16 @@ import {RequestItem} from './RequestItem'
 export {RequestItem}
 import styles from './styles'
 
-export const ItemWithImage = ({onPress, children}) => (
+export const ItemWithImage = ({onPress, children, source}) => (
   <TouchableOpacity style={styles.itemWithImageContainer} onPress={onPress}>
     <View
       style={{width: 65, alignItems: "center", padding: 10, paddingTop: 20}}
     >
       <Image
         style={{
-          height: 50, width: 50
+          height: 50, width: 50, borderRadius: 25,
         }}
-        source={require('../../images/icons/mo.png')}
+        source={source}
       />
     </View>
     <View style={{flex: 1}}>
@@ -32,7 +32,7 @@ ItemWithImage.propTypes = {
 }
 ItemWithImage.defaultProps = {}
 
-export const MessageItem = ({sender, content, datetime, onPress, isRead}) => <ItemWithImage onPress={onPress}>
+export const MessageItem = ({sender, content, datetime, onPress, isRead, source}) => <ItemWithImage onPress={onPress} source={source}>
   <View style={[styles.title, {flexDirection: "row", alignItems: "center"}]}>
     {isRead ? null :
       <View style={{backgroundColor: '#0389f9', width: 8, height: 8, borderRadius: 4, marginRight: 10}}/>}
