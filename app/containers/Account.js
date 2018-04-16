@@ -1,15 +1,11 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
-import {List, Icon} from 'antd-mobile'
-import {createAction, NavigationActions} from '../utils'
+import {Icon} from 'antd-mobile'
+import {NavigationActions, objectIdToImg} from '../utils'
 
 const {width, height} = Dimensions.get('window')
-import UsedApps from './UsedApps'
-import AppsList, {UsedAppsList} from '../components/List/AppsList'
-
-const Item = List.Item
-import {avatarList} from '../Global'
+import {UsedAppsList} from '../components/List/AppsList'
 
 const radius = 40
 
@@ -44,7 +40,7 @@ class Account extends Component {
 
   render() {
     const {username, login, user} = this.props
-    const picNumber = parseInt(user._id.slice(20)) % 6
+    // const picNumber = parseInt(user._id.slice(20)) % 6
     return (
       <View>
 
@@ -117,7 +113,7 @@ class Account extends Component {
               justifyContent: "center"
             }}>
               <Image style={{width: radius * 2 - 2, height: radius * 2 - 2, borderRadius: radius - 1}}
-                     source={avatarList[picNumber]}/>
+                     source={objectIdToImg(user._id)}/>
             </View>
 
             <View style={{marginTop: 10}}>
@@ -172,9 +168,6 @@ class Account extends Component {
             </Text>
           </View>
 
-          {/*<UsedApps />*/}
-
-
           <UsedAppsList Apps={this.props.appList.usedApps} onPressItem={(App) =>
             this.props.dispatch(
               NavigationActions.navigate({
@@ -183,74 +176,6 @@ class Account extends Component {
               })
             )
           }/>
-
-          {/*<List style={{*/}
-          {/*marginTop: "40%"*/}
-          {/*}}>*/}
-          {/*{*/}
-          {/*login && <Item style={{alignItems: "center"}} onClick={() => {*/}
-          {/*}}>*/}
-          {/*{username}*/}
-          {/*</Item>*/}
-          {/*}*/}
-
-          {/*/!*{*!/*/}
-          {/*/!*!login && <Item arrow="horizontal" onClick={this.gotoLogin}>*!/*/}
-          {/*/!*登录*!/*/}
-          {/*/!*</Item>*!/*/}
-          {/*/!*}*!/*/}
-
-          {/*<View style={{height: 15}}/>*/}
-
-          {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-          {/*arrow="horizontal" onClick={() => {*/}
-          {/*this.props.dispatch(NavigationActions.navigate({routeName: 'UserInfo'}))*/}
-          {/*}}>*/}
-          {/*账号与安全*/}
-          {/*</Item>*/}
-
-          {/*<View style={{height: 15}}/>*/}
-
-          {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-          {/*arrow="horizontal" onClick={this.gotoMessage}*/}
-          {/*>*/}
-          {/*消息列表*/}
-          {/*</Item>*/}
-
-          {/*/!*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*!/*/}
-          {/*/!*arrow="horizontal" onClick={() => {*!/*/}
-          {/*/!*}}>*!/*/}
-          {/*/!*用户帮助*!/*/}
-          {/*/!*</Item>*!/*/}
-
-          {/*<View style={{height: 15}}/>*/}
-
-          {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-          {/*arrow="horizontal" onClick={this.gotoRequests}>*/}
-          {/*我的需求*/}
-          {/*</Item>*/}
-
-          {/*<View style={{height: 15}}/>*/}
-
-          {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-          {/*arrow="horizontal" onClick={this.gotoUsedApps}>*/}
-          {/*我的历史记录*/}
-          {/*</Item>*/}
-
-          {/*<View style={{height: 50}}/>*/}
-          {/*{*/}
-          {/*login && <Item*/}
-          {/*style={styles.logout}*/}
-          {/*// arrow="horizontal"*/}
-          {/*onClick={this.logout}*/}
-          {/*>*/}
-          {/*<Text style={styles.logout_text}>退出登录</Text>*/}
-          {/*</Item>*/}
-          {/*}*/}
-
-          {/*</List>*/}
-
-          {/*/!*<List/>*!/*/}
         </ScrollView>
       </View>
     )

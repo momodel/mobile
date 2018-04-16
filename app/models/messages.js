@@ -3,7 +3,8 @@ import * as messageService from '../services/message'
 export default {
   namespace: 'messages',
   state: {
-    messages: []
+    messages: [],
+    fetching: false
   },
   reducers: {
     updateState(state, {payload}) {
@@ -12,11 +13,19 @@ export default {
   },
   effects: {
     * getMessages({payload}, {call, put, select}) {
+      yield put({
+        type: 'updateState',
+        payload: {
+          fetching: true
+        }
+      })
+
       const result = yield call(messageService.getMessages, {})
       yield put({
         type: 'updateState',
         payload: {
-          messages: result.response
+          messages: result.response,
+          fetching: false
         }
       })
     },

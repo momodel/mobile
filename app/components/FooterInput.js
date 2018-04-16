@@ -35,10 +35,12 @@ export class FooterInput extends Component {
         <View style={{margin: 10, width: "40%", justifyContent: "center", alignItems: "center"}}>
           <Speech
             setResult={(result) => {
-              if (result !== this.state.result) {
-                this.setState({result: result})
-                this.props.sendSpeechResult(result)
-              }
+              this.props.sendSpeechResult(result)
+
+              // if (result !== this.state.result) {
+              //   this.setState({result: result})
+              //   this.props.sendSpeechResult(result)
+              // }
             }}
           />
         </View>

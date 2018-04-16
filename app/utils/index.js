@@ -1,5 +1,6 @@
 import moment from 'moment';
-
+import {avatarList} from "../Global"
+// import {avatarList} from '../Global'
 export { NavigationActions } from 'react-navigation'
 
 export { default as Storage } from './storage'
@@ -95,3 +96,29 @@ export const checkMobile = (value) => {
   // }
 }
 
+export const objectIdToImg = (objectId) => {
+  const picNumber = parseInt(objectId.slice(10)) % 6
+  return avatarList[picNumber]
+}
+
+export const messageObjToContent = (e) => {
+  const translatorTemp = {
+    app: '应用',
+    module: '模块',
+    dataset: '数据集'
+  }
+  switch(e.message_type) {
+    case 'answer':
+      return `${e.user_ID}回答了您关注的需求${e.user_request_title}`
+    case 'commit':
+      `${e.user_ID}更新了您关注的需求${e.user_request_title}的答案`
+    case 'deploy':
+      return `${e.user_ID}上线了您关注的${translatorTemp[e.project_type]} ${e.project_name}`
+    case 'publish':
+      return `${e.user_ID}发布了您关注的${translatorTemp[e.project_type]} ${e.project_name}`
+    case 'deploy_request':
+      return `${e.user_ID}为您的答案${e.user_request_title}上线了${translatorTemp[e.project_type]} ${e.project_name}`
+    case 'publish_request':
+      return `${e.user_ID}为您的答案${e.user_request_title}发布了${translatorTemp[e.project_type]} ${e.project_name}`
+  }
+}

@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
+import {ActivityIndicator} from 'antd-mobile'
 
-import {createAction, NavigationActions} from '../utils'
+import {createAction, NavigationActions, objectIdToImg, messageObjToContent} from '../utils'
 import {MessageItem} from '../components/Item'
-import {avatarList} from '../Global'
 
 @connect(({messages}) => ({...messages}))
 class Message extends Component {
@@ -32,9 +32,10 @@ class Message extends Component {
   }
 
   render() {
-    const {messages} = this.props
+    const {messages, fetching} = this.props
 
     return (
+      fetching ? <ActivityIndicator /> :
       <ScrollView style={styles.container}
                   keyboardShouldPersistTaps="always"
       >
@@ -43,22 +44,25 @@ class Message extends Component {
             messages.map(message => {
                 const {
                   _id, create_time, is_read, sender, user_request,
-                  user_ID, user_request_title, receiver_id
+                  user_ID, user_request_title, receiver_id, message_type
                 } = message
-                const content = `${user_ID}评论了您关注的需求${user_request_title}`
-                const picNumber = parseInt(sender.slice(20)) % 6
-                const source = avatarList[picNumber]
+                const content = messageObjToContent(message)
+              //`${user_ID}评论了您关注的需求${user_request_title}`
+
                 return <MessageItem
                   key={_id}
                   content={content}
                   sender={"system"}
                   datetime={create_time}
                   onPress={() => {
-                    this.toMessage(user_request, receiver_id)
+                    if(message_type === 'answer' || message_type === "commit"){
+                      this.toMessage(user_request, receiver_id)
+                    }
+
                   }
                   }
                   isRead={is_read}
-                  source={source}
+                  source={objectIdToImg(sender)}
                 />
               }
             )
@@ -70,7 +74,7 @@ class Message extends Component {
 
 const InfoPage = ({text}) => {
   return (
-    <View style={{alignItems: "center", justifyContent: "center"}}>
+    <View style={{minHeight: 200, alignItems: "center", justifyContent: "center"}}>
       <Text>
         {text}
       </Text>

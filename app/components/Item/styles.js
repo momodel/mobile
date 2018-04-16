@@ -32,11 +32,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   title: {
-    padding: 10,
-    marginTop: -10
+    padding: 2,
+    paddingRight: 10,
+    // marginTop: -5
   },
   datetime: {
-    padding: 10,
+    padding: 2,
   },
 
   text: {

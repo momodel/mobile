@@ -21,7 +21,7 @@ export const ItemWithImage = ({onPress, children, source}) => (
         source={source}
       />
     </View>
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, justifyContent: 'space-between'}}>
       {children}
     </View>
   </TouchableOpacity>
@@ -32,21 +32,22 @@ ItemWithImage.propTypes = {
 }
 ItemWithImage.defaultProps = {}
 
-export const MessageItem = ({sender, content, datetime, onPress, isRead, source}) => <ItemWithImage onPress={onPress} source={source}>
-  <View style={[styles.title, {flexDirection: "row", alignItems: "center"}]}>
-    {isRead ? null :
-      <View style={{backgroundColor: '#0389f9', width: 8, height: 8, borderRadius: 4, marginRight: 10}}/>}
-    <Text style={{fontSize: 20}}>{sender}</Text>
-  </View>
+export const MessageItem = ({sender, content, datetime, onPress, isRead, source}) =>
+  <ItemWithImage onPress={onPress} source={source}>
+    <View style={[styles.title, {flexDirection: "row", alignItems: "center"}]}>
+      {isRead ? null :
+        <View style={{backgroundColor: '#0389f9', width: 8, height: 8, borderRadius: 4, marginRight: 10}}/>}
+      <Text style={{fontSize: 15}}>{sender}</Text>
+    </View>
 
-  <View style={styles.title}>
-    <Text style={{fontSize: 20}}>{content}</Text>
-  </View>
+    <View style={styles.title}>
+      <Text style={{fontSize: 15}}>{content}</Text>
+    </View>
 
-  <View style={styles.datetime}>
-    <Text style={{color: 'grey'}}>{showTime(datetime)}</Text>
-  </View>
-</ItemWithImage>
+    <View style={styles.datetime}>
+      <Text style={{color: 'grey'}}>{showTime(datetime)}</Text>
+    </View>
+  </ItemWithImage>
 
 MessageItem.propTypes = {
   content: PropTypes.string,

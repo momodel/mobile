@@ -8,9 +8,9 @@ import avatar6 from './images/avatar/6.png'
 const Global = {
   // localhost
   // URL: 'http://localhost:5005',
-  // URL: 'http://192.168.31.4:5005',
+  URL: 'http://192.168.31.4:5005',
   // production
-  URL: 'http://192.168.31.7:5005',
+  // URL: 'http://192.168.31.7:5005',
   MOCK: false,
   // production (demo)
   // URL: "http://10.52.22.196:3080",

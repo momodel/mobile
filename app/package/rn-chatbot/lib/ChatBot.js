@@ -735,7 +735,10 @@ class ChatBot extends Component {
           // style={{backgroundColor: "white"}}
         />
 
-        <InputView behavior="padding" keyboardVerticalOffset={55}>
+        <InputView
+          // behavior="padding"
+          //          keyboardVerticalOffset={55}
+        >
 
           {this.state.inputType === 'speech' ?
             <Footer

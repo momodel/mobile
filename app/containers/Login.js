@@ -121,19 +121,17 @@ class LoginPage extends Component {
     )
   }
 
-
   onLoginWithPhone = () => {
     if (this.state.phone === '' || this.state.code === '') {
       Alert.alert('警告', '请输入手机号和验证码', [{text: '确定'}])
       return
     }
-
     let phone = this.state.phone
     phone = phone.replace(/\s+/g,"");
     if (checkMobile(phone)) {
       this.props.dispatch(
         createAction('app/loginWithPhone')({
-          phone: this.state.phone,
+          phone: phone,
           code: this.state.code,
         })
       )

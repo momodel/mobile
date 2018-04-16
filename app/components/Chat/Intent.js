@@ -15,6 +15,9 @@ export default class Intent extends Component {
 
   componentWillMount() {
     const {steps} = this.props
+    // Todo 检查报错
+    console.log("steps", steps)
+
     const keyWord = steps[WebChatId.message.input].value
     // 将关键字发往后端，得到反馈
     const result = getIntent({

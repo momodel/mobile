@@ -1,3 +1,5 @@
+import {Platform} from 'react-native';
+
 import styled from 'styled-components/native'
 
 const OptionElement = styled.View`
@@ -7,7 +9,7 @@ const OptionElement = styled.View`
   padding-bottom: 10;
   padding-left: 12;
   border-radius: 22;
-  border-width: 0.5;
+  border-width: ${Platform.OS === 'ios'?0.5: 1};
   
 `
 
