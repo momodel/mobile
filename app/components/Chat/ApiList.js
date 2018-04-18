@@ -10,12 +10,12 @@ import {connect} from 'react-redux'
 import {Button, Toast} from 'antd-mobile'
 import _ from 'lodash'
 import {ApiCard, NoMoreCard, MoreCard} from '../../components/ApiCard'
-import {WebChatId} from './WebChat'
+import {WebChatId, optionStep} from './WebChat'
 import {getApiList} from '../../services/api'
 import {getfavorAppsCustom as getfavorApps} from '../../services/user'
 
 import {NavigationActions} from '../../utils'
-
+// import {WebChatId, optionStep} from '../../components/Chat/WebChat'
 
 @connect(({app}) => ({...app}))
 export default class ApiList extends Component {
@@ -170,12 +170,7 @@ export default class ApiList extends Component {
                 this.setState({showButton: false})
               }}/>) :
               <NoMoreCard onPress={() => {
-                this.props.triggerCustomOption({
-                  value: 2,
-                  label: '发布需求',
-                  trigger: "createUserRequest", // WebChatId.asking.text,
-                  borderColor: 'yellow',
-                })
+                this.props.triggerCustomOption(optionStep.options[1])
               }}/>
           }
         </ScrollView>

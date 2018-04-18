@@ -21,8 +21,6 @@ export default class VoiceTest extends Component {
       started: '',
       results: [],
       partialResults: [],
-
-      isEnd: false,
     };
     Voice.onSpeechStart = this.onSpeechStart.bind(this);
     Voice.onSpeechRecognized = this.onSpeechRecognized.bind(this);
@@ -31,6 +29,11 @@ export default class VoiceTest extends Component {
     Voice.onSpeechResults = this.onSpeechResults.bind(this);
     Voice.onSpeechPartialResults = this.onSpeechPartialResults.bind(this);
     Voice.onSpeechVolumeChanged = this.onSpeechVolumeChanged.bind(this);
+  }
+
+  componentWillMount(){
+    let result = Voice.isAvailable()
+    console.log("result", result)
   }
 
   componentWillUnmount() {
@@ -62,7 +65,7 @@ export default class VoiceTest extends Component {
   }
 
   onSpeechResults(e) {
-
+    console.log("e", e)
     this.setState({
       results: e.value,
     });
@@ -81,9 +84,8 @@ export default class VoiceTest extends Component {
   }
 
   async _startRecognizing(e) {
-    this.setState({
-      isEnd: false
-    })
+    console.log("_startRecognizing", e)
+
     this.setState({
       recognized: '',
       pitch: '',
@@ -94,16 +96,15 @@ export default class VoiceTest extends Component {
       end: ''
     });
     try {
-      await Voice.start('zh-CN');
+      let result = await Voice.start('zh-CN', {REQUEST_PERMISSIONS_AUTO: true});
+
+      console.log("result", result)
     } catch (e) {
       console.error(e);
     }
   }
 
   async _stopRecognizing(e) {
-    this.setState({
-      isEnd: true
-    })
     try {
       await Voice.stop();
     } catch (e) {
@@ -253,5 +254,3 @@ const styles = StyleSheet.create({
     marginBottom: 1,
   },
 });
-
-// AppRegistry.registerComponent('VoiceTest', () => VoiceTest);

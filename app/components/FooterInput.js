@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {TouchableOpacity, Text, View, Image} from 'react-native'
 import {Button} from 'antd-mobile'
-import {Speech} from './Speech'
+// import {Speech} from './Speech/SpeechBase'
+import {Speech} from './Speech/index'
 
 export class FooterInput extends Component {
   state = {
@@ -36,7 +37,6 @@ export class FooterInput extends Component {
           <Speech
             setResult={(result) => {
               this.props.sendSpeechResult(result)
-
               // if (result !== this.state.result) {
               //   this.setState({result: result})
               //   this.props.sendSpeechResult(result)

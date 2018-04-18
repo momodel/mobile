@@ -20,3 +20,7 @@ yarn add react-native-simple-markdown
 # issue
 每次npm install之后 styled-components 都会消失
 yarn add styled-compyarn global add react-devtoolsonents
+
+试用这个包
+https://github.com/zphhhhh/react-native-speech-iflytek
+https://github.com/JoaoCnh/react-native-android-voice

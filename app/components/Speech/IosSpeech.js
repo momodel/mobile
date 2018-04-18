@@ -16,7 +16,7 @@ import Voice from 'react-native-voice'
 
 const {width, height} = Dimensions.get('window')
 
-export class Speech extends Component {
+export default class IosSpeech extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -45,6 +45,7 @@ export class Speech extends Component {
     Voice.destroy().then(Voice.removeAllListeners)
   }
 
+
   onSpeechStart(e) {
     this.setState({
       started: '√',
@@ -70,6 +71,7 @@ export class Speech extends Component {
   }
 
   onSpeechResults(e) {
+    console.log("value", e.value)
     this.setState({
       results: e.value,
     })
@@ -111,6 +113,10 @@ export class Speech extends Component {
   }
 
   async _stopRecognizing(e) {
+    console.log("stop", e)
+    console.log("this.state.results", this.state.results)
+    this.setOuterResult.bind(this)
+
     this.setState({isEnd: true, modal1: false})
     try {
       await Voice.stop()
@@ -153,16 +159,16 @@ export class Speech extends Component {
       <View>
         <TouchableOpacity
           onPressIn={this._startRecognizing.bind(this)}
-          onPressOut={() => {
+          onPressOut={
             this._stopRecognizing.bind(this)
             // TODO 手机测试一下这样的新写法， 当松开是吧result给出去
-            this.setOuterResult.bind(this)
-          }
+            // this.setOuterResult.bind(this)
+
           }
         >
           <Image
             style={styles.button}
-            source={require('../images/icons/microphone.png')}
+            source={require('../../images/icons/microphone.png')}
           />
         </TouchableOpacity>
         <Modal

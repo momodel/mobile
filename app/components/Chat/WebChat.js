@@ -292,16 +292,19 @@ function finalSteps() {
     {
       id: "createUserRequestApp",
       component: <CreateUserRequest type='app'/>,
+      trigger: WebChatId.message.hello
     },
 
     {
       id: "createUserRequestModule",
       component: <CreateUserRequest type='module'/>,
+      trigger: WebChatId.message.hello
     },
 
     {
       id: "createUserRequestDataSet",
       component: <CreateUserRequest type='dataset'/>,
+      trigger: WebChatId.message.hello
     },
 
     //

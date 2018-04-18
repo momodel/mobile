@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-speech-iflytek')
     compile project(':react-native-image-picker')
     compile project(':react-native-voice')
     compile fileTree(dir: "libs", include: ["*.jar"])

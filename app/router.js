@@ -21,15 +21,15 @@ import Predict from './containers/Predict'
 import Requests from './containers/Requests'
 import Request from './containers/Request'
 import FavorApps from './containers/FavorApps'
-
 import {RequestEdit} from './containers/RequestEdit'
-// import SpeechToText from './containers/SpeechToText'
 import UserInfo from './containers/UserInfo'
 // import Predict from './containers/Predict'
 // import ImagePickerExample from './containers/Test'
 
-import Test from './containers/Test'
-import {RequestHeaderCard} from './components/RequestHeader'
+// import Test from './containers/Test'
+// import {RequestHeaderCard} from './components/RequestHeader'
+// import SpeechToText from './containers/test/SpeechToText'
+import SpeechTest from './containers/test/SpeechTest'
 
 
 const HomeNavigator = TabNavigator(

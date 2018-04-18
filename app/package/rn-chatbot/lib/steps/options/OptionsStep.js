@@ -21,8 +21,8 @@ class OptionsStep extends Component {
     this.onOptionClick = this.onOptionClick.bind(this)
   }
 
-  onOptionClick({ value }) {
-    this.props.triggerNextStep({ value })
+  onOptionClick({ value, trigger }) {
+    this.props.triggerNextStep({ value, trigger })
   }
 
   onCustomClick(route){
@@ -32,13 +32,13 @@ class OptionsStep extends Component {
   renderOption(option) {
     const { bubbleStyle } = this.props
     const { bubbleColor, fontColor } = this.props.step
-    const { value, label, route, backgroundColor } = option
+    const { value, label, route, backgroundColor, trigger } = option
 
     return (
       <Option
         key={value}
         className="rsc-os-option"
-        onPress={() => route?this.onCustomClick(route):this.onOptionClick({ value })}
+        onPress={() => route?this.onCustomClick(route):this.onOptionClick({ value, trigger })}
       >
         <OptionElement
           className="rsc-os-option-element"

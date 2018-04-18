@@ -4196,6 +4196,12 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-button@^2.3.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/react-native-button/download/react-native-button-2.3.0.tgz#7d0a90095d415b0edf98a904556a7c4439646568"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-camera-roll-picker@^1.2.1:
   version "1.2.3"
   resolved "http://registry.npm.taobao.org/react-native-camera-roll-picker/download/react-native-camera-roll-picker-1.2.3.tgz#b117fd3a2b9012dcccee1261a9bc427226b8d6d2"
@@ -4233,6 +4239,10 @@ react-native-menu@^0.23.0:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
     react-timer-mixin "^0.13.3"
+
+react-native-speech-iflytek@^1.0.3:
+  version "1.0.3"
+  resolved "http://registry.npm.taobao.org/react-native-speech-iflytek/download/react-native-speech-iflytek-1.0.3.tgz#b9ad193775bf7d9823a599814f2eee78fda74ce6"
 
 react-native-swipeout@^2.2.2:
   version "2.3.3"
