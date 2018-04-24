@@ -5,7 +5,8 @@
 import React, {Component} from 'react'
 import {
   StyleSheet, View, Image, Text, ScrollView,
-  Dimensions, TextInput, ImageBackground, TouchableOpacity
+  Dimensions, TextInput, ImageBackground, TouchableOpacity,
+  Alert
 } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 
@@ -31,9 +32,9 @@ const typeDict = {
 
 const options = {
   title: '选择图片',
-  customButtons: [
-    {name: 'fb', title: 'Choose Photo from Facebook'},
-  ],
+  // customButtons: [
+  //   {name: 'fb', title: 'Choose Photo from Facebook'},
+  // ],
   storageOptions: {
     skipBackup: true,
     path: 'images'
@@ -42,6 +43,10 @@ const options = {
 
 @connect(({api}) => ({...api}))
 export default class Predict extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: navigation.state.params.title
+  })
+
   constructor(props) {
     super(props)
     this.state = {
@@ -122,7 +127,14 @@ export default class Predict extends Component {
       if (this.state.image) {
         // 存进input里
         for (let key in this.state.image) {
-          imageKeyValue[key] = this.state.image[key].file.data
+          if(this.state.image.hasOwnProperty(key)){
+            if(!_.get(this.state.image[key], '[file][data]', null)){
+              Alert.alert('警告', '选择图片', [{text: '确定'}])
+              return
+            }else{
+              imageKeyValue[key] = this.state.image[key].file.data
+            }
+          }
         }
       }
 

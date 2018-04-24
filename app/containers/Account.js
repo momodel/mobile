@@ -29,14 +29,16 @@ class Account extends Component {
     this.props.dispatch(NavigationActions.navigate({routeName: 'Requests'}))
   }
 
-  // gotoUsedApps = () => {
-  //   this.props.dispatch(NavigationActions.navigate({routeName: 'UsedApps'}))
-  // }
 
-  // FavorApps
   gotoFavorApps = () => {
     this.props.dispatch(NavigationActions.navigate({routeName: 'FavorApps'}))
   }
+
+  gotoUserInfo = () => {
+    this.props.dispatch(NavigationActions.navigate({routeName: 'UserInfo'}))
+  }
+
+  goBack = () => this.props.dispatch(NavigationActions.back())
 
   render() {
     const {username, login, user} = this.props
@@ -44,9 +46,11 @@ class Account extends Component {
     return (
       <View>
 
-        <View style={{width: "100%", height: height * 0.1,
+        <View style={{
+          width: "100%", height: height * 0.1,
           backgroundColor: "#AACDFF", flexDirection: "row",
-          justifyContent: "space-between"}}>
+          justifyContent: "space-between"
+        }}>
           <TouchableOpacity
             style={{
               // position: 'absolute',
@@ -59,7 +63,7 @@ class Account extends Component {
               // justifyContent: "center",
               alignItems: "center"
             }}
-            onPress={() => this.props.dispatch(NavigationActions.back())}
+            onPress={this.goBack}
           >
             <Icon type="left" color='#2F7DF6' style={{marginRight: 10, color: "blue"}}/>
             <Text style={{fontSize: 20, color: "white"}}
@@ -100,9 +104,7 @@ class Account extends Component {
           </View>
 
           <TouchableOpacity style={{width: "100%", alignItems: "center", marginTop: -radius}}
-                            onPress={() => {
-                              this.props.dispatch(NavigationActions.navigate({routeName: 'UserInfo'}))
-                            }}
+                            onPress={this.gotoUserInfo}
           >
             <View style={{
               width: radius * 2,

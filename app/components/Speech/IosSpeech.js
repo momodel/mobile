@@ -72,6 +72,9 @@ export default class IosSpeech extends Component {
 
   onSpeechResults(e) {
     console.log("value", e.value)
+    console.log("onSpeechResults", e)
+
+    console.log("this.state.isEnd", this.state.isEnd)
     this.setState({
       results: e.value,
     })
@@ -94,6 +97,7 @@ export default class IosSpeech extends Component {
   }
 
   async _startRecognizing(e) {
+    console.log("_startRecognizing", e)
     this.setState({
       recognized: '',
       pitch: '',
@@ -113,7 +117,8 @@ export default class IosSpeech extends Component {
   }
 
   async _stopRecognizing(e) {
-    console.log("stop", e)
+    console.log("_stopRecognizing", e)
+
     console.log("this.state.results", this.state.results)
     this.setOuterResult.bind(this)
 

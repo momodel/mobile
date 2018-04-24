@@ -152,7 +152,10 @@ export default class AppDetail extends Component {
             }}
             onClick={() => {
               this.props.dispatch(
-                NavigationActions.navigate({routeName: 'Predict'})
+                NavigationActions.navigate({
+                  routeName: 'Predict',
+                  params: {title: this.props.navigation.state.params.api.name}
+                })
               )
             }}
             disabled={args === undefined}

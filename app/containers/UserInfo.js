@@ -6,28 +6,28 @@ import {Modal, Button, WingBlank, WhiteSpace, Toast} from 'antd-mobile'
 import {createAction} from "../utils"
 
 const prompt = Modal.prompt
-const operation = Modal.operation;
+const operation = Modal.operation
 const Item = List.Item
 
+const genderDic = {
+  '1': '男',
+  '0': '女',
+  '2': '保密'
+}
 
-// const lists = [{
-//   key: "email",
-//   text: "邮箱"
-// }]
 @connect(({app}) => ({...app}))
 export default class UserInfo extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.dispatch({
       type: "app/getUserInfo",
       payload: {
-        user_ID: this.props.username}
+        user_ID: this.props.username
+      }
     })
   }
 
   updateUser = (key, value) => {
-    // update email
-
     this.props.dispatch({
       type: "app/updateUser",
       payload: {
@@ -40,12 +40,9 @@ export default class UserInfo extends Component {
     this.props.dispatch(createAction('app/logout')())
   }
 
-
   render() {
-    const {username, login, user = {}} = this.props
-    // const {email, phone, gender} = login.response.user
+    const {login, user = {}} = this.props
     const {email, phone, gender} = user
-
     const lists = [
       {
         key: "email",
@@ -59,17 +56,10 @@ export default class UserInfo extends Component {
         text: "手机",
         value: phone,
       },
-      // {
-      //   key: "gender",
-      //   extra: gender === 1 ? "男" : "女",
-      //   text: "性别",
-      //   value: gender,
-      // }
     ]
 
     return (
       <List>
-
         <Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
               onClick={() => {
               }}>
@@ -88,58 +78,41 @@ export default class UserInfo extends Component {
             {item.text}
           </Item>)}
 
-        {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-              {/*extra={email}*/}
-
-              {/*onClick={() => prompt('defaultValue', 'defaultValue for prompt', [*/}
-                {/*{text: 'Cancel'},*/}
-                {/*{text: 'Submit', onPress: value => this.updateUser('email', value)},*/}
-              {/*], 'default', email)}*/}
-        {/*>*/}
-          {/*邮箱*/}
-        {/*</Item>*/}
-
-        {/*<Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"*/}
-              {/*extra={phone}*/}
-              {/*onClick={() => prompt('defaultVlue', 'defaultValue for prompt', [*/}
-                {/*{text: 'Cancel'},*/}
-                {/*{text: 'Submit', onPress: value => this.updateUser('phone', value)},*/}
-              {/*], 'default', phone)}*/}
-        {/*>*/}
-          {/*手机*/}
-        {/*</Item>*/}
-
         <Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
-              extra={gender === 1 ? "男" : "女"}
+              extra={genderDic[String(gender)]}
               onClick={() => operation([
-                { text: '男', onPress: () => this.props.dispatch({
-                  type: "app/updateUser",
-                  payload: {
-                    gender: 1
-                  }
-                }) },
-                { text: '女', onPress: () => this.props.dispatch({
-                  type: "app/updateUser",
-                  payload: {
-                    gender: 0
-                  }
-                })  },
+                {
+                  text: '女', onPress: () => this.props.dispatch({
+                    type: "app/updateUser",
+                    payload: {
+                      gender: 0
+                    }
+                  })
+                },
+                {
+                  text: '男', onPress: () => this.props.dispatch({
+                    type: "app/updateUser",
+                    payload: {
+                      gender: 1
+                    }
+                  })
+                },
+                {
+                  text: '保密', onPress: () => this.props.dispatch({
+                    type: "app/updateUser",
+                    payload: {
+                      gender: 2
+                    }
+                  })
+                },
               ])}
-
-              // onClick={() => prompt('defaultValue', 'defaultValue for prompt', [
-              //   {text: 'Cancel'},
-              //   {text: 'Submit', onPress: value => this.updateUser('gender', value)},
-              // ], 'default', gender)}
         >
           性别
         </Item>
-
-
         <View style={{height: 50}}/>
         {
           login && <Item
             style={styles.logout}
-            // arrow="horizontal"
             onClick={this.logout}
           >
             <Text style={styles.logout_text}>退出登录</Text>

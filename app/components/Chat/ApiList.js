@@ -103,6 +103,12 @@ export default class ApiList extends Component {
               this.setState({
                 displayText: "没有匹配到任何服务"
               })
+
+              this.props.triggerNextStep({
+                trigger: WebChatId.requirement.text,
+              })
+
+
             }
             else{
               this.setState({
@@ -119,7 +125,7 @@ export default class ApiList extends Component {
       res => {
         this.setState(
           {
-            displayText: '对不起，你的需求未匹配到任何服务',
+            displayText: '对不起，你的需求未匹配到任何服务（网络问题）',
           },
           () =>
             this.props.triggerNextStep({

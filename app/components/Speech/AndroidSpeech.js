@@ -9,7 +9,7 @@ import {Modal} from 'antd-mobile'
 const {width, height} = Dimensions.get('window')
 import {SpeechContainer} from './SpeechBase'
 
-export default class Speech extends Component {
+export default class AndroidSpeech extends Component {
   constructor(props) {
     super(props);
     if (Platform.OS === 'android') {
@@ -39,15 +39,17 @@ export default class Speech extends Component {
     this.recognizerEventEmitter.addListener('onRecognizerResult', this.onRecognizerResult)
     this.recognizerEventEmitter.addListener('onRecognizerError', this.onRecognizerError)
     this.recognizerEventEmitter.addListener('onRecognizerVolumeChanged', this.onRecognizerVolumeChanged)
-
     this.synthesizerEventEmitter = new NativeEventEmitter(Synthesizer);
     this.synthesizerEventEmitter.addListener('onSynthesizerSpeakCompletedEvent', this.onSynthesizerSpeakCompletedEvent);
     this.synthesizerEventEmitter.addListener('onSynthesizerBufferCompletedEvent', this.onSynthesizerBufferCompletedEvent);
   }
 
   componentWillUnmount() {
-    this.recognizerEventEmitter.removeAllListeners();
-    this.synthesizerEventEmitter.removeAllListeners();
+    this.recognizerEventEmitter.removeAllListeners('onRecognizerResult');
+    this.recognizerEventEmitter.removeAllListeners('onRecognizerError');
+    this.recognizerEventEmitter.removeAllListeners('onRecognizerVolumeChanged');
+    this.synthesizerEventEmitter.removeAllListeners('onSynthesizerSpeakCompletedEvent');
+    this.synthesizerEventEmitter.removeAllListeners('onSynthesizerBufferCompletedEvent');
   }
 
   onRecordStart() {
