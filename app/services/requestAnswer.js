@@ -1,4 +1,4 @@
-import request, {customRequest} from '../utils/request'
+import request, {} from '../utils/request'
 
 const prefix = '/request_answer'
 

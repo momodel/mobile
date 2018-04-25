@@ -1,9 +1,9 @@
-import request, { customRequest } from '../utils/request'
+import request, {  } from '../utils/request'
 
-const prefix = '/user_request_comments'
+const prefix = '/comments'
 
 export const getRequestComments = (payload) => {
-  return request(`${prefix}?user_request_id=${payload.requestId}`)
+  return request(`${prefix}?_id=${payload.requestId}&comments_type=request`)
 }
 
 export const createUserRequestComments = (payload) => {

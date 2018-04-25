@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -42,7 +43,6 @@
 		74DBDEA02068CD3E003AB846 /* anticon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 74DBDE782068CD3E003AB846 /* anticon.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		16890892281F4B2D9D472B02 /* libRNSpeechIFlytek.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9C84699DC344F18028B0FB /* libRNSpeechIFlytek.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -319,6 +319,13 @@
 			remoteGlobalIDString = DC0729B51EF78E41004EBC83;
 			remoteInfo = Voice;
 		};
+		74DD38C9208F2B9D00390BC1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0C16DCF1A22B4D6D91628D9A /* RNSpeechIFlytek.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E49168D52006061600B9A23A;
+			remoteInfo = RNSpeechIFlytek;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -352,6 +359,7 @@
 		00E356EE1AD99517003FC87E /* DvaStarterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DvaStarterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* DvaStarterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DvaStarterTests.m; sourceTree = "<group>"; };
+		0C16DCF1A22B4D6D91628D9A /* RNSpeechIFlytek.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpeechIFlytek.xcodeproj; path = "../node_modules/react-native-speech-iflytek/ios/RNSpeechIFlytek.xcodeproj"; sourceTree = "<group>"; };
 		136329C7C3CD42618F2A9BF6 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -373,11 +381,10 @@
 		74DBDE782068CD3E003AB846 /* anticon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = anticon.ttf; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		9F9C84699DC344F18028B0FB /* libRNSpeechIFlytek.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpeechIFlytek.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		BC14DF0DB69A42489E8644F1 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		E4B9AB5EBEA147FDB1FB150E /* libVoice.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libVoice.a; sourceTree = "<group>"; };
-		0C16DCF1A22B4D6D91628D9A /* RNSpeechIFlytek.xcodeproj */ = {isa = PBXFileReference; name = "RNSpeechIFlytek.xcodeproj"; path = "../node_modules/react-native-speech-iflytek/ios/RNSpeechIFlytek.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		9F9C84699DC344F18028B0FB /* libRNSpeechIFlytek.a */ = {isa = PBXFileReference; name = "libRNSpeechIFlytek.a"; path = "libRNSpeechIFlytek.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,7 +417,6 @@
 				65DD45DE03FC4D1A95D81E7C /* libVoice.a in Frameworks */,
 				740C018E206E137A00BE92B4 /* libRCTCameraRoll.a in Frameworks */,
 				55486DFDBE2946CD86EEEF01 /* libRNImagePicker.a in Frameworks */,
-				16890892281F4B2D9D472B02 /* libRNSpeechIFlytek.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +607,7 @@
 			children = (
 				E4B9AB5EBEA147FDB1FB150E /* libVoice.a */,
 				136329C7C3CD42618F2A9BF6 /* libRNImagePicker.a */,
+				9F9C84699DC344F18028B0FB /* libRNSpeechIFlytek.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -609,6 +616,14 @@
 			isa = PBXGroup;
 			children = (
 				74D6CD84204E2D6A00250A75 /* libVoice.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74DD38C6208F2B9D00390BC1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74DD38CA208F2B9D00390BC1 /* libRNSpeechIFlytek.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -871,6 +886,10 @@
 				{
 					ProductGroup = 740C01C5206E1BBE00BE92B4 /* Products */;
 					ProjectRef = BC14DF0DB69A42489E8644F1 /* RNImagePicker.xcodeproj */;
+				},
+				{
+					ProductGroup = 74DD38C6208F2B9D00390BC1 /* Products */;
+					ProjectRef = 0C16DCF1A22B4D6D91628D9A /* RNSpeechIFlytek.xcodeproj */;
 				},
 				{
 					ProductGroup = 74D6CD80204E2D6900250A75 /* Products */;
@@ -1145,6 +1164,13 @@
 			fileType = archive.ar;
 			path = libVoice.a;
 			remoteRef = 74D6CD83204E2D6A00250A75 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		74DD38CA208F2B9D00390BC1 /* libRNSpeechIFlytek.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSpeechIFlytek.a;
+			remoteRef = 74DD38C9208F2B9D00390BC1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {

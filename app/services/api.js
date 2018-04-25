@@ -1,4 +1,4 @@
-import request, {customRequest} from '../utils/request'
+import request, {} from '../utils/request'
 import {formatParam} from '../utils'
 import {MOCK} from '../Global'
 import {apiList} from './mockData'
@@ -24,15 +24,23 @@ export const getApiList = async (payload, callback, onSuccess, onError) => {
   //   onSuccess && onSuccess({response: apiList_1})
   //   return {response: apiList_1}
   // }
-  return await customRequest(
+  return await request(
     `${prefix}/chat?${formatParam({search_query, page_no, page_size, max_score,
       privacy: "public"
-    })}`,
-    {},
-    callback,
-    onSuccess,
-    onError
+    })}`, {}, {
+      onSuccess,
+      onError
+    }
   )
+  // return await customRequest(
+  //   `${prefix}/chat?${formatParam({search_query, page_no, page_size, max_score,
+  //     privacy: "public"
+  //   })}`,
+  //   {},
+  //   callback,
+  //   onSuccess,
+  //   onError
+  // )
 }
 // export const getApiList = async (payload, callback, onSuccess, onError) => {
 //   const {

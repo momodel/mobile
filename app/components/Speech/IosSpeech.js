@@ -10,11 +10,8 @@ import {
   Dimensions
 } from 'react-native'
 
-import {Modal} from 'antd-mobile'
-
 import Voice from 'react-native-voice'
-
-const {width, height} = Dimensions.get('window')
+import {SpeechContainer} from './SpeechBase'
 
 export default class IosSpeech extends Component {
   constructor(props) {
@@ -71,17 +68,13 @@ export default class IosSpeech extends Component {
   }
 
   onSpeechResults(e) {
-    console.log("value", e.value)
-    console.log("onSpeechResults", e)
+    if (this.state.isEnd) {
+      this.setState({
+        isEnd: false
+      })
 
-    console.log("this.state.isEnd", this.state.isEnd)
-    this.setState({
-      results: e.value,
-    })
-    // if (this.state.isEnd) {
-    //
-    //   this.props.setResult(e.value[0])
-    // }
+      this.props.setResult(e.value[0])
+    }
   }
 
   onSpeechPartialResults(e) {
@@ -97,7 +90,6 @@ export default class IosSpeech extends Component {
   }
 
   async _startRecognizing(e) {
-    console.log("_startRecognizing", e)
     this.setState({
       recognized: '',
       pitch: '',
@@ -117,11 +109,6 @@ export default class IosSpeech extends Component {
   }
 
   async _stopRecognizing(e) {
-    console.log("_stopRecognizing", e)
-
-    console.log("this.state.results", this.state.results)
-    this.setOuterResult.bind(this)
-
     this.setState({isEnd: true, modal1: false})
     try {
       await Voice.stop()
@@ -160,91 +147,9 @@ export default class IosSpeech extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <TouchableOpacity
-          onPressIn={this._startRecognizing.bind(this)}
-          onPressOut={
-            this._stopRecognizing.bind(this)
-            // TODO 手机测试一下这样的新写法， 当松开是吧result给出去
-            // this.setOuterResult.bind(this)
-
-          }
-        >
-          <Image
-            style={styles.button}
-            source={require('../../images/icons/microphone.png')}
-          />
-        </TouchableOpacity>
-        <Modal
-          visible={this.state.modal1}
-          transparent
-          maskClosable={false}
-          style={{
-            width: width,
-            height: height,
-            // backgroundColor: "transparent",
-            // opacity: 0.1,
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-          // onClose={this.onClose('modal1')}
-          title="松开发送"
-          // footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.onClose('modal1')(); } }]}
-          // wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-        >
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-
-            <Text style={styles.text}>语音助手</Text>
-            <Text style={styles.text}>我要使用app</Text>
-            <Text style={styles.text}>我要发布需求</Text>
-            <Text style={styles.text}>我要查看我的收藏</Text>
-
-          </View>
-        </Modal>
-
-      </View>
-    )
+    return <SpeechContainer
+      onPressIn={this._startRecognizing.bind(this)}
+      onPressOut={this._stopRecognizing.bind(this)}
+    />
   }
 }
-
-const styles = StyleSheet.create({
-  button: {
-    width: 80,
-    height: 80,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  action: {
-    textAlign: 'center',
-    color: '#0000FF',
-    marginVertical: 5,
-    fontWeight: 'bold',
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  stat: {
-    textAlign: 'center',
-    color: '#B0171F',
-    marginBottom: 1,
-  },
-
-  text: {
-    margin: 10,
-    padding: 5,
-  }
-})
-

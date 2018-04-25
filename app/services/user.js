@@ -1,4 +1,4 @@
-import request, {customRequest} from '../utils/request'
+import request, {} from '../utils/request'
 
 const prefix = '/user'
 import {formatParam} from '../utils'
@@ -107,13 +107,15 @@ export const getfavorApps = async (payload, callback, onSuccess, onError, ) => {
 
 export const getfavorAppsCustom = async (payload, callback, onSuccess, onError, ) => {
   const {pageNo: page_no, pageSize: page_size} = payload
-  return await customRequest(
-    `${prefix}/action_entity?${formatParam({page_no, page_size, action_entity: "favor_apps"})}`,
-    {},
-    callback,
-    onSuccess,
-    onError
-  )
+  return await request(`${prefix}/action_entity?${formatParam({page_no, page_size, action_entity: "favor_apps"})}`,
+    {}, {onSuccess, onError})
+  // return await customRequest(
+  //   `${prefix}/action_entity?${formatParam({page_no, page_size, action_entity: "favor_apps"})}`,
+  //   {},
+  //   callback,
+  //   onSuccess,
+  //   onError
+  // )
 }
 
 export const getUsedApps = async payload => {
@@ -128,7 +130,7 @@ export const updateUser = async payload => {
   return await request(`${prefix}`, {
     method: "put",
     body: payload
-  })
+  }, {customErrorMsg: true})
 }
 
 export const getUserInfo = async payload => {

@@ -14,6 +14,8 @@ export default {
     token: '',
     registration_id: '',
     user: "",
+
+    updatingUser: false,
   },
   reducers: {
     updateState(state, { payload }) {
@@ -26,10 +28,10 @@ export default {
       const username = yield call(Storage.get, 'username', '')
       const password = yield call(Storage.get, 'password', '')
       const token = yield call(Storage.get, 'token', '')
-      let user = ''
-      if (login){
-        user = login.response.user
-      }
+      // let user = ''
+      // if (login){
+      //   user = login.response.user
+      // }
       yield put(
         createAction('updateState')({
           login,
@@ -37,7 +39,7 @@ export default {
           password,
           token,
           loading: false,
-          user
+          // user
         })
       )
     },
@@ -45,16 +47,14 @@ export default {
       const {username, password} = payload
       yield put(createAction('updateState')({ fetching: true }))
       const login = yield call(authService.login, payload)
-
-      console.log("login", login)
-
       if (!(login instanceof Error ) && login.status === 200) {
         // 将 username password token存起来
         yield call(Storage.set, 'username', payload.username)
         yield call(Storage.set, 'password', payload.password)
         yield call(Storage.set, 'token', login.response.token)
         yield put(NavigationActions.navigate({ routeName: 'Main' }))
-        yield put(createAction('updateState')({ login, username, password,fetching: false, user: login.response.user }))
+        yield put(createAction('updateState')({ login, username, password,
+          fetching: false, user: login.response.user }))
         yield call(Storage.set, 'login', login)
       }
     },
@@ -100,13 +100,17 @@ export default {
     },
 
     *updateUser({ payload }, { call, put }) {
+      yield put(createAction('updateState')({ updatingUser: true }))
 
       const response = yield call(authService.updateUser, payload)
+      yield put(createAction('updateState')({ updatingUser: true }))
       if(!(response instanceof Error ) && response.status === 200){
         yield put(createAction('updateState')({
           user: response.response.user
         }))
       }
+
+      yield put(createAction('updateState')({ updatingUser: false }))
     },
 
     *getUserInfo({ payload }, { call, put }) {

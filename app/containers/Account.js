@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
-import {Icon} from 'antd-mobile'
+import {Icon, ActivityIndicator} from 'antd-mobile'
 import {NavigationActions, objectIdToImg} from '../utils'
 
 const {width, height} = Dimensions.get('window')
@@ -14,6 +14,13 @@ class Account extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'appList/getUsedApps'
+    })
+
+    this.props.dispatch({
+      type: "app/getUserInfo",
+      payload: {
+        user_ID: this.props.username
+      }
     })
   }
 
@@ -42,10 +49,9 @@ class Account extends Component {
 
   render() {
     const {username, login, user} = this.props
-    // const picNumber = parseInt(user._id.slice(20)) % 6
+    const {avatar} = user
     return (
       <View>
-
         <View style={{
           width: "100%", height: height * 0.1,
           backgroundColor: "#AACDFF", flexDirection: "row",
@@ -98,11 +104,11 @@ class Account extends Component {
 
         </View>
 
+
         <ScrollView style={{backgroundColor: "white"}}
                     keyboardShouldPersistTaps="always">
           <View style={{width: "100%", height: height * 0.08, backgroundColor: "#AACDFF",}}>
           </View>
-
           <TouchableOpacity style={{width: "100%", alignItems: "center", marginTop: -radius}}
                             onPress={this.gotoUserInfo}
           >
@@ -114,8 +120,11 @@ class Account extends Component {
               alignItems: "center",
               justifyContent: "center"
             }}>
-              <Image style={{width: radius * 2 - 2, height: radius * 2 - 2, borderRadius: radius - 1}}
-                     source={objectIdToImg(user._id)}/>
+              {user !== "" ? <Image style={{width: radius * 2 - 2, height: radius * 2 - 2, borderRadius: radius - 1}}
+                                    source={avatar ? {uri: avatar} : objectIdToImg(user._id)}/> :
+                <ActivityIndicator animating/>
+              }
+
             </View>
 
             <View style={{marginTop: 10}}>
@@ -179,6 +188,7 @@ class Account extends Component {
             )
           }/>
         </ScrollView>
+
       </View>
     )
   }

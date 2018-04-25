@@ -52,6 +52,7 @@ export default {
       const result = yield call(userRequestService.getRequest, {
         ...payload,
       })
+      console.log("result", result)
 
       yield put({
         type: 'updateState',
@@ -74,7 +75,7 @@ export default {
       yield put({
         type: 'updateState',
         payload: {
-          comments: result.response
+          comments: result.response.comments
         }
       })
 
@@ -84,6 +85,7 @@ export default {
       const result = yield call(requestAnswerService.getRequestAnswer, {
         ...payload,
       })
+
 
       yield put({
         type: 'updateState',

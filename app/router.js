@@ -23,14 +23,6 @@ import Request from './containers/Request'
 import FavorApps from './containers/FavorApps'
 import {RequestEdit} from './containers/RequestEdit'
 import UserInfo from './containers/UserInfo'
-// import Predict from './containers/Predict'
-// import ImagePickerExample from './containers/Test'
-
-// import Test from './containers/Test'
-// import {RequestHeaderCard} from './components/RequestHeader'
-// import SpeechToText from './containers/test/SpeechToText'
-import SpeechTest from './containers/test/SpeechTest'
-
 
 const HomeNavigator = TabNavigator(
   {
@@ -114,7 +106,7 @@ const MainNavigator = StackNavigator(
 
     UserInfo: { screen: UserInfo,
       navigationOptions: {
-        title: '账号与安全',
+        title: '编辑个人资料',//'账号与安全',
       }
     },
   },

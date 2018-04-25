@@ -2,7 +2,7 @@
  * 1. 获取intent
  * 2. 获取 api list
  */
-import request, { customRequest } from '../utils/request'
+import request, {  } from '../utils/request'
 import { MOCK } from '../Global'
 import { apiList } from './mockData'
 const prefix = '/chat'
@@ -29,13 +29,21 @@ function pagination(pageNo, pageSize, array) {
  */
 const getIntent = async payload => {
   const {content, IntentList, callback, onSuccess, onError} = payload
-  return customRequest(`${prefix}/intent`, {
+  return request(`${prefix}/intent`, {
     method: 'post',
     body: {
       content: payload.content,
       intent_list: payload.IntentList,
     },
-  }, callback, onSuccess, onError)
+  }, {onSuccess, onError})
+
+  // return customRequest(`${prefix}/intent`, {
+  //   method: 'post',
+  //   body: {
+  //     content: payload.content,
+  //     intent_list: payload.IntentList,
+  //   },
+  // }, callback, onSuccess, onError)
 }
 
 /**
@@ -60,14 +68,22 @@ const getApiList = async (
     onSuccess && onSuccess(apiList_1)
     return apiList_1
   }
-  return await customRequest(
+  return await request(
     `${prefix}/get_matched_apis?
   content=${keyword}&page_no=${pageNo}&page_size=${pageSize}&get_type=${get_type}&user_ID=${user_ID}`,
     {},
-    callback,
-    onSuccess,
-    onError
+    {onSuccess,
+    onError}
   )
+
+  // return await customRequest(
+  //   `${prefix}/get_matched_apis?
+  // content=${keyword}&page_no=${pageNo}&page_size=${pageSize}&get_type=${get_type}&user_ID=${user_ID}`,
+  //   {},
+  //   callback,
+  //   onSuccess,
+  //   onError
+  // )
 }
 
 // 获取单个api
