@@ -1,3 +1,5 @@
+// 单个app 正在使用
+
 import {createAction, NavigationActions, Storage} from '../utils'
 import * as userService from '../services/user'
 import * as apiService from '../services/api'
@@ -9,26 +11,6 @@ export default {
     app: {},
     api_response: null,
     fetch_api_response: false
-
-    // favor_users: [],
-    // tags: [],
-    // input_type: [],
-    // output_type: [],
-    // category: [],
-    // args: null,
-
-
-    // name: '',
-    // desc: '',
-
-    // apiDetail: null
-
-    // isUp: false,
-    // isStar: false,
-    // upNum: 0,
-    // startNum: 0,
-
-
   },
 
   reducers: {

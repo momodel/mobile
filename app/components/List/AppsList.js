@@ -1,27 +1,37 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text, ScrollView} from 'react-native'
 import {AppItem, UsedAppItem} from '../Item/AppItem'
+import {ActivityIndicator} from 'antd-mobile'
+
 
 const BasicList = (props) => {
-  const {Apps, emptyText = '暂无历史记录', onPressItem, Item} = props
+  const {Apps, emptyText = '暂无历史记录', onPressItem, Item, fetching} = props
   return (
-    <View>
-      {
-        Apps.length !== 0 ? Apps.map(App => (
-            <Item
-              key={App._id}
-              App={App}
-              onPress={onPressItem}
-            />
-          ))
-          :
-          <View style={{width: "100%", height: 200, justifyContent: "center", alignItems: "center"}}>
-            <Text style={{fontSize: 16}}>
-              {emptyText}
-            </Text>
-          </View>
-      }
-    </View>
+    fetching ? <View style={{
+        height: '15%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <ActivityIndicator size='large' />
+      </View>
+      :
+      <View>
+        {
+          Apps.length !== 0 ? Apps.map(App => (
+              <Item
+                key={App._id}
+                App={App}
+                onPress={onPressItem}
+              />
+            ))
+            :
+            <View style={{width: "100%", height: 200, justifyContent: "center", alignItems: "center"}}>
+              <Text style={{fontSize: 16}}>
+                {emptyText}
+              </Text>
+            </View>
+        }
+      </View>
   )
 }
 

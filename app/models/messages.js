@@ -8,9 +8,10 @@ export default {
 
     // 现有messages的页码
     pageNo: null,
-
     refreshing: false,
     loadingMore: false,
+    total_number: null,
+    noMore: false
   },
   reducers: {
     updateState(state, {payload}) {
@@ -47,7 +48,7 @@ export default {
       yield put({
         type: 'refreshMessages',
         payload: {
-          messages: result.response,
+          messages: result.response.messages,
         }
       })
       yield put({
@@ -55,15 +56,29 @@ export default {
         payload: {
           // messages: result.response,
           refreshing: false,
+          total_number: result.response.total_number
         }
       })
     },
 
     * loadingMoreMessage({payload}, {call, put, select}) {
       const loadingMore = yield select((state) => state.messages.loadingMore)
+      const total_number = yield select((state) => state.messages.total_number)
+
       if(loadingMore){
         return
       }
+
+      if(payload.pageNo > total_number/10){
+        yield put({
+          type: 'updateState',
+          payload: {
+            noMore: true
+          }
+        })
+        return
+      }
+
       yield put({
         type: 'updateState',
         payload: {
@@ -75,7 +90,7 @@ export default {
       yield put({
         type: 'loadingMoreMessages',
         payload: {
-          messages: result.response,
+          messages: result.response.messages,
           pageNo: payload.pageNo
         }
       })
@@ -84,6 +99,7 @@ export default {
         payload: {
           // messages: messages.concat(result.response),
           loadingMore: false,
+          total_number: result.response.total_number
         }
       })
 
