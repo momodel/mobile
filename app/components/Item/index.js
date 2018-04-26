@@ -89,7 +89,6 @@ MessageItem.defaultProps = {
 // export const UsedAppItem = ({usedApp, onPress}) => {
 //   const {app_obj = {}, datetime, app_obj_user_ID} = usedApp
 //   const {name, description, favor_users = [], star_users = []} = app_obj
-//   console.log("app_obj", app_obj)
 //
 //   return <View>
 //     <TouchableOpacity style={{

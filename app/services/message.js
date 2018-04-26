@@ -1,8 +1,10 @@
 import request, {requestV2} from '../utils/request'
+import {formatParam} from "../utils"
 const prefix = '/message'
 
-export const getMessages = async payload => {
-  return await request(`${prefix}`)
+
+export const getMessages = async ({pageNo, pageSize=10}) => {
+  return await request(`${prefix}?${formatParam({pageNo, pageSize})}`)
 }
 
 // export const getMessages = async payload => {

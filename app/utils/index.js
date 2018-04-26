@@ -15,10 +15,8 @@ export const createAction = type => payload => ({ type, payload })
 // }
 //
 // export const FormatDateTime = (strTime) => {
-//   console.log("strTime", strTime)
 //   let date = new Date(strTime);
 //   let localeString = date.toLocaleString();
-//   console.log("localeString", localeString)
 //
 //   return date.getFullYear()+"-"+(date.getMonth()+1)+
 //     "-"+date.getDate()+ " "+date.getHours()+":"+ date.getMinutes();

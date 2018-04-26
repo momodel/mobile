@@ -52,7 +52,6 @@ export default {
       const result = yield call(userRequestService.getRequest, {
         ...payload,
       })
-      console.log("result", result)
 
       yield put({
         type: 'updateState',

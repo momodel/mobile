@@ -17,13 +17,13 @@ export default {
   },
   effects: {
     * getUsedApps({payload}, {call, put, select}) {
-      const result = yield call(userService.getUsedApps, {})
-      yield put({
-        type: 'updateState',
-        payload: {
-          usedApps: result.response.objects
-        }
-      })
+      // const result = yield call(userService.getUsedApps, {})
+      // yield put({
+      //   type: 'updateState',
+      //   payload: {
+      //     usedApps: result.response.objects
+      //   }
+      // })
     },
 
     * getFavorApps({payload}, {call, put, select}) {

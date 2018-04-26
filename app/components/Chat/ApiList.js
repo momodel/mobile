@@ -142,6 +142,7 @@ export default class ApiList extends Component {
       <View>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
                     keyboardShouldPersistTaps="always"
+                    // pagingEnabled
         >
           {apiList.map(api => {
               const {favor_users, star_users} = api
