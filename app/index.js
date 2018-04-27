@@ -14,13 +14,13 @@ import requestModel from './models/request'
 import requestsModel from './models/requests'
 import messagesModel from './models/messages'
 import registerModel from './models/register'
-
+import favorAppsModel from './models/favorApps'
 
 
 const app = dva({
   initialState: {},
   models: [appModel, routerModel, apiModel, apiListModel, requestModel, requestsModel,
-    messagesModel, registerModel],
+    messagesModel, registerModel, favorAppsModel],
   onError(e, dispatch) {
     console.log('onError', e)
     console.log('onError', e.response)

@@ -49,21 +49,18 @@ export const CustomFlatList = ({dataItems, state, renderItem, noMore, loadingMor
   }
 
   return (
-    !dataItems ? <ActivityIndicator/> :
-      (
-        dataItems.length === 0 ? <InfoPage text="暂无信息"/> :
-          <FlatList
-            data={dataItems}
-            extraData={state}
-            keyExtractor={_keyExtractor}
-            renderItem={renderItem}
-            ListFooterComponent={_renderFooter}
-            ListEmptyComponent={emptyComponent}
-            onEndReachedThreshold={0.1}
-            onEndReached={onEndReached}
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-      )
+    dataItems && dataItems.length !== 0 ?
+      <FlatList
+        data={dataItems}
+        extraData={state}
+        keyExtractor={_keyExtractor}
+        renderItem={renderItem}
+        ListFooterComponent={_renderFooter}
+        ListEmptyComponent={emptyComponent}
+        onEndReachedThreshold={0.1}
+        onEndReached={onEndReached}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      /> : <InfoPage text="暂无信息"/>
   )
 }

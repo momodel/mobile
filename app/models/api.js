@@ -28,14 +28,6 @@ export default {
         }
       }
     }
-
-    // updateApi(state, {payload}) {
-    //   return {
-    //     ...state,
-    //     ...payload
-    //   }
-    // }
-
   },
   effects: {
     * getApi({payload}, {call, put, select}) {
@@ -65,7 +57,6 @@ export default {
       })
     },
 
-
     * favorApi({payload}, {call, put, select}) {
       const result = yield call(userService.favorApi, {
         ...payload,
@@ -79,8 +70,6 @@ export default {
       })
     },
 
-
-
     * runApi({payload}, {call, put, select}) {
       yield put({
         type: 'updateState',
@@ -88,7 +77,6 @@ export default {
           fetch_api_response: true
         }
       })
-
       // const fake_result = {
       //   "response": {
       //     "weather_prediction_out1": 1
@@ -101,13 +89,10 @@ export default {
       //     fetch_api_response: false
       //   }
       // })
-
-      // TODO 把真实的打开
       // const user_ID = yield select(state => state.app.username)
       const result = yield call(apiService.runApi, {
         ...payload,
       })
-
 
       yield put({
         type: 'updateState',
@@ -117,10 +102,5 @@ export default {
         }
       })
     }
-
-
-
-
-
   }
 }

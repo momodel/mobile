@@ -22,6 +22,15 @@ class Account extends Component {
         user_ID: this.props.username
       }
     })
+
+    this.props.dispatch({
+      type: "app/getUserStatistics",
+      payload: {
+        user_ID: this.props.username
+      }
+    })
+
+
   }
 
   gotoLogin = () => {
@@ -48,8 +57,9 @@ class Account extends Component {
   goBack = () => this.props.dispatch(NavigationActions.back())
 
   render() {
-    const {username, login, user} = this.props
+    const {username, login, user, userStatistics} = this.props
     const {avatar} = user
+    const {favor_apps_count, requests_count} = userStatistics
     return (
       <View>
         <View style={{
@@ -150,7 +160,7 @@ class Account extends Component {
                               onPress={this.gotoFavorApps}
             >
               <Text style={{fontSize: 20, color: "#6D9CF9"}}>
-                10
+                {favor_apps_count}
               </Text>
               <Text style={{marginTop: 10}}>
                 收藏
@@ -165,7 +175,7 @@ class Account extends Component {
                               onPress={this.gotoRequests}
             >
               <Text style={{fontSize: 20, color: "#6D9CF9"}}>
-                2
+                {requests_count}
               </Text>
               <Text style={{marginTop: 10}}>
                 需求

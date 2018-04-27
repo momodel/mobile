@@ -2,6 +2,7 @@ import request, {requestV2} from '../utils/request'
 
 import {MOCK} from '../Global'
 import {apiList} from './mockData'
+import {formatParam} from "../utils"
 
 const prefix = '/user_requests'
 
@@ -51,8 +52,10 @@ export const getRequest = (payload) => {
   return request(`${prefix}/${payload.requestId}`)
 }
 
-export const getRequests = (payload) => {
-  return request(`${prefix}?user_ID=${payload.user_ID}`)
+export const getRequests = ({user_ID, pageNo, pageSize}) => {
+  // return request(`${prefix}?user_ID=${payload.user_ID}`)
+  return request(`${prefix}?${formatParam({user_ID, page_no: pageNo, page_size: 10})}`)
+
 }
 
 

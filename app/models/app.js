@@ -16,6 +16,9 @@ export default {
     user: "",
 
     updatingUser: false,
+    userStatistics: {},
+    // favor_apps_count: null,
+    // requests_count: null
   },
   reducers: {
     updateState(state, { payload }) {
@@ -128,7 +131,7 @@ export default {
 
       if(!(response instanceof Error ) && response.status === 200){
         yield put(createAction('updateState')({
-          user: response.response
+          userStatistics: response.response
         }))
       }
     }

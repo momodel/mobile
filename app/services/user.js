@@ -101,7 +101,7 @@ export const favorApi = async payload => {
 export const getfavorApps = async (payload, callback, onSuccess, onError, ) => {
   const {pageNo: page_no, pageSize: page_size} = payload
   return await request(
-    `${prefix}/action_entity?${formatParam({page_no, page_size, action_entity: "favor_apps"})}`
+    `${prefix}/action_entity?${formatParam({page_no, page_size: 10, action_entity: "favor_apps"})}`
   )
 }
 
