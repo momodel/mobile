@@ -111,7 +111,7 @@ const MainNavigator = StackNavigator(
     },
   },
   {
-    headerMode: 'float',
+    headerMode: 'screen',
   }
 )
 

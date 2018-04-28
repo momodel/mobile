@@ -79,16 +79,13 @@ export default class App extends Component {
   }
 
   onRecordStart() {
-    console.log("onRecordStart")
     this.setState({ recordBtnText: "Release to stop" });
     Recognizer.start();
   }
 
   onRecordEnd() {
-    console.log("onRecordEnd")
     this.setState({ recordBtnText: "Press to record" });
     Recognizer.stop();
-    console.log("this.state.text",this.state.text)
   }
 
   onRecordCancel(evt) {
@@ -98,7 +95,6 @@ export default class App extends Component {
   }
 
   onRecognizerResult(e) {
-    console.log("e", e)
     if (!e.isLast) {
       return;
     }
@@ -106,7 +102,6 @@ export default class App extends Component {
   }
 
   onRecognizerError(result) {
-    console.log("result", result)
     if (result.errorCode !== 0) {
       alert(JSON.stringify(result));
     }

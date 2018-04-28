@@ -32,8 +32,6 @@ export function* getObjects({payload, extra: {objectsName, services, responseFie
     }
   })
   const result = yield call(services, payload)
-  console.log("result", result)
-  console.log("responseField", responseField)
 
   yield put({
     type: 'refreshMessages',

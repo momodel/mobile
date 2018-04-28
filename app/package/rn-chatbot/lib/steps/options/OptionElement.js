@@ -20,7 +20,6 @@ export default OptionElement
 // return props.borderColor?props.borderColor:"white"
 /*
 border-color: ${props => {
-  console.log("props", props)
   return "white"
 
   }};

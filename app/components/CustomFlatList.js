@@ -47,7 +47,17 @@ export const CustomFlatList = ({dataItems, state, renderItem, noMore, loadingMor
       }}>暂无数据下拉刷新</Text>
     </View>
   }
-
+  if(refreshing&&dataItems===null){
+    return (
+      <View style={{
+        height: '15%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <ActivityIndicator size='large'/>
+      </View>
+    )
+  }
   return (
     dataItems && dataItems.length !== 0 ?
       <FlatList

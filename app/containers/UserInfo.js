@@ -76,7 +76,6 @@ export default class UserInfo extends Component {
         console.log('User tapped custom button: ', response.customButton)
       }
       else {
-        console.log("response", response)
         // 上传头像
         this.updateUser('avatar', `data:image/png;base64, ${response.data}`)
         // this.setState({

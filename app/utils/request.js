@@ -97,8 +97,6 @@ export default async function request(url, options, kwargs = {}) {
     onError && await onError(err)
   }
 
-
-
 }
 
 /**************************** 分割线 ****************************/
@@ -160,10 +158,6 @@ const callbackDef = function (response) {
 //     ...newOptions.headers,
 //   }
 //
-//   console.log('newUrl, newOptions')
-//   console.log(newUrl, newOptions)
-//   // console.log(JSON.stringify(newUrl))
-//   // console.log(JSON.stringify(newOptions))
 //
 //
 //   return fetch(newUrl, newOptions)

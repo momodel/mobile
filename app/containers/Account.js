@@ -1,5 +1,15 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView} from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+  Platform
+} from 'react-native'
 import {connect} from 'react-redux'
 import {Icon, ActivityIndicator} from 'antd-mobile'
 import {NavigationActions, objectIdToImg} from '../utils'
@@ -8,6 +18,9 @@ const {width, height} = Dimensions.get('window')
 import {UsedAppsList} from '../components/List/AppsList'
 
 const radius = 40
+
+
+console.log("platform", Platform.OS)
 
 @connect(({app, appList}) => ({...app, appList}))
 class Account extends Component {
@@ -62,57 +75,109 @@ class Account extends Component {
     const {favor_apps_count, requests_count} = userStatistics
     return (
       <View>
-        <View style={{
-          width: "100%", height: height * 0.1,
-          backgroundColor: "#AACDFF", flexDirection: "row",
-          justifyContent: "space-between"
-        }}>
-          <TouchableOpacity
-            style={{
-              // position: 'absolute',
-              // left: 100,
-              // top: 100,
-              marginTop: "7%",
-              paddingLeft: "2.5%",
-              backgroundColor: 'transparent',
+
+        {
+          Platform.OS === 'ios' ?
+            <View style={{
+              width: "100%", height: height * 0.1,
+              backgroundColor: "#AACDFF",
               flexDirection: "row",
-              // justifyContent: "center",
-              alignItems: "center"
-            }}
-            onPress={this.goBack}
-          >
-            <Icon type="left" color='#2F7DF6' style={{marginRight: 10, color: "blue"}}/>
-            <Text style={{fontSize: 20, color: "white"}}
-            >我的</Text>
-          </TouchableOpacity>
+              justifyContent: "space-between",
+              alignItems: 'center'
+            }}>
+              <TouchableOpacity
+                style={{
+                  // position: 'absolute',
+                  // left: 100,
+                  // top: 100,
+                  marginTop: "7%",
+                  paddingLeft: "2.5%",
+                  backgroundColor: 'transparent',
+                  flexDirection: "row",
+                  // justifyContent: "center",
+                  alignItems: "center"
+                }}
+                onPress={this.goBack}
+              >
+                <Icon type="left" color='#2F7DF6' style={{marginRight: 10, color: "blue"}}/>
+                <Text style={{fontSize: 20, color: "white"}}
+                >我的</Text>
+              </TouchableOpacity>
 
 
-          <TouchableOpacity
-            style={{
-              marginTop: "7%",
-              paddingRight: "2.5%",
-              backgroundColor: 'transparent',
+              <TouchableOpacity
+                style={{
+                  marginTop: "7%",
+                  paddingRight: "2.5%",
+                  backgroundColor: 'transparent',
 
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              // margin: 10,
-              width: 50,
-              height: 40,
-            }}
-            onPress={() => {
-              this.props.dispatch(
-                NavigationActions.navigate({routeName: 'Message'})
-              )
-            }}
-          >
-            <Image
-              style={{width: 25, height: 25, tintColor: 'white'}}
-              source={require('../images/icons/mail.png')}
-            />
-          </TouchableOpacity>
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  // margin: 10,
+                  width: 50,
+                  height: 40,
+                }}
+                onPress={() => {
+                  this.props.dispatch(
+                    NavigationActions.navigate({routeName: 'Message'})
+                  )
+                }}
+              >
+                <Image
+                  style={{width: 25, height: 25, tintColor: 'white'}}
+                  source={require('../images/icons/mail.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            :
+            <View style={{
+              width: "100%",
+              height: height * 0.08,
+              backgroundColor: "#AACDFF",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: 'center'
+            }}>
+              <TouchableOpacity
+                style={{
+                  paddingLeft: "2.5%",
+                  backgroundColor: 'transparent',
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}
+                onPress={this.goBack}
+              >
+                <Icon type="left" color='#2F7DF6' style={{marginRight: 10, color: "blue"}}/>
+                <Text style={{fontSize: 20, color: "white"}}
+                >我的</Text>
+              </TouchableOpacity>
 
-        </View>
+
+              <TouchableOpacity
+                style={{
+                  paddingRight: "2.5%",
+                  backgroundColor: 'transparent',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  // margin: 10,
+                  width: 50,
+                  height: 40,
+                }}
+                onPress={() => {
+                  this.props.dispatch(
+                    NavigationActions.navigate({routeName: 'Message'})
+                  )
+                }}
+              >
+                <Image
+                  style={{width: 25, height: 25, tintColor: 'white'}}
+                  source={require('../images/icons/mail.png')}
+                />
+              </TouchableOpacity>
+            </View>
+        }
 
 
         <ScrollView style={{backgroundColor: "white"}}

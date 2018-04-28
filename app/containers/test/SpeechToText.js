@@ -33,7 +33,6 @@ export default class VoiceTest extends Component {
 
   componentWillMount(){
     let result = Voice.isAvailable()
-    console.log("result", result)
   }
 
   componentWillUnmount() {
@@ -65,7 +64,6 @@ export default class VoiceTest extends Component {
   }
 
   onSpeechResults(e) {
-    console.log("e", e)
     this.setState({
       results: e.value,
     });
@@ -84,7 +82,6 @@ export default class VoiceTest extends Component {
   }
 
   async _startRecognizing(e) {
-    console.log("_startRecognizing", e)
 
     this.setState({
       recognized: '',
@@ -98,7 +95,6 @@ export default class VoiceTest extends Component {
     try {
       let result = await Voice.start('zh-CN', {REQUEST_PERMISSIONS_AUTO: true});
 
-      console.log("result", result)
     } catch (e) {
       console.error(e);
     }

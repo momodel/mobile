@@ -25,16 +25,8 @@ const dict = {
   'datetime': 'Date'
 }
 
-const typeDict = {
-  upload: "",
-  input: ""
-}
-
 const options = {
   title: '选择图片',
-  // customButtons: [
-  //   {name: 'fb', title: 'Choose Photo from Facebook'},
-  // ],
   storageOptions: {
     skipBackup: true,
     path: 'images'
@@ -220,6 +212,8 @@ export default class Predict extends Component {
 
   render() {
     const {app: {args}, api_response, fetch_api_response} = this.props
+
+    console.log("this.props", this.props)
 
     return (
       <ScrollView

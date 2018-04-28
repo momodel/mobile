@@ -149,7 +149,8 @@ export default class IosSpeech extends Component {
   render() {
     return <SpeechContainer
       onPressIn={this._startRecognizing.bind(this)}
-      onPressOut={this._stopRecognizing.bind(this)}
+      // onPressOut={this._stopRecognizing.bind(this)}
+      onPress={this._stopRecognizing.bind(this)}
     />
   }
 }

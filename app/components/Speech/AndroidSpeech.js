@@ -22,6 +22,8 @@ export default class AndroidSpeech extends Component {
 
     this.state = {
       text: "",
+
+      end: false
     };
 
     this.onRecordStart = this.onRecordStart.bind(this);
@@ -53,34 +55,44 @@ export default class AndroidSpeech extends Component {
   }
 
   onRecordStart() {
-    console.log("onRecordStart")
+    console.log("start")
     Recognizer.start();
+    this.setState({
+      end: false
+    })
   }
 
   onRecordEnd() {
-    console.log("onRecordEnd")
+    // 设置是否输出
+    this.setState({
+      end: true
+    })
+  }
+
+  handlePressOut = () =>{
     Recognizer.stop();
   }
 
-
   onRecordCancel(evt) {
+    // 设置flag, stop 不输出
     // setTimeout(() => {
     //   Recognizer.cancel();
     // }, 500);
   }
 
   onRecognizerResult(e) {
-    console.log("e", e)
+    console.log("onRecognizerResult", e)
     if (!e.isLast) {
       return;
     }
+    if (!this.state.end){
+      return;
+    }
     this.setState({ text: e.result });
-    console.log("e.result final", e.result)
     this.props.setResult(e.result)
   }
 
   onRecognizerError(result) {
-    console.log("result", result)
     if (result.errorCode !== 0) {
       alert(JSON.stringify(result));
     }
@@ -104,7 +116,8 @@ export default class AndroidSpeech extends Component {
   render() {
     return <SpeechContainer
       onPressIn={this.onRecordStart}
-      onPressOut={this.onRecordEnd}
+      onPressOut={this.handlePressOut}
+      onPress={this.onRecordEnd}
     />
   }
 }

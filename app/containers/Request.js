@@ -29,7 +29,6 @@ export default class Request extends Component {
 
   componentDidMount() {
     const requestId = this.props.navigation.state.params.request._id
-    console.log("requestId", requestId)
     // 通过id 重新获取 request
     this.props.dispatch({
       type: 'request/getRequest',

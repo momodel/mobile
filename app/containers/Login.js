@@ -375,17 +375,12 @@ class LoginPage extends Component {
 
               </TouchableOpacity>
             </View>
-
-
             {/*<View style={{backgroundColor: "transparent", justifyContent: "center",*/}
             {/*alignItems: "center",  margin: 10}}>*/}
             {/*<Text style={styles.bottomText}>MO手机版 版本号: {Global.version}</Text>*/}
             {/*</View>*/}
 
-
           </View>
-
-
         </ImageBackground>
       </KeyboardAvoidingView>
     )
