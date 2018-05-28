@@ -12,7 +12,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  Platform
 
 } from 'react-native'
 import InputItemStyle from 'antd-mobile/lib/input-item/style/index'
@@ -127,7 +128,7 @@ class LoginPage extends Component {
       return
     }
     let phone = this.state.phone
-    phone = phone.replace(/\s+/g,"");
+    phone = phone.replace(/\s+/g, "")
     if (checkMobile(phone)) {
       this.props.dispatch(
         createAction('app/loginWithPhone')({
@@ -135,7 +136,7 @@ class LoginPage extends Component {
           code: this.state.code,
         })
       )
-    }else{
+    } else {
       Alert.alert('警告', '请输入正确的手机号', [{text: '确定'}])
     }
   }
@@ -143,7 +144,7 @@ class LoginPage extends Component {
   onGetCaptcha = () => {
     // 向后端请求验证码
     let phone = this.state.phone
-    phone = phone.replace(/\s+/g,"");
+    phone = phone.replace(/\s+/g, "")
     if (checkMobile(phone)) {
       this.props.dispatch({
         type: "register/sendVerificationCode",
@@ -260,7 +261,6 @@ class LoginPage extends Component {
     )
   }
 
-
   render() {
     return (
       <KeyboardAvoidingView style={{height: "100%", width: "100%"}}
@@ -275,7 +275,7 @@ class LoginPage extends Component {
               height: 110 * scale, width: 110 * scale, backgroundColor: 'white',
               borderRadius: 55 * scale, justifyContent: "center",
               alignItems: "center",
-              marginTop: 90 * scale,
+              marginTop: Platform.OS === 'ios' ? 90 * scale : 30 * scale,
               // boxShadow: "100px 100px 50spx #888888"
               // boxShadow:"2px 2px 2px 2px #FF0000",
               // // border: "10px solid #ddd",
@@ -349,7 +349,7 @@ class LoginPage extends Component {
 
             <View style={{
               flexDirection: "row", justifyContent: "center",
-              alignItems: "center", margin: 30
+              alignItems: "center", margin: 30, marginBottom: 50
             }}>
               <TouchableOpacity
                 onPress={() => {
@@ -371,10 +371,12 @@ class LoginPage extends Component {
                 }}
                 style={{backgroundColor: "transparent"}}
               >
-                <Text style={styles.bottomText}>注册</Text>
+                <Text style={styles.bottomText}>注册账号</Text>
 
               </TouchableOpacity>
             </View>
+
+            {/*版本号，可以移动到设置页面*/}
             {/*<View style={{backgroundColor: "transparent", justifyContent: "center",*/}
             {/*alignItems: "center",  margin: 10}}>*/}
             {/*<Text style={styles.bottomText}>MO手机版 版本号: {Global.version}</Text>*/}
@@ -387,9 +389,7 @@ class LoginPage extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
-
   bottomText: {
     color: "#BBC3D2",
     fontSize: 14

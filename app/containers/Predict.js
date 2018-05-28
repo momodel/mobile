@@ -119,11 +119,11 @@ export default class Predict extends Component {
       if (this.state.image) {
         // 存进input里
         for (let key in this.state.image) {
-          if(this.state.image.hasOwnProperty(key)){
-            if(!_.get(this.state.image[key], '[file][data]', null)){
+          if (this.state.image.hasOwnProperty(key)) {
+            if (!_.get(this.state.image[key], '[file][data]', null)) {
               Alert.alert('警告', '选择图片', [{text: '确定'}])
               return
-            }else{
+            } else {
               imageKeyValue[key] = this.state.image[key].file.data
             }
           }
@@ -223,9 +223,9 @@ export default class Predict extends Component {
         onContentSizeChange={this.onContentSizeChange}
       >
         {/*<View style={{justifyContent: "center", alignItems: "center", margin: 10}}>*/}
-          {/*<Text>*/}
-            {/*输入*/}
-          {/*</Text>*/}
+        {/*<Text>*/}
+        {/*输入*/}
+        {/*</Text>*/}
         {/*</View>*/}
 
         <Form
@@ -294,7 +294,6 @@ export default class Predict extends Component {
           })
         }
 
-
         <Button
           type="primary"
           onClick={this.onSubmit}
@@ -321,8 +320,6 @@ export default class Predict extends Component {
               />
           })
         }
-
-
       </ScrollView>
     )
   }

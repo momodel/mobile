@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text} from 'react-native'
 import {connect} from 'react-redux'
-import {ActivityIndicator} from 'antd-mobile'
-
 import {createAction, NavigationActions, objectIdToImg, messageObjToContent} from '../utils'
 import {MessageItem} from '../components/Item'
 import {CustomFlatList} from '../components/CustomFlatList'
-
 
 @connect(({messages}) => ({...messages}))
 class Message extends Component {
@@ -88,7 +85,6 @@ class Message extends Component {
     )
   }
 }
-
 
 
 const styles = StyleSheet.create({

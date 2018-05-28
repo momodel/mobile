@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {CommentCard} from "../components/Item/CommentItem"
 import {AnswerCard} from "../components/Item/AnswerItem"
 import {RequestHeaderCard} from '../components/RequestHeader'
-import { createAction, NavigationActions, Storage } from '../utils'
+import {createAction, NavigationActions, Storage} from '../utils'
 
 const tabs = [
   {title: "回答"},
@@ -46,11 +46,14 @@ export default class Request extends Component {
       type: 'request/getAnswers',
       payload: {requestId}
     })
+  }
 
+  gotoCommentsPage = () => {
+    this.props.dispatch(NavigationActions.navigate({routeName: 'Comments'}))
   }
 
   render() {
-    const {title, description, input, output, comments, answers} = this.props
+    const {title, description, input, output, comments, answers, numComments} = this.props
 
     return (
       <View style={{flex: 1}}>
@@ -63,10 +66,15 @@ export default class Request extends Component {
             this.setState({showReplyTextSend: false})
           }}
         >
-          <RequestHeaderCard request={this.props}
-                             showMore={this.state.showMore}
-                             onPress={() => this.setState({showMore: true})}
-                             onPressEdit={()=> {this.props.dispatch(NavigationActions.navigate({ routeName: "RequestEdit" }))}}
+          <RequestHeaderCard
+            request={this.props}
+            showMore={this.state.showMore}
+            onPress={() => this.setState({showMore: true})}
+            onPressEdit={() => {
+              this.props.dispatch(NavigationActions.navigate({routeName: "RequestEdit"}))
+            }}
+            numComments={numComments}
+            onPressComments={this.gotoCommentsPage}
           />
           <Tabs tabs={tabs}
                 initialPage={0}
@@ -167,24 +175,29 @@ export default class Request extends Component {
 
 const Comments = ({comments, onChangeCommentText, onPressSend, commentText}) => {
   return (
-    <View style={{flex: 1}}>
-      <View
-      >
-        {comments.map((comment) => {
-          const {
-            comments, comments_type, comments_user_id, create_time,
-            reply_number, _id
-          } = comment
-          return <CommentCard
-            key={_id}
-            username={comments_user_id}
-            content={comments}
-            datetime={create_time}
-          />
-        })}
+    comments && comments.length !== 0 ?
+      <View style={{flex: 1}}>
+        <View
+        >
+          {comments.map((comment) => {
+            const {
+              comments, comments_type, comments_user_id, create_time,
+              reply_number, _id
+            } = comment
+            return <CommentCard
+              key={_id}
+              username={comments_user_id}
+              content={comments}
+              datetime={create_time}
+            />
+          })}
+        </View>
+      </View> :
+      <View style={{minHeight: 200, alignItems: "center", justifyContent: "center"}}>
+        <Text>
+          暂无信息
+        </Text>
       </View>
-
-    </View>
   )
 }
 
@@ -222,6 +235,4 @@ const TextSend = ({onChangeCommentText, commentText, onPressSend, placeholder}) 
 }
 
 
-const styles = StyleSheet.create({
-
-})
+const styles = StyleSheet.create({})

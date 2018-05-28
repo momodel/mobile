@@ -1,3 +1,6 @@
+/**
+ * 用户个人信息页面
+ */
 import React, {Component} from 'react'
 import {StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux'
@@ -5,19 +8,16 @@ import {List} from 'antd-mobile'
 import {Modal, Button, WingBlank, WhiteSpace, Toast, ActivityIndicator} from 'antd-mobile'
 import {createAction, objectIdToImg} from "../utils"
 import ImagePicker from "react-native-image-picker"
-
+import {URL} from "../Global"
 const prompt = Modal.prompt
 const operation = Modal.operation
 const Item = List.Item
-
 const genderDic = {
   '1': '男',
   '0': '女',
   '2': '保密'
 }
-
 const radius = 20
-
 const options = {
   title: '选择图片',
   storageOptions: {
@@ -52,6 +52,15 @@ export default class UserInfo extends Component {
     })
   }
 
+  updateAvatar = (base64Str) => {
+    this.props.dispatch({
+      type: "app/updateAvatar",
+      payload: {
+        base64Str
+      }
+    })
+  }
+
   logout = () => {
     this.props.dispatch(createAction('app/logout')())
   }
@@ -77,7 +86,8 @@ export default class UserInfo extends Component {
       }
       else {
         // 上传头像
-        this.updateUser('avatar', `data:image/png;base64, ${response.data}`)
+        // this.updateUser('avatar', `data:image/png;base64, ${response.data}`)
+        this.updateAvatar(`data:image/png;base64, ${response.data}`)
         // this.setState({
         //   image
         // })
@@ -87,7 +97,7 @@ export default class UserInfo extends Component {
 
   render() {
     const {login, user = {}, updatingUser} = this.props
-    const {email, phone, gender, avatar} = user
+    const {email, phone, gender, avatar, user_ID, avatarV} = user
     const lists = [
       {
         key: "email",
@@ -106,9 +116,7 @@ export default class UserInfo extends Component {
     return (
       !updatingUser ?
         <View>
-
           <List renderHeader={() => '常规设置'}>
-
             <Item
               extra={<View style={{
                 width: radius * 2,
@@ -119,7 +127,9 @@ export default class UserInfo extends Component {
                 justifyContent: "center"
               }}>
                 <Image style={{width: radius * 2 - 2, height: radius * 2 - 2, borderRadius: radius - 1}}
-                       source={avatar ? {uri: avatar} : objectIdToImg(user._id)}/>
+                       source={{uri: `${URL}/user/avatar/${user_ID}.jpeg?${avatarV}`}}
+                       // source={avatar ? {uri: avatar} : objectIdToImg(user._id)}
+                />
               </View>}
               onClick={this.handleChangeAvatar}>
               更换头像
@@ -185,7 +195,6 @@ export default class UserInfo extends Component {
         </View> : <ActivityIndicator animating/>
     )
   }
-
 }
 
 const styles = StyleSheet.create({

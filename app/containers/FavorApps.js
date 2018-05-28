@@ -15,8 +15,9 @@ export default class FavorApps extends Component {
       }
     })
   }
+
   _renderItem = ({item}) => {
-    return  <AppItem
+    return <AppItem
       key={item._id}
       App={item}
       onPress={(App) =>

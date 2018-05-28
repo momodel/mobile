@@ -5,7 +5,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native'
-
 import {NavigationActions} from '../utils'
 import WebChat from '../components/Chat/WebChat'
 
@@ -64,22 +63,11 @@ class Home extends Component {
   })
 
   render() {
-    return <View style={{backgroundColor:"white"}}>
+    return <View style={{backgroundColor: "white"}}>
       <WebChat/>
     </View>
   }
 }
 
-const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // icon: {
-  //   width: 32,
-  //   height: 32,
-  // },
-})
 
 export default Home

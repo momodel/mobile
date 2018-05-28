@@ -5,14 +5,15 @@ import {InputItem, List, Tabs} from 'antd-mobile'
 import {showTime} from '../utils'
 
 
-export const RequestHeaderCard = ({request, onPress, showMore, onPressEdit}) => {
+export const RequestHeaderCard = ({request, onPress, showMore, onPressEdit, onPressComments, numComments}) => {
   const {title, create_time, description, category, tags, input, output} = request
 
   return <View style={styles.cardContainer}>
     <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-      <View style={styles.title}>
+      <View style={[styles.title, {width: "80%"}]}>
         <Text style={{fontSize: 20}}>{title}</Text>
       </View>
+
       <TouchableOpacity onPress={onPressEdit}>
         <Text style={{color: 'grey', fontSize: 15, marginTop: 5, marginRight: 5}}> 编辑</Text>
       </TouchableOpacity>
@@ -39,6 +40,16 @@ export const RequestHeaderCard = ({request, onPress, showMore, onPressEdit}) => 
         填写更加详细的信息有助于得到想要的回答
       </Text>
     </View>
+
+    {numComments !== null ?
+      <TouchableOpacity
+        style={styles.title}
+        onPress={onPressComments}>
+        <Text style={{color: 'grey', fontSize: 12, margin: 10}}>
+          {numComments}条评论
+        </Text>
+      </TouchableOpacity> : null
+    }
   </View>
 }
 
@@ -95,12 +106,12 @@ const RequestInfo = ({category, tags, input, output}) => {
     marginTop: 10
   }}>
     {/*<InputItem*/}
-      {/*type="text"*/}
-      {/*disabled*/}
-      {/*editable={false}*/}
-      {/*value={category && category.toString()}*/}
+    {/*type="text"*/}
+    {/*disabled*/}
+    {/*editable={false}*/}
+    {/*value={category && category.toString()}*/}
     {/*>*/}
-      {/*分类*/}
+    {/*分类*/}
     {/*</InputItem>*/}
 
     <InputItem
@@ -139,7 +150,7 @@ const Steps = ({array}) => {
     if (e !== undefined && e !== null && e.length !== 0) {
       return true
     }
-    count +=1
+    count += 1
     return false
   })
 

@@ -11,7 +11,7 @@ export const createUserRequestComments = (payload) => {
     method: "post",
     body: {
       comments: payload.comments,
-      user_request_id: payload.user_request_id,
+      _id: payload.user_request_id,
       user_id: payload.user_id,
       comments_type: "request",
       // request_answer_id:,

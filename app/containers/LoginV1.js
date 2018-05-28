@@ -1,3 +1,8 @@
+/**
+ * 尝试改变login， 去除container, 封装方法，
+ * （但后来login设计图改变，并做了适配，没有更新到这个文件， 故被弃用）
+ */
+
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {

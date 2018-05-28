@@ -1,3 +1,6 @@
+/**
+ * 用户主页
+ */
 import React, {Component} from 'react'
 import {
   StyleSheet,
@@ -13,14 +16,10 @@ import {
 import {connect} from 'react-redux'
 import {Icon, ActivityIndicator} from 'antd-mobile'
 import {NavigationActions, objectIdToImg} from '../utils'
-
-const {width, height} = Dimensions.get('window')
 import {UsedAppsList} from '../components/List/AppsList'
-
+import {URL} from '../Global'
+const {width, height} = Dimensions.get('window')
 const radius = 40
-
-
-console.log("platform", Platform.OS)
 
 @connect(({app, appList}) => ({...app, appList}))
 class Account extends Component {
@@ -42,8 +41,6 @@ class Account extends Component {
         user_ID: this.props.username
       }
     })
-
-
   }
 
   gotoLogin = () => {
@@ -71,11 +68,11 @@ class Account extends Component {
 
   render() {
     const {username, login, user, userStatistics} = this.props
-    const {avatar} = user
+    const {avatar, user_ID, avatarV} = user
     const {favor_apps_count, requests_count} = userStatistics
     return (
       <View>
-
+        {/*顶部导航栏*/}
         {
           Platform.OS === 'ios' ?
             <View style={{
@@ -195,11 +192,13 @@ class Account extends Component {
               alignItems: "center",
               justifyContent: "center"
             }}>
-              {user !== "" ? <Image style={{width: radius * 2 - 2, height: radius * 2 - 2, borderRadius: radius - 1}}
-                                    source={avatar ? {uri: avatar} : objectIdToImg(user._id)}/> :
+              {user !== "" ?
+                <Image style={{width: radius * 2 - 2, height: radius * 2 - 2, borderRadius: radius - 1}}
+                       source={{uri: `${URL}/user/avatar/${user_ID}.jpeg?${avatarV}`}}
+                       // source={avatar ? {uri: avatar} : objectIdToImg(user._id)}
+                /> :
                 <ActivityIndicator animating/>
               }
-
             </View>
 
             <View style={{marginTop: 10}}>

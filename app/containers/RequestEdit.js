@@ -40,7 +40,7 @@ export class RequestEdit extends Component {
   onSubmit = () => {
 
     let value = this.refs.form.getValue()
-    if (value){
+    if (value) {
       this.props.dispatch({
         type: "request/updateUserRequest",
         payload: {
@@ -63,7 +63,7 @@ export class RequestEdit extends Component {
   handleInputConfirm(tags) {
     if (this.state.inputValue && tags.indexOf(this.state.inputValue) === -1) {
       tags = [...tags, this.state.inputValue]
-      this.setState({ inputValue: undefined, inputVisible: false })
+      this.setState({inputValue: undefined, inputVisible: false})
       this.setState({
         tags
       })
@@ -138,7 +138,7 @@ export class RequestEdit extends Component {
                 onBlur={() => this.handleInputConfirm(this.state.tags)}
               />
             ) : <Button size="small"
-                        // type="dashed"
+              // type="dashed"
                         onClick={() => this.showInput()}>+ New Tag</Button>
           }
         </View>

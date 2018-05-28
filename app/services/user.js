@@ -1,7 +1,6 @@
 import request, {} from '../utils/request'
-
-const prefix = '/user'
 import {formatParam} from '../utils'
+const prefix = '/user'
 
 // 当加入推送后 更改login
 export const login = payload => {
@@ -143,6 +142,13 @@ export const getUserStatistics = async payload => {
   return await request(`${prefix}/user_statistics`)
 }
 
+export const updateAvatar = async payload => {
+  // const {} = payload
+  return await request(`${prefix}`, {
+    method: "post",
+    body: {dataUrl: payload.base64Str}
+  }, {customErrorMsg: true})
+}
 
 
 

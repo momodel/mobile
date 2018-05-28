@@ -35,7 +35,6 @@ for (const key in InputItemStyle) {
 }
 
 
-
 @connect(({app}) => ({...app}))
 class Register extends Component {
   constructor(props) {
@@ -52,7 +51,7 @@ class Register extends Component {
   onGetCaptcha = () => {
     // 向后端请求验证码
     let phone = this.state.phone
-    phone = phone.replace(/\s+/g,"");
+    phone = phone.replace(/\s+/g, "")
     if (checkMobile(phone)) {
       this.props.dispatch({
         type: "register/sendVerificationCode",
@@ -70,7 +69,7 @@ class Register extends Component {
           clearInterval(this.interval)
         }
       }, 1000)
-    }else{
+    } else {
       Alert.alert('警告', '请输入正确的手机号', [{text: '确定'}])
     }
 
@@ -92,7 +91,7 @@ class Register extends Component {
     )
   }
 
-  renderRigisterBox(){
+  renderRigisterBox() {
     const {count} = this.state
     return (
       <View>
@@ -113,7 +112,7 @@ class Register extends Component {
             </Text>
           </InputItem>
         </View>
-        <View style={{flexDirection: "row", }}>
+        <View style={{flexDirection: "row",}}>
           <View style={{padding: 10, flex: 1}}>
             <InputItem
               styles={StyleSheet.create(newStyle)}
@@ -126,7 +125,7 @@ class Register extends Component {
               }}
               value={this.state.code}/>
           </View>
-          <View style={{justifyContent: "center", alignItems: "center", paddingRight: 20, }}>
+          <View style={{justifyContent: "center", alignItems: "center", paddingRight: 20,}}>
             <Button
               style={{width: 100, height: 35, borderRadius: 2, borderColor: "#6D9CF9"}}
               type="ghost"
@@ -226,14 +225,16 @@ class Register extends Component {
             flex: 1, justifyContent: "flex-end"
           }}>
 
-            <View style={{flexDirection: "row", justifyContent: "center",
-              alignItems: "center", margin: 30, backgroundColor: "transparent"}}>
+            <View style={{
+              flexDirection: "row", justifyContent: "center",
+              alignItems: "center", margin: 30, backgroundColor: "transparent"
+            }}>
               <Text style={styles.bottomText}>
                 已有账户？
               </Text>
 
               <TouchableOpacity
-                onPress={()=>this.props.dispatch(NavigationActions.back())}
+                onPress={() => this.props.dispatch(NavigationActions.back())}
                 style={{backgroundColor: "transparent"}}
               >
                 <Text style={[styles.bottomText, {fontWeight: "700", color: "white"}]}>登录</Text>

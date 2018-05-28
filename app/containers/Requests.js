@@ -16,7 +16,6 @@ export default class Requests extends Component {
     })
   }
 
-
   _renderItem = ({item}) => {
     const {_id, title, create_time, answer_number, star_user, comment_number} = item
     return <View style={styles.container} key={_id}>
@@ -28,7 +27,7 @@ export default class Requests extends Component {
           this.props.dispatch(
             NavigationActions.navigate({
               routeName: 'Request',
-              params: {item},
+              params: {request: item},
             }))
         }}
       />

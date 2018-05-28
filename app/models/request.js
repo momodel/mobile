@@ -10,8 +10,9 @@ export default {
     title: null,
     _id: null,
 
-    comments: [],
-    answers: []
+    comments: null,
+    answers: [],
+    numComments: null
   },
 
   reducers: {
@@ -70,11 +71,13 @@ export default {
         ...payload,
         // requestId
       })
+      console.log("result", result)
 
       yield put({
         type: 'updateState',
         payload: {
-          comments: result.response.comments
+          comments: result.response.comments,
+          numComments: result.response.total_number
         }
       })
 
@@ -106,7 +109,7 @@ export default {
         user_id
       })
       // 如果成功， 提示成功，更新 comments
-      if(result.response === "create user_request_comments success"){
+      if(result.response === "create comments success"){
         // 重新获取comments
         yield put({
           type: "getComments",

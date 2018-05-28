@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {
   StyleSheet,
   View,
@@ -9,14 +9,14 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native'
-import { InputItem, Button, List } from 'antd-mobile'
+import {InputItem, Button, List} from 'antd-mobile'
 import {connect} from 'react-redux'
 import Global from '../Global'
-import { createAction, NavigationActions } from '../utils'
+import {createAction, NavigationActions} from '../utils'
 
-@connect(({ app }) => ({ ...app }))
+@connect(({app}) => ({...app}))
 export default class Forget extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       phoneNumber: ""
@@ -34,7 +34,7 @@ export default class Forget extends Component {
         phone: this.state.phoneNumber
       }
     })
-    this.props.dispatch(NavigationActions.navigate({ routeName: 'ResetPassword' }))
+    this.props.dispatch(NavigationActions.navigate({routeName: 'ResetPassword'}))
   }
 
   render() {
@@ -61,7 +61,7 @@ export default class Forget extends Component {
             style={styles.btn}
             // onClick={this.goToReset}
           >
-            <Text style={{ color: 'white' }}>获取验证码</Text>
+            <Text style={{color: 'white'}}>获取验证码</Text>
           </Button>
         </View>
       </View>

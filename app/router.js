@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react'
-import { BackHandler, Animated, Easing } from 'react-native'
+import React, {PureComponent} from 'react'
+import {BackHandler, Animated, Easing} from 'react-native'
 import {
   StackNavigator,
   TabNavigator,
@@ -7,7 +7,7 @@ import {
   addNavigationHelpers,
   NavigationActions,
 } from 'react-navigation'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 import Loading from './containers/Loading'
 import Login from './containers/Login'
@@ -24,6 +24,8 @@ import FavorApps from './containers/FavorApps'
 import {RequestEdit} from './containers/RequestEdit'
 import UserInfo from './containers/UserInfo'
 
+import Comments from './containers/Comments'
+
 const HomeNavigator = TabNavigator(
   {
     Home: {
@@ -33,14 +35,6 @@ const HomeNavigator = TabNavigator(
       },
     },
   },
-  // {
-  //   Home: {
-  //     screen: Home,
-  //     navigationOptions: {
-  //       tabBarVisible: false,
-  //     },
-  //   },
-  // },
   {
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
@@ -52,13 +46,15 @@ const HomeNavigator = TabNavigator(
 
 const MainNavigator = StackNavigator(
   {
-    HomeNavigator: { screen: HomeNavigator },
-    Message: { screen: Message,
+    HomeNavigator: {screen: HomeNavigator},
+    Message: {
+      screen: Message,
       navigationOptions: {
         title: '我的消息',
       },
     },
-    Account: { screen: Account,
+    Account: {
+      screen: Account,
       navigationOptions: {
         title: '我的账户',
         header: null,
@@ -68,19 +64,21 @@ const MainNavigator = StackNavigator(
         // },
       },
     },
-    AppDetail: { screen: AppDetail,
+    AppDetail: {
+      screen: AppDetail,
       navigationOptions: {
         // title: '应用详情',
       },
     },
-    Predict: { screen: Predict },
+    Predict: {screen: Predict},
     Requests: {
       screen: Requests,
       navigationOptions: {
         title: '我发布的需求',
       },
     },
-    Request: { screen: Request,
+    Request: {
+      screen: Request,
       navigationOptions: {
         title: '需求详情',
       }
@@ -92,21 +90,31 @@ const MainNavigator = StackNavigator(
     //   }
     // },
 
-    FavorApps: { screen: FavorApps,
+    FavorApps: {
+      screen: FavorApps,
       navigationOptions: {
         title: '我的收藏',
       }
     },
 
-    RequestEdit: { screen: RequestEdit,
+    RequestEdit: {
+      screen: RequestEdit,
       navigationOptions: {
         title: '修改需求',
       }
     },
 
-    UserInfo: { screen: UserInfo,
+    UserInfo: {
+      screen: UserInfo,
       navigationOptions: {
         title: '编辑个人资料',//'账号与安全',
+      }
+    },
+
+    Comments: {
+      screen: Comments,
+      navigationOptions: {
+        title: '评论',
       }
     },
   },
@@ -144,8 +152,8 @@ const LoginNavigator = StackNavigator(
 
 const AppNavigator = StackNavigator(
   {
-    LoginNav: { screen: LoginNavigator },
-    Main: { screen: MainNavigator },
+    LoginNav: {screen: LoginNavigator},
+    Main: {screen: MainNavigator},
   },
   {
     headerMode: 'none',
@@ -160,21 +168,18 @@ const AppNavigator = StackNavigator(
         timing: Animated.timing,
       },
       screenInterpolator: sceneProps => {
-        const { layout, position, scene } = sceneProps
-        const { index } = scene
-
+        const {layout, position, scene} = sceneProps
+        const {index} = scene
         const height = layout.initHeight
         const translateY = position.interpolate({
           inputRange: [index - 1, index, index + 1],
           outputRange: [height, 0, 0],
         })
-
         const opacity = position.interpolate({
           inputRange: [index - 1, index - 0.99, index],
           outputRange: [0, 1, 1],
         })
-
-        return { opacity, transform: [{ translateY }] }
+        return {opacity, transform: [{translateY}]}
       },
     }),
   }
@@ -191,7 +196,7 @@ function getCurrentScreen(navigationState) {
   return route.routeName
 }
 
-@connect(({ app, router }) => ({ app, router }))
+@connect(({app, router}) => ({app, router}))
 class Router extends PureComponent {
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.backHandle)
@@ -214,11 +219,11 @@ class Router extends PureComponent {
   }
 
   render() {
-    const { dispatch, app, router } = this.props
-    if (app.loading) return <Loading />
+    const {dispatch, app, router} = this.props
+    if (app.loading) return <Loading/>
 
-    const navigation = addNavigationHelpers({ dispatch, state: router })
-    return <AppNavigator navigation={navigation} />
+    const navigation = addNavigationHelpers({dispatch, state: router})
+    return <AppNavigator navigation={navigation}/>
   }
 }
 
