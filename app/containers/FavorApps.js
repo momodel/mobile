@@ -17,16 +17,19 @@ export default class FavorApps extends Component {
   }
 
   _renderItem = ({item}) => {
+
     return <AppItem
       key={item._id}
       App={item}
-      onPress={(App) =>
+      onPress={(App) =>{
         this.props.dispatch(
           NavigationActions.navigate({
             routeName: 'AppDetail',
             params: {api: App},
           })
         )
+      }
+
       }
     />
   }

@@ -16,17 +16,25 @@ class Message extends Component {
     })
   }
 
-  toMessage = (user_request, receiver_id) => {
-    this.props.dispatch(
-      NavigationActions.navigate({
-        routeName: 'Request',
-        params: {
-          request: {
-            _id: user_request
-          }
-        },
-      }))
-
+  toMessage = (message) => {
+    const { user_request, receiver_id, message_type, project_type, project_id }= message
+    if (message_type === 'answer' || message_type === "comment") {
+      this.props.dispatch(
+        NavigationActions.navigate({
+          routeName: 'Request',
+          params: {
+            request: {
+              _id: user_request
+            }
+          },
+        }))
+    }else if(message_type==="commit" && project_type==="app"){
+      this.props.dispatch(
+        NavigationActions.navigate({
+          routeName: 'AppDetail',
+          params: {api: {_id: project_id}},
+        }))
+    }
     this.props.dispatch({
       type: 'messages/readMessage',
       payload: {receiver_id: receiver_id},
@@ -48,11 +56,7 @@ class Message extends Component {
       sender={"system"}
       datetime={create_time}
       onPress={() => {
-        if (message_type === 'answer' || message_type === "comment") {
-          this.toMessage(user_request, receiver_id)
-        }
-      }
-      }
+        this.toMessage(message)}}
       isRead={is_read}
       source={objectIdToImg(sender)}
     />

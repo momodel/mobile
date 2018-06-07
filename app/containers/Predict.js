@@ -213,8 +213,6 @@ export default class Predict extends Component {
   render() {
     const {app: {args}, api_response, fetch_api_response} = this.props
 
-    console.log("this.props", this.props)
-
     return (
       <ScrollView
         style={styles.container}
