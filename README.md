@@ -1,4 +1,18 @@
 # MO App for iOS and Android
+## 项目描述
+MO机器学习平台的手机端，包含iOS和Android
+
+### 功能
+1. 语音交互界面
+  通过react-native-voice和科大讯飞语音SDK分别实现iOS和Android语音转文字功能。使用react native原生api实现按住录音，松开结束，上滑取消等功能，
+2. 智能机器人意图识别
+  通过训练好的第三方模型，在后端对用户的文字内容进行意图识别和多轮对话
+3. 可视化交互界面
+  卡片式的app列表以及各种图形化的机器人对话内容。
+4. 平台内app实时调用
+  用户可以使用平台内开放的app，如寻找夫妻脸这样的app
+
+用户可以通过告知我想使用平台服务，触发使用app功能，再告知具体app描述如夫妻脸app，得到卡片式的匹配的app列表。通过填写具体app需要的输入以获得输出。
 
 ## Scaffolding
 react-native-dva-starter as Scaffolding
@@ -42,7 +56,7 @@ install node_modules
 
 ``yarn``  
 
-run iOs
+run iOS
 
 `` react-native run-ios --simulator="iPhone 7" ``
 
@@ -98,3 +112,4 @@ run Android
   - theme.js: global theme color
 
 1. important files
+
