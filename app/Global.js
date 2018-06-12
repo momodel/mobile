@@ -7,7 +7,7 @@ import avatar6 from './images/avatar/6.png'
 
 const Global = {
   // localhost
-  URL: 'http://localhost:5005',
+  URL: 'http://192.168.31.56:5005',
   // URL: 'http://192.168.31.11:5005',
 
   // production

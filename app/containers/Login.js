@@ -327,10 +327,7 @@ class LoginPage extends Component {
                 </Text>
               </TouchableOpacity>
             </View>
-
-
             {this.state.type === 'account' ? this.renderAccountBox() : this.renderPhoneBox()}
-
             <View style={{flex: 1, justifyContent: "flex-end"}}>
               <Button style={{width: "100%", alignSelf: "center", backgroundColor: "#6D9CF9"}}
                       onClick={
@@ -339,14 +336,12 @@ class LoginPage extends Component {
                 <Text style={{color: 'white'}}>登 录</Text>
               </Button>
             </View>
-
           </View>
 
 
           <View style={{
             flex: 1, justifyContent: "flex-end"
           }}>
-
             <View style={{
               flexDirection: "row", justifyContent: "center",
               alignItems: "center", margin: 30, marginBottom: 50
@@ -375,13 +370,11 @@ class LoginPage extends Component {
 
               </TouchableOpacity>
             </View>
-
             {/*版本号，可以移动到设置页面*/}
             {/*<View style={{backgroundColor: "transparent", justifyContent: "center",*/}
             {/*alignItems: "center",  margin: 10}}>*/}
             {/*<Text style={styles.bottomText}>MO手机版 版本号: {Global.version}</Text>*/}
             {/*</View>*/}
-
           </View>
         </ImageBackground>
       </KeyboardAvoidingView>
