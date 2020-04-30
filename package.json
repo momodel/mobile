@@ -7,7 +7,9 @@
     "test": "jest",
     "prettier": "prettier --write --single-quote --no-semi --trailing-comma es5 --print-width 80 \"app/**/*.js\"",
     "lint": "eslint app",
-    "format": "yarn prettier && yarn lint -- --fix"
+    "format": "yarn prettier && yarn lint -- --fix",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "antd-mobile": "^2.1.6",
@@ -23,7 +25,8 @@
     "react-navigation": "^1.0.0-beta.21",
     "react-redux": "^5.0.6",
     "styled-components": "^3.1.6",
-    "tcomb-form-native": "^0.6.11"
+    "tcomb-form-native": "^0.6.11",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -47,5 +50,6 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "snyk": true
 }
