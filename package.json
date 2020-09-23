@@ -14,15 +14,15 @@
     "dva-core": "^1.1.0",
     "moment": "^2.22.0",
     "rc-form": "^2.1.7",
-    "react": "16.0.0",
+    "react": "16.5.0",
     "react-native": "^0.51.0",
     "react-native-button": "^2.3.0",
     "react-native-image-picker": "^0.26.7",
     "react-native-speech-iflytek": "^1.0.3",
     "react-native-voice": "^0.2.6",
-    "react-navigation": "^1.0.0-beta.21",
+    "react-navigation": "^1.0.0",
     "react-redux": "^5.0.6",
-    "styled-components": "^3.1.6",
+    "styled-components": "^4.0.0",
     "tcomb-form-native": "^0.6.11"
   },
   "devDependencies": {
