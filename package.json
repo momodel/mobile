@@ -10,12 +10,12 @@
     "format": "yarn prettier && yarn lint -- --fix"
   },
   "dependencies": {
-    "antd-mobile": "^2.1.6",
+    "antd-mobile": "^5.0.0",
     "dva-core": "^1.1.0",
     "moment": "^2.22.0",
     "rc-form": "^2.1.7",
     "react": "16.0.0",
-    "react-native": "^0.51.0",
+    "react-native": "^0.69.12",
     "react-native-button": "^2.3.0",
     "react-native-image-picker": "^0.26.7",
     "react-native-speech-iflytek": "^1.0.3",
